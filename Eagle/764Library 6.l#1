@@ -278,17 +278,6 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="DUAL_OP_AMP_LMV822">
-<gates>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 </devicesets>
 </library>
 </drawing>
