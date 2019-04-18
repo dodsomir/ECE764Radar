@@ -73,22 +73,62 @@
 </layers>
 <library>
 <packages>
+<package name="DIGITAL_POT" urn="urn:adsk.eagle:footprint:10501677/1" locally_modified="yes">
+<description>14-SOP, 0.65 mm pitch, 6.40 mm span, 5.00 X 4.40 X 1.20 mm body
+&lt;p&gt;14-pin SOP package with 0.65 mm pitch, 6.40 mm span with body size 5.00 X 4.40 X 1.20 mm&lt;/p&gt;</description>
+<circle x="-2.928" y="2.6574" radius="0.25" width="0" layer="21"/>
+<wire x1="-2.25" y1="2.4074" x2="-2.25" y2="2.55" width="0.12" layer="21"/>
+<wire x1="-2.25" y1="2.55" x2="2.25" y2="2.55" width="0.12" layer="21"/>
+<wire x1="2.25" y1="2.55" x2="2.25" y2="2.4074" width="0.12" layer="21"/>
+<wire x1="-2.25" y1="-2.4074" x2="-2.25" y2="-2.55" width="0.12" layer="21"/>
+<wire x1="-2.25" y1="-2.55" x2="2.25" y2="-2.55" width="0.12" layer="21"/>
+<wire x1="2.25" y1="-2.55" x2="2.25" y2="-2.4074" width="0.12" layer="21"/>
+<wire x1="2.25" y1="-2.55" x2="-2.25" y2="-2.55" width="0.12" layer="51"/>
+<wire x1="-2.25" y1="-2.55" x2="-2.25" y2="2.55" width="0.12" layer="51"/>
+<wire x1="-2.25" y1="2.55" x2="2.25" y2="2.55" width="0.12" layer="51"/>
+<wire x1="2.25" y1="2.55" x2="2.25" y2="-2.55" width="0.12" layer="51"/>
+<smd name="1" x="-2.8713" y="1.95" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="2" x="-2.8713" y="1.3" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="3" x="-2.8713" y="0.65" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="4" x="-2.8713" y="0" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="5" x="-2.8713" y="-0.65" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="6" x="-2.8713" y="-1.3" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="7" x="-2.8713" y="-1.95" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="8" x="2.8713" y="-1.95" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="9" x="2.8713" y="-1.3" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="10" x="2.8713" y="-0.65" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="11" x="2.8713" y="0" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="12" x="2.8713" y="0.65" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="13" x="2.8713" y="1.3" dx="1.4692" dy="0.4068" layer="1"/>
+<smd name="14" x="2.8713" y="1.95" dx="1.4692" dy="0.4068" layer="1"/>
+<text x="0" y="3.5424" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
+<text x="0" y="-3.185" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
+</package>
 </packages>
+<packages3d>
+<package3d name="SOP65P640X120-14" urn="urn:adsk.eagle:package:10501669/1" locally_modified="yes" type="model">
+<description>14-SOP, 0.65 mm pitch, 6.40 mm span, 5.00 X 4.40 X 1.20 mm body
+&lt;p&gt;14-pin SOP package with 0.65 mm pitch, 6.40 mm span with body size 5.00 X 4.40 X 1.20 mm&lt;/p&gt;</description>
+<packageinstances>
+<packageinstance name="DIGITAL_POT"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="DIGITAL_POT">
 <pin name="!CS" x="2.54" y="0" length="middle" direction="pas"/>
 <pin name="SCK" x="2.54" y="-2.54" length="middle" direction="pas"/>
 <pin name="SDI" x="2.54" y="-5.08" length="middle" direction="pas"/>
-<pin name="VSS" x="2.54" y="-7.62" length="middle" direction="pas"/>
-<pin name="P1B" x="2.54" y="-10.16" length="middle" direction="pas"/>
-<pin name="P1W" x="2.54" y="-12.7" length="middle" direction="pas"/>
-<pin name="P1A" x="2.54" y="-15.24" length="middle" direction="pas"/>
-<pin name="P0A" x="33.02" y="-15.24" length="middle" direction="pas" rot="R180"/>
-<pin name="P0W" x="33.02" y="-12.7" length="middle" direction="pas" rot="R180"/>
-<pin name="P0B" x="33.02" y="-10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="NC" x="33.02" y="-7.62" length="middle" direction="pas" rot="R180"/>
-<pin name="!SHDN" x="33.02" y="-5.08" length="middle" direction="pas" rot="R180"/>
-<pin name="SDO" x="33.02" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="VSS" x="2.54" y="-15.24" length="middle" direction="pas"/>
+<pin name="P1B" x="2.54" y="-7.62" length="middle" direction="pas"/>
+<pin name="P1W" x="2.54" y="-10.16" length="middle" direction="pas"/>
+<pin name="P1A" x="2.54" y="-12.7" length="middle" direction="pas"/>
+<pin name="P0A" x="33.02" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="P0W" x="33.02" y="-5.08" length="middle" direction="pas" rot="R180"/>
+<pin name="P0B" x="33.02" y="-7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="NC" x="33.02" y="-15.24" length="middle" direction="pas" rot="R180"/>
+<pin name="!SHDN" x="33.02" y="-12.7" length="middle" direction="pas" rot="R180"/>
+<pin name="SDO" x="33.02" y="-10.16" length="middle" direction="pas" rot="R180"/>
 <pin name="VDD" x="33.02" y="0" length="middle" direction="pas" rot="R180"/>
 <text x="15.5956" y="6.5786" size="2.0828" layer="95" ratio="6" rot="SR0">&gt;Name</text>
 <text x="14.9606" y="4.0386" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
@@ -104,7 +144,26 @@
 <gate name="A" symbol="DIGITAL_POT" x="-7.62" y="17.78"/>
 </gates>
 <devices>
-<device name="">
+<device name="DIGITAL_POT" package="DIGITAL_POT">
+<connects>
+<connect gate="A" pin="!CS" pad="1"/>
+<connect gate="A" pin="!SHDN" pad="12"/>
+<connect gate="A" pin="NC" pad="11"/>
+<connect gate="A" pin="P0A" pad="8"/>
+<connect gate="A" pin="P0B" pad="10"/>
+<connect gate="A" pin="P0W" pad="9"/>
+<connect gate="A" pin="P1A" pad="7"/>
+<connect gate="A" pin="P1B" pad="5"/>
+<connect gate="A" pin="P1W" pad="6"/>
+<connect gate="A" pin="SCK" pad="2"/>
+<connect gate="A" pin="SDI" pad="3"/>
+<connect gate="A" pin="SDO" pad="13"/>
+<connect gate="A" pin="VDD" pad="14"/>
+<connect gate="A" pin="VSS" pad="4"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:10501669/1"/>
+</package3dinstances>
 <technologies>
 <technology name=""/>
 </technologies>
@@ -114,4 +173,16 @@
 </devicesets>
 </library>
 </drawing>
+<compatibility>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports URNs for individual library
+assets (packages, symbols, and devices). The URNs of those assets
+will not be understood (or retained) with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports the association of 3D packages
+with devices in libraries, schematics, and board files. Those 3D
+packages will not be understood (or retained) with this version.
+</note>
+</compatibility>
 </eagle>
