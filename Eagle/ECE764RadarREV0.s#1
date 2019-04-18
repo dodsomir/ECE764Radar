@@ -1818,7 +1818,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="R3" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="50"/>
-<part name="GND8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1909,15 +1908,12 @@ Source Module</text>
 <instance part="GND6" gate="1" x="22.86" y="40.64" smashed="yes">
 <attribute name="VALUE" x="22.86" y="40.386" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="GND7" gate="1" x="22.86" y="15.24" smashed="yes">
-<attribute name="VALUE" x="22.86" y="14.986" size="1.778" layer="96" align="top-center"/>
+<instance part="GND7" gate="1" x="22.86" y="20.32" smashed="yes">
+<attribute name="VALUE" x="22.86" y="20.066" size="1.778" layer="96" align="top-center"/>
 </instance>
 <instance part="R3" gate="G$1" x="99.06" y="25.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="102.6414" y="26.67" size="1.778" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="102.362" y="24.13" size="1.778" layer="96" align="center"/>
-</instance>
-<instance part="GND8" gate="1" x="99.06" y="15.24" smashed="yes">
-<attribute name="VALUE" x="99.06" y="14.986" size="1.778" layer="96" align="top-center"/>
 </instance>
 </instances>
 <busses>
@@ -1960,7 +1956,7 @@ Source Module</text>
 <segment>
 <pinref part="J6" gate="G$1" pin="GND"/>
 <pinref part="GND7" gate="1" pin="GND"/>
-<wire x1="22.86" y1="27.94" x2="22.86" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="27.94" x2="22.86" y2="22.86" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U2" gate="A" pin="GND"/>
@@ -1971,11 +1967,6 @@ Source Module</text>
 <pinref part="J5" gate="G$1" pin="GND"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="22.86" y1="48.26" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="GND8" gate="1" pin="GND"/>
-<wire x1="99.06" y1="17.78" x2="99.06" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="9V" class="0">
@@ -2052,13 +2043,6 @@ Source Module</text>
 <pinref part="U2" gate="A" pin="LO"/>
 <wire x1="22.86" y1="33.02" x2="63.5" y2="33.02" width="0.1524" layer="91"/>
 <label x="43.18" y="33.02" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$2" class="0">
-<segment>
-<pinref part="U2" gate="A" pin="IF"/>
-<pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="99.06" y1="33.02" x2="99.06" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

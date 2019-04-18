@@ -497,10 +497,10 @@
 <symbol name="5V_REG">
 <pin name="VIN" x="-12.7" y="0" length="middle"/>
 <pin name="VOUT" x="15.24" y="0" length="middle" rot="R180"/>
-<pin name="GND" x="-12.7" y="-10.16" length="middle"/>
-<wire x1="-7.62" y1="2.54" x2="-7.62" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="-12.7" x2="10.16" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-12.7" x2="10.16" y2="2.54" width="0.254" layer="94"/>
+<pin name="GND" x="-12.7" y="-5.08" length="middle"/>
+<wire x1="-7.62" y1="2.54" x2="-7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-7.62" x2="10.16" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="10.16" y2="2.54" width="0.254" layer="94"/>
 <wire x1="10.16" y1="2.54" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
 <text x="-2.54" y="5.08" size="1.27" layer="95">&gt;NAME</text>
 </symbol>
@@ -643,7 +643,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="MIXER" prefix="U">
+<deviceset name="MIXER">
 <gates>
 <gate name="A" symbol="MIXER" x="0" y="0"/>
 </gates>
