@@ -207,16 +207,6 @@
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
 </symbol>
-<symbol name="LMV822M">
-<wire x1="0" y1="21.59" x2="0" y2="-6.35" width="0.254" layer="94"/>
-<wire x1="0" y1="-6.35" x2="25.4" y2="7.62" width="0.254" layer="94"/>
-<wire x1="25.4" y1="7.62" x2="0" y2="21.59" width="0.254" layer="94"/>
-<pin name="+" x="-5.08" y="12.7" length="middle" direction="pas"/>
-<pin name="-" x="-5.08" y="2.54" length="middle" direction="pas"/>
-<pin name="VDD" x="10.16" y="21.59" length="middle" direction="pas" rot="R270"/>
-<pin name="GND" x="10.16" y="-5.08" length="middle" direction="pas" rot="R90"/>
-<pin name="OUT" x="30.48" y="7.62" length="middle" direction="pas" rot="R180"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="DIGITAL_POT" prefix="U">
@@ -290,8 +280,6 @@
 </deviceset>
 <deviceset name="DUAL_OP_AMP_LMV822">
 <gates>
-<gate name="A" symbol="LMV822M" x="0" y="5.08"/>
-<gate name="B" symbol="LMV822M" x="0" y="-27.94"/>
 </gates>
 <devices>
 <device name="">
