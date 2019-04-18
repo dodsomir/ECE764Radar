@@ -654,10 +654,9 @@
 <sheets>
 <sheet>
 <plain>
-<text x="165.1" y="53.34" size="1.778" layer="91">Cin = 1/(2*pi*Fin*1Ohm)</text>
-<text x="226.06" y="53.34" size="1.778" layer="91">Cout = 1/(2*pi*Fout*1Ohm)</text>
+<text x="167.64" y="73.66" size="1.778" layer="91">Cin = 1/(2*pi*Fin*1Ohm)</text>
+<text x="226.06" y="73.66" size="1.778" layer="91">Cout = 1/(2*pi*Fout*1Ohm)</text>
 <text x="180.34" y="134.62" size="1.778" layer="91">Loop Filter, Simulated in TI Calculator</text>
-<text x="200.66" y="78.74" size="1.778" layer="91">X3 Multiplier</text>
 </plain>
 <instances>
 <instance part="U1" gate="A" x="111.76" y="78.74"/>
@@ -808,20 +807,11 @@
 <label x="182.88" y="127" size="1.778" layer="95" rot="MR0"/>
 </segment>
 </net>
-<net name="VCO_TUNE" class="0">
+<net name="VCO_CONT" class="0">
 <segment>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="218.44" y1="127" x2="223.52" y2="127" width="0.1524" layer="91"/>
 <label x="223.52" y="127" size="1.778" layer="95"/>
-</segment>
-<segment>
-<label x="116.84" y="30.48" size="1.778" layer="95" rot="MR0"/>
-</segment>
-</net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="U2" gate="A" pin="TUNE"/>
-<wire x1="119.38" y1="30.48" x2="116.84" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
