@@ -2225,52 +2225,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="0" y="3.5424" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
 <text x="0" y="-3.185" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
 </package>
-<package name="CONN6_SJ-43516-SMT">
-<smd name="1" x="-7.7724" y="-7.9" dx="2.0066" dy="2.3114" layer="1"/>
-<smd name="2" x="-4.9784" y="-7.9" dx="2.2098" dy="2.3114" layer="1"/>
-<smd name="3" x="-5.8928" y="0" dx="2.0066" dy="2.3114" layer="1"/>
-<smd name="4" x="-3.0988" y="0" dx="2.2098" dy="2.3114" layer="1"/>
-<pad name="5" x="-4.9022" y="-3.9624" drill="1.7018" diameter="2.2098"/>
-<pad name="6" x="2.1082" y="-3.9624" drill="1.7018" diameter="2.2098"/>
-<smd name="7" x="8.4074" y="-3.188" dx="2.5908" dy="2.794" layer="1"/>
-<smd name="8" x="3.6546" y="-7.9" dx="2.794" dy="2.3114" layer="1"/>
-<wire x1="-10.16" y1="-0.3556" x2="-10.16" y2="-7.5692" width="0.1524" layer="39"/>
-<wire x1="-10.16" y1="-7.5692" x2="7.3406" y2="-7.5692" width="0.1524" layer="39"/>
-<wire x1="7.3406" y1="-7.5692" x2="7.3406" y2="-0.3556" width="0.1524" layer="39"/>
-<wire x1="7.3406" y1="-0.3556" x2="-10.16" y2="-0.3556" width="0.1524" layer="39"/>
-<polygon width="0.1524" layer="39">
-<vertex x="-10.1503" y="-0.3432"/>
-<vertex x="-10.1503" y="-7.5568"/>
-<vertex x="7.3503" y="-7.5568"/>
-<vertex x="7.3503" y="-0.3432"/>
-</polygon>
-<polygon width="0.1524" layer="39">
-<vertex x="-9.8963" y="-0.5972"/>
-<vertex x="-9.8963" y="-7.3028"/>
-<vertex x="7.0963" y="-7.3028"/>
-<vertex x="7.0963" y="-0.5972"/>
-</polygon>
-<wire x1="-10.033" y1="-7.4422" x2="-4.1402" y2="-7.4422" width="0.1524" layer="21"/>
-<wire x1="7.2136" y1="-7.4422" x2="7.2136" y2="-0.4826" width="0.1524" layer="21"/>
-<wire x1="7.2136" y1="-0.4826" x2="1.4478" y2="-0.4826" width="0.1524" layer="21"/>
-<wire x1="-10.033" y1="-0.4826" x2="-10.033" y2="-7.4422" width="0.1524" layer="21"/>
-<wire x1="1.4478" y1="-7.4422" x2="1.9304" y2="-7.4422" width="0.1524" layer="21"/>
-<wire x1="-4.1402" y1="-0.4826" x2="-10.033" y2="-0.4826" width="0.1524" layer="21"/>
-<wire x1="5.3848" y1="-7.4422" x2="7.2136" y2="-7.4422" width="0.1524" layer="21"/>
-<wire x1="-10.287" y1="-7.8994" x2="-11.049" y2="-7.8994" width="0.508" layer="21" curve="-180"/>
-<wire x1="-11.049" y1="-7.8994" x2="-10.287" y2="-7.8994" width="0.508" layer="21" curve="-180"/>
-<wire x1="-9.906" y1="-7.3152" x2="7.0866" y2="-7.3152" width="0.1524" layer="51"/>
-<wire x1="7.0866" y1="-7.3152" x2="7.0866" y2="-0.6096" width="0.1524" layer="51"/>
-<wire x1="7.0866" y1="-0.6096" x2="-9.906" y2="-0.6096" width="0.1524" layer="51"/>
-<wire x1="-9.906" y1="-0.6096" x2="-9.906" y2="-7.3152" width="0.1524" layer="51"/>
-<wire x1="-2.413" y1="-9.8044" x2="-3.175" y2="-9.8044" width="0.508" layer="51" curve="-180"/>
-<wire x1="-3.175" y1="-9.8044" x2="-2.413" y2="-9.8044" width="0.508" layer="51" curve="-180"/>
-<wire x1="-3.048" y1="-7.8994" x2="-2.54" y2="-7.8994" width="0.1524" layer="23"/>
-<wire x1="-2.794" y1="-8.1534" x2="-2.794" y2="-7.6454" width="0.1524" layer="23"/>
-<wire x1="-10.287" y1="-7.8994" x2="-11.049" y2="-7.8994" width="0.508" layer="22" curve="-180"/>
-<wire x1="-11.049" y1="-7.8994" x2="-10.287" y2="-7.8994" width="0.508" layer="22" curve="-180"/>
-<text x="-4.6736" y="-4.5974" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
-</package>
 </packages>
 <packages3d>
 <package3d name="R0603" urn="urn:adsk.eagle:package:26057/1" type="box">
@@ -2406,31 +2360,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="7.62" y1="-17.78" x2="27.94" y2="-17.78" width="0.254" layer="94"/>
 <wire x1="27.94" y1="-17.78" x2="27.94" y2="2.54" width="0.254" layer="94"/>
 <wire x1="27.94" y1="2.54" x2="7.62" y2="2.54" width="0.254" layer="94"/>
-</symbol>
-<symbol name="AUDIO-JACK2">
-<description>&lt;h3&gt; Audio Jack &lt;/h3&gt;
-&lt;p&gt;  Basic Audio Jack with bypass switches&lt;/p&gt;</description>
-<wire x1="-1.27" y1="-7.62" x2="0" y2="-6.35" width="0.1524" layer="94"/>
-<wire x1="0" y1="-6.35" x2="1.27" y2="-7.62" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="-7.62" x2="2.54" y2="-7.62" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="2.54" x2="-1.27" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="-1.27" y1="2.54" x2="-2.54" y2="1.27" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="1.27" x2="-3.81" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="5.08" x2="-5.08" y2="5.08" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="-5.08" x2="2.54" y2="-5.08" width="0.1524" layer="94"/>
-<text x="-5.08" y="5.588" size="1.778" layer="95" font="vector">&gt;NAME</text>
-<text x="-5.08" y="-10.16" size="1.778" layer="96" font="vector">&gt;VALUE</text>
-<rectangle x1="-6.35" y1="-7.62" x2="-5.08" y2="5.08" layer="94"/>
-<pin name="RING2" x="5.08" y="2.54" visible="off" length="short" rot="R180"/>
-<pin name="TIP" x="5.08" y="-7.62" visible="off" length="short" rot="R180"/>
-<pin name="SLEEVE" x="5.08" y="5.08" visible="off" length="short" rot="R180"/>
-<pin name="RINGSWITCH" x="5.08" y="-2.54" visible="off" length="short" rot="R180"/>
-<pin name="TIPSWITCH" x="5.08" y="-5.08" visible="off" length="short" rot="R180"/>
-<wire x1="5.08" y1="0" x2="1.27" y2="0" width="0.1524" layer="94"/>
-<pin name="RING1" x="5.08" y="0" visible="off" length="point" rot="R180"/>
-<wire x1="-1.27" y1="0" x2="0" y2="1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="1.27" x2="1.27" y2="0" width="0.1524" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -2585,26 +2514,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </device>
 </devices>
 </deviceset>
-<deviceset name="3.5HEADPHONEJACK" prefix="J">
-<gates>
-<gate name="G$1" symbol="AUDIO-JACK2" x="5.08" y="7.62"/>
-</gates>
-<devices>
-<device name="" package="CONN6_SJ-43516-SMT">
-<connects>
-<connect gate="G$1" pin="RING1" pad="4"/>
-<connect gate="G$1" pin="RING2" pad="2"/>
-<connect gate="G$1" pin="RINGSWITCH" pad="3"/>
-<connect gate="G$1" pin="SLEEVE" pad="1"/>
-<connect gate="G$1" pin="TIP" pad="8"/>
-<connect gate="G$1" pin="TIPSWITCH" pad="7"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -2661,7 +2570,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
 <part name="GND14" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="C8" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
-<part name="J2" library="764Library" deviceset="3.5HEADPHONEJACK" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2685,12 +2593,6 @@ Control
 Max Gain = 100</text>
 <text x="256.54" y="20.32" size="1.778" layer="97">Total Gain = 10,000 
 Max Output = 4.9V with 100k digipot</text>
-<text x="317.5" y="20.32" size="1.778" layer="97">Sleeve
-Ring2
-Ring1
-Ring Switch
-Tip Switch
-Tip</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
@@ -2847,10 +2749,6 @@ Tip</text>
 <instance part="C8" gate="G$1" x="266.7" y="27.94" smashed="yes" rot="R90">
 <attribute name="NAME" x="267.716" y="35.179" size="1.778" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="267.716" y="32.639" size="1.778" layer="96" rot="R180" align="center"/>
-</instance>
-<instance part="J2" gate="G$1" x="307.34" y="27.94" smashed="yes" rot="MR0">
-<attribute name="NAME" x="312.42" y="33.528" size="1.778" layer="95" font="vector" rot="MR0"/>
-<attribute name="VALUE" x="312.42" y="17.78" size="1.778" layer="96" font="vector" rot="MR0"/>
 </instance>
 </instances>
 <busses>

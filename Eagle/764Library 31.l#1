@@ -460,6 +460,86 @@
 <text x="-1.27" y="2.032" size="0.6096" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <text x="-1.27" y="-2.667" size="0.6096" layer="27" font="vector" ratio="20">&gt;VALUE</text>
 </package>
+<package name="AUDIO-JACK-3.5MM-SMD" urn="urn:adsk.eagle:footprint:37605/1">
+<description>&lt;h3&gt;3.5mm Stereo Audio Jack - Surface Mount&lt;/h3&gt;
+2.5mm Height. 
+&lt;p&gt;Specifications:
+&lt;ul&gt;&lt;li&gt;Pin count:5&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=”http://www.4uconnector.com/online/object/4udrawing/19269.pdf”&gt;Datasheet referenced for footprint&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Example device(s):
+&lt;ul&gt;&lt;li&gt;Audio_Jack&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</description>
+<wire x1="3.9" y1="-3" x2="10.2" y2="-3" width="0.254" layer="21"/>
+<wire x1="14.5" y1="-0.635" x2="14.5" y2="-3" width="0.254" layer="21"/>
+<wire x1="14.5" y1="-3" x2="13.2" y2="-3" width="0.254" layer="21"/>
+<wire x1="14.5" y1="2.2098" x2="14.5" y2="3" width="0.254" layer="21"/>
+<wire x1="14.5" y1="3" x2="5.7" y2="3" width="0.254" layer="21"/>
+<wire x1="0.5" y1="3" x2="0" y2="3" width="0.254" layer="51"/>
+<wire x1="0" y1="3" x2="0" y2="-2.5" width="0.254" layer="51"/>
+<wire x1="0" y1="-2.5" x2="0" y2="-3" width="0.254" layer="51"/>
+<wire x1="0" y1="-3" x2="1" y2="-3" width="0.254" layer="51"/>
+<wire x1="-0.1524" y1="2.5" x2="-2.5" y2="2.5" width="0.254" layer="51"/>
+<wire x1="-2.5" y1="2.5" x2="-2.5" y2="-2.5" width="0.254" layer="51"/>
+<wire x1="-2.5" y1="-2.5" x2="0" y2="-2.5" width="0.254" layer="51"/>
+<smd name="SLEEVE" x="2.4" y="-3.45" dx="2" dy="2.5" layer="1"/>
+<smd name="TIP" x="11.7" y="-3.45" dx="2" dy="2.5" layer="1"/>
+<smd name="RING" x="4.3" y="3.45" dx="2" dy="2.5" layer="1"/>
+<smd name="TSH" x="15.75" y="0.75" dx="2" dy="2.5" layer="1" rot="R90"/>
+<smd name="RSH" x="1.5" y="3.45" dx="1.2" dy="2.5" layer="1" rot="R180"/>
+<hole x="3.5" y="0" drill="2"/>
+<hole x="10.5" y="0" drill="2"/>
+<text x="5.715" y="0.762" size="0.6096" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<text x="5.715" y="-1.397" size="0.6096" layer="27" font="vector" ratio="20">&gt;VALUE</text>
+</package>
+<package name="AUDIO-JACK-KIT" urn="urn:adsk.eagle:footprint:37606/1">
+<description>&lt;h3&gt;3.5mm Stereo Audio Jack -Kit Version&lt;/h3&gt;
+Reduced openings in tStop, pins spread a tiny bit out to hold part on PCB during assembly
+&lt;p&gt;Specifications:
+&lt;ul&gt;&lt;li&gt;Pin count:5&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=”https://www.sparkfun.com/datasheets/Prototyping/Audio-3.5mm.pdf”&gt;Datasheet referenced for footprint&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Example device(s):
+&lt;ul&gt;&lt;li&gt;Audio_Jack&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</description>
+<wire x1="7.5" y1="6" x2="7.5" y2="-6" width="0.2032" layer="21"/>
+<wire x1="-3.5" y1="6" x2="-3.5" y2="4.5" width="0.2032" layer="51"/>
+<wire x1="-3.5" y1="-4.5" x2="-3.5" y2="-6" width="0.2032" layer="51"/>
+<wire x1="-4.5" y1="4.5" x2="-4.5" y2="3" width="0.2032" layer="51"/>
+<wire x1="-4.5" y1="-3" x2="-4.5" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="-4.5" y1="-4.5" x2="-3.5" y2="-4.5" width="0.2032" layer="51"/>
+<wire x1="-4.5" y1="4.5" x2="-3.5" y2="4.5" width="0.2032" layer="51"/>
+<wire x1="-6.5" y1="3" x2="-6.5" y2="-3" width="0.2032" layer="51"/>
+<wire x1="-6.5" y1="-3" x2="-4.5" y2="-3" width="0.2032" layer="51"/>
+<wire x1="-6.5" y1="3" x2="-4.5" y2="3" width="0.2032" layer="51"/>
+<wire x1="-3.5" y1="6" x2="3.5" y2="6" width="0.2032" layer="21"/>
+<wire x1="7.5" y1="6" x2="6.5" y2="6" width="0.2032" layer="21"/>
+<wire x1="-3.5" y1="6" x2="-3.5" y2="-6" width="0.2032" layer="21"/>
+<wire x1="-3.5" y1="-6" x2="3.5" y2="-6" width="0.2032" layer="21"/>
+<wire x1="7.5" y1="-6" x2="6.5" y2="-6" width="0.2032" layer="21"/>
+<pad name="SLEEVE" x="0" y="0" drill="1.3" diameter="2.1844" stop="no"/>
+<pad name="RSH" x="5" y="2.5" drill="1.3" diameter="2.1844" stop="no"/>
+<pad name="RING" x="5" y="5.1" drill="1.3" diameter="2.1844" stop="no"/>
+<pad name="TSH" x="5" y="-2.5" drill="1.3" diameter="2.1844" stop="no"/>
+<pad name="TIP" x="5" y="-5.1" drill="1.3" diameter="2.1844" stop="no"/>
+<hole x="0" y="5" drill="1.2"/>
+<hole x="-2.5" y="5" drill="1.2"/>
+<hole x="-2.5" y="-5" drill="1.2"/>
+<hole x="0" y="-5" drill="1.2"/>
+<hole x="5" y="0" drill="1.2"/>
+<circle x="0" y="0" radius="0.6604" width="0" layer="29"/>
+<circle x="5" y="5.1" radius="0.6604" width="0" layer="29"/>
+<circle x="5" y="2.5" radius="0.6604" width="0" layer="29"/>
+<circle x="5" y="-2.5" radius="0.6604" width="0" layer="29"/>
+<circle x="5" y="-5.1" radius="0.6604" width="0" layer="29"/>
+<circle x="0" y="0" radius="1.2192" width="0" layer="30"/>
+<circle x="5" y="5.1" radius="1.2192" width="0" layer="30"/>
+<circle x="5" y="-5.1" radius="1.2192" width="0" layer="30"/>
+<circle x="5" y="-2.5" radius="1.2192" width="0" layer="30"/>
+<circle x="5" y="2.5" radius="1.2192" width="0" layer="30"/>
+<text x="-1.27" y="2.032" size="0.6096" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<text x="-1.27" y="-2.667" size="0.6096" layer="27" font="vector" ratio="20">&gt;VALUE</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="SOP65P640X120-14" urn="urn:adsk.eagle:package:10501669/1" locally_modified="yes" type="model">
@@ -479,6 +559,47 @@
 <description>RESISTOR</description>
 <packageinstances>
 <packageinstance name="R0402"/>
+</packageinstances>
+</package3d>
+<package3d name="AUDIO-JACK" urn="urn:adsk.eagle:package:37997/1" type="box">
+<description>3.5mm Stereo Audio Jack
+Specifications:
+Pin count:5
+
+Datasheet referenced for footprint
+Example device(s):
+Audio_Jack
+</description>
+<packageinstances>
+<packageinstance name="AUDIO-JACK"/>
+</packageinstances>
+</package3d>
+<package3d name="AUDIO-JACK-3.5MM-SMD" urn="urn:adsk.eagle:package:38015/1" type="box">
+<description>3.5mm Stereo Audio Jack - Surface Mount
+2.5mm Height. 
+Specifications:
+Pin count:5
+
+Datasheet referenced for footprint
+Example device(s):
+Audio_Jack
+</description>
+<packageinstances>
+<packageinstance name="AUDIO-JACK-3.5MM-SMD"/>
+</packageinstances>
+</package3d>
+<package3d name="AUDIO-JACK-KIT" urn="urn:adsk.eagle:package:38014/1" type="box">
+<description>3.5mm Stereo Audio Jack -Kit Version
+Reduced openings in tStop, pins spread a tiny bit out to hold part on PCB during assembly
+Specifications:
+Pin count:5
+
+Datasheet referenced for footprint
+Example device(s):
+Audio_Jack
+</description>
+<packageinstances>
+<packageinstance name="AUDIO-JACK-KIT"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -617,15 +738,15 @@
 <text x="-5.08" y="5.588" size="1.778" layer="95" font="vector">&gt;NAME</text>
 <text x="-5.08" y="-10.16" size="1.778" layer="96" font="vector">&gt;VALUE</text>
 <rectangle x1="-6.35" y1="-7.62" x2="-5.08" y2="5.08" layer="94"/>
-<pin name="RING2" x="5.08" y="2.54" visible="off" length="short" rot="R180"/>
+<pin name="RING" x="5.08" y="2.54" visible="off" length="short" rot="R180"/>
 <pin name="TIP" x="5.08" y="-7.62" visible="off" length="short" rot="R180"/>
 <pin name="SLEEVE" x="5.08" y="5.08" visible="off" length="short" rot="R180"/>
-<pin name="RINGSWITCH" x="5.08" y="-2.54" visible="off" length="short" rot="R180"/>
-<pin name="TIPSWITCH" x="5.08" y="-5.08" visible="off" length="short" rot="R180"/>
+<pin name="RSH" x="5.08" y="-2.54" visible="off" length="short" rot="R180"/>
+<pin name="TSH" x="5.08" y="-5.08" visible="off" length="short" rot="R180"/>
 <wire x1="5.08" y1="0" x2="1.27" y2="0" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="0" x2="0" y2="-1.27" width="0.1524" layer="94"/>
+<wire x1="0" y1="-1.27" x2="-1.27" y2="0" width="0.1524" layer="94"/>
 <pin name="RING1" x="5.08" y="0" visible="off" length="point" rot="R180"/>
-<wire x1="-1.27" y1="0" x2="0" y2="1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="1.27" x2="1.27" y2="0" width="0.1524" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -773,26 +894,6 @@
 <connect gate="A" pin="GND" pad="1"/>
 <connect gate="A" pin="VIN" pad="3"/>
 <connect gate="A" pin="VOUT" pad="2 4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="3.5HEADPHONEJACK" prefix="J">
-<gates>
-<gate name="G$1" symbol="AUDIO-JACK2" x="5.08" y="7.62"/>
-</gates>
-<devices>
-<device name="" package="CONN6_SJ-43516-SMT">
-<connects>
-<connect gate="G$1" pin="RING1" pad="4"/>
-<connect gate="G$1" pin="RING2" pad="2"/>
-<connect gate="G$1" pin="RINGSWITCH" pad="3"/>
-<connect gate="G$1" pin="SLEEVE" pad="1"/>
-<connect gate="G$1" pin="TIP" pad="8"/>
-<connect gate="G$1" pin="TIPSWITCH" pad="7"/>
 </connects>
 <technologies>
 <technology name=""/>
