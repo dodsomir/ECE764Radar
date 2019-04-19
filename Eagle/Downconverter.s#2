@@ -2683,9 +2683,8 @@ Control
 <text x="205.74" y="-33.02" size="1.778" layer="97">Adjustable Gain
 100k Digital potentiometer
 Max Gain = 100</text>
-<text x="256.54" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
-Max Output = 4.9V
-100k digipot</text>
+<text x="256.54" y="20.32" size="1.778" layer="97">Total Gain = 10,000 
+Max Output = 4.9V with 100k digipot</text>
 <text x="317.5" y="20.32" size="1.778" layer="97">Sleeve
 Ring2
 Ring1
@@ -2851,7 +2850,7 @@ Tip</text>
 </instance>
 <instance part="J2" gate="G$1" x="307.34" y="27.94" smashed="yes" rot="MR0">
 <attribute name="NAME" x="312.42" y="33.528" size="1.778" layer="95" font="vector" rot="MR0"/>
-<attribute name="VALUE" x="312.42" y="17.78" size="1.778" layer="96" font="vector" rot="MR0" align="center"/>
+<attribute name="VALUE" x="312.42" y="17.78" size="1.778" layer="96" font="vector" rot="MR0"/>
 </instance>
 </instances>
 <busses>

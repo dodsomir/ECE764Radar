@@ -2429,8 +2429,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pin name="TIPSWITCH" x="5.08" y="-5.08" visible="off" length="short" rot="R180"/>
 <wire x1="5.08" y1="0" x2="1.27" y2="0" width="0.1524" layer="94"/>
 <pin name="RING1" x="5.08" y="0" visible="off" length="point" rot="R180"/>
-<wire x1="-1.27" y1="0" x2="0" y2="1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="1.27" x2="1.27" y2="0" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="0" x2="0" y2="-1.27" width="0.1524" layer="94"/>
+<wire x1="0" y1="-1.27" x2="-1.27" y2="0" width="0.1524" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -2850,7 +2850,7 @@ Tip</text>
 </instance>
 <instance part="J2" gate="G$1" x="307.34" y="27.94" smashed="yes" rot="MR0">
 <attribute name="NAME" x="312.42" y="33.528" size="1.778" layer="95" font="vector" rot="MR0"/>
-<attribute name="VALUE" x="312.42" y="17.78" size="1.778" layer="96" font="vector" rot="MR0"/>
+<attribute name="VALUE" x="312.42" y="17.78" size="1.778" layer="96" font="vector" rot="MR0" align="center"/>
 </instance>
 </instances>
 <busses>
