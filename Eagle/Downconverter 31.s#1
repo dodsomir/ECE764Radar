@@ -2736,7 +2736,6 @@ LOSS 6dBm</text>
 2.5E9
 0.00049 V</text>
 <text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
-<text x="45.72" y="86.36" size="1.778" layer="97">ZLD0117</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
