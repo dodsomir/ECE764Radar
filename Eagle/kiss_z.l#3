@@ -336,8 +336,8 @@
 <pin name="CPO" x="35.56" y="20.32" length="middle" direction="pas" rot="R180"/>
 <pin name="GND_2" x="15.24" y="-5.08" length="middle" direction="pas" rot="R90"/>
 <pin name="GND_3" x="17.78" y="-5.08" length="middle" direction="pas" rot="R90"/>
-<pin name="!FIN" x="35.56" y="10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="FIN" x="35.56" y="7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="!FIN" x="35.56" y="7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="FIN" x="35.56" y="10.16" length="middle" direction="pas" rot="R180"/>
 <pin name="VCC1" x="12.7" y="33.02" length="middle" direction="pas" rot="R270"/>
 <pin name="OSCIN" x="-5.08" y="5.08" length="middle" direction="pas"/>
 <pin name="GND" x="12.7" y="-5.08" length="middle" direction="pas" rot="R90"/>
@@ -381,13 +381,13 @@
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
 </symbol>
 <symbol name="MAX2752EUA+">
-<pin name="BYP" x="-5.08" y="15.24" length="middle" direction="pas"/>
+<pin name="BYP" x="27.94" y="5.08" length="middle" direction="pas" rot="R180"/>
 <pin name="TUNE" x="-5.08" y="5.08" length="middle" direction="pas"/>
 <pin name="GND" x="10.16" y="-5.08" length="middle" direction="pwr" rot="R90"/>
-<pin name="!SHDN" x="-5.08" y="12.7" length="middle" direction="pas"/>
+<pin name="!SHDN" x="-5.08" y="15.24" length="middle" direction="pas"/>
 <pin name="VCC1" x="10.16" y="25.4" length="middle" direction="pwr" rot="R270"/>
 <pin name="VCC2" x="12.7" y="25.4" length="middle" direction="pwr" rot="R270"/>
-<pin name="OUT" x="27.94" y="10.16" length="middle" direction="out" rot="R180"/>
+<pin name="OUT" x="27.94" y="15.24" length="middle" direction="out" rot="R180"/>
 <pin name="GND_2" x="12.7" y="-5.08" length="middle" direction="pwr" rot="R90"/>
 <wire x1="0" y1="20.32" x2="0" y2="0" width="0.1524" layer="94"/>
 <wire x1="0" y1="0" x2="22.86" y2="0" width="0.1524" layer="94"/>
@@ -407,6 +407,8 @@
 <pin name="OUTPUT" x="33.02" y="12.7" length="middle" direction="out" rot="R180"/>
 <pin name="GND_3" x="15.24" y="-5.08" length="middle" direction="pwr" rot="R90"/>
 <pin name="GND_4" x="17.78" y="-5.08" length="middle" direction="pwr" rot="R90"/>
+<text x="19.05" y="21.59" size="1.778" layer="94">&gt;NAME</text>
+<text x="19.05" y="19.05" size="1.778" layer="94">&gt;VALUE</text>
 </symbol>
 <symbol name="ASTX-H11">
 <wire x1="-10.16" y1="10.16" x2="10.16" y2="10.16" width="0.254" layer="94"/>
@@ -419,6 +421,43 @@
 <pin name="VDD" x="0" y="15.24" length="middle" direction="pwr" rot="R270"/>
 <text x="2.54" y="15.24" size="1.27" layer="95" ratio="6">&gt;NAME</text>
 <text x="2.54" y="12.7" size="1.27" layer="96" ratio="6">&gt;VALUE</text>
+</symbol>
+<symbol name="TEENSY_3.2_SOCKET">
+<wire x1="-15.24" y1="22.86" x2="15.24" y2="22.86" width="0.254" layer="94"/>
+<wire x1="15.24" y1="22.86" x2="15.24" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-22.86" x2="-15.24" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="-15.24" y1="-22.86" x2="-15.24" y2="22.86" width="0.254" layer="94"/>
+<pin name="GND_0" x="-2.54" y="-27.94" length="middle" rot="R90"/>
+<pin name="0" x="-20.32" y="15.24" length="middle"/>
+<pin name="1" x="-20.32" y="12.7" length="middle"/>
+<pin name="2" x="-20.32" y="10.16" length="middle"/>
+<pin name="3" x="-20.32" y="7.62" length="middle"/>
+<pin name="4" x="-20.32" y="5.08" length="middle"/>
+<pin name="5" x="-20.32" y="2.54" length="middle"/>
+<pin name="6" x="-20.32" y="0" length="middle"/>
+<pin name="7" x="-20.32" y="-2.54" length="middle"/>
+<pin name="8" x="-20.32" y="-5.08" length="middle"/>
+<pin name="9" x="-20.32" y="-7.62" length="middle"/>
+<pin name="10" x="-20.32" y="-10.16" length="middle"/>
+<pin name="11" x="-20.32" y="-12.7" length="middle"/>
+<pin name="12" x="-20.32" y="-15.24" length="middle"/>
+<pin name="13" x="20.32" y="-15.24" length="middle" rot="R180"/>
+<pin name="14" x="20.32" y="-12.7" length="middle" rot="R180"/>
+<pin name="15" x="20.32" y="-10.16" length="middle" rot="R180"/>
+<pin name="16" x="20.32" y="-7.62" length="middle" rot="R180"/>
+<pin name="17" x="20.32" y="-5.08" length="middle" rot="R180"/>
+<pin name="18" x="20.32" y="-2.54" length="middle" rot="R180"/>
+<pin name="19" x="20.32" y="0" length="middle" rot="R180"/>
+<pin name="20" x="20.32" y="2.54" length="middle" rot="R180"/>
+<pin name="21" x="20.32" y="5.08" length="middle" rot="R180"/>
+<pin name="22" x="20.32" y="7.62" length="middle" rot="R180"/>
+<pin name="23" x="20.32" y="10.16" length="middle" rot="R180"/>
+<pin name="3V3_LIM" x="5.08" y="27.94" length="middle" rot="R270"/>
+<pin name="AGND" x="2.54" y="-27.94" length="middle" rot="R90"/>
+<pin name="VIN" x="-5.08" y="27.94" length="middle" rot="R270"/>
+<pin name="3V3" x="2.54" y="27.94" length="middle" rot="R270"/>
+<pin name="GND_1" x="0" y="-27.94" length="middle" rot="R90"/>
+<pin name="DAC" x="20.32" y="15.24" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
