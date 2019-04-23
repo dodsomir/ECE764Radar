@@ -2683,12 +2683,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY2" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="GND1" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
-<part name="GND4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
-<text x="139.7" y="134.62" size="2.54" layer="97">Downconverter/Preamp - Miranda Dodson</text>
+<text x="33.02" y="134.62" size="2.54" layer="97">Downconverter/Preamp - Miranda Dodson</text>
 <text x="86.36" y="83.82" size="1.778" layer="97" align="top-left">To TX/RX</text>
 <text x="142.24" y="-22.86" size="1.778" layer="97">LPF fc = 5k
 Gain = R5/R4 = 100</text>
@@ -2716,27 +2715,6 @@ Tip (2)</text>
 <text x="134.62" y="83.82" size="1.778" layer="97" align="top-left">From Teensy -
 Digital Pot
 3.3V Power</text>
-<text x="208.28" y="-17.78" size="1.778" layer="97">MCP4251</text>
-<wire x1="129.54" y1="66.04" x2="254" y2="66.04" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="254" y1="66.04" x2="254" y2="5.08" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="254" y1="5.08" x2="129.54" y2="5.08" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="129.54" y1="5.08" x2="129.54" y2="66.04" width="0.1524" layer="97" style="shortdash"/>
-<text x="182.88" y="68.58" size="1.778" layer="97">LM821 OP AMP</text>
-<text x="76.2" y="-10.16" size="1.778" layer="97">MCA1-85L+
-
-ASSUME INSERTION
-LOSS 6dBm</text>
-<text x="68.58" y="55.88" size="1.778" layer="97">-50 dBm
-1E-8W
-0.00099V</text>
-<text x="53.34" y="22.86" size="1.778" layer="97">6 dBm
-0.00398W
-0.624V</text>
-<text x="96.52" y="43.18" size="1.778" layer="97">-56 dBm
-2.5E9
-0.00049 V</text>
-<text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
-<text x="45.72" y="86.36" size="1.778" layer="97">ZLD0117</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
@@ -2898,9 +2876,6 @@ LOSS 6dBm</text>
 <instance part="SUPPLY4" gate="G$1" x="231.14" y="17.78" smashed="yes">
 <attribute name="VALUE" x="231.14" y="20.574" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="GND4" gate="1" x="287.02" y="30.48" smashed="yes">
-<attribute name="VALUE" x="287.02" y="30.226" size="1.778" layer="96" align="top-center"/>
-</instance>
 </instances>
 <busses>
 </busses>
@@ -2986,16 +2961,6 @@ LOSS 6dBm</text>
 <pinref part="J4" gate="G$1" pin="1"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 <wire x1="139.7" y1="101.6" x2="139.7" y2="93.98" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="J2" gate="G$1" pin="SLEEVE"/>
-<pinref part="GND4" gate="1" pin="GND"/>
-<wire x1="302.26" y1="33.02" x2="292.1" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="J2" gate="G$1" pin="RING2"/>
-<wire x1="292.1" y1="33.02" x2="287.02" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="302.26" y1="30.48" x2="292.1" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="292.1" y1="30.48" x2="292.1" y2="33.02" width="0.1524" layer="91"/>
-<junction x="292.1" y="33.02"/>
 </segment>
 </net>
 <net name="9V" class="0">
