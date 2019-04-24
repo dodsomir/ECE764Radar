@@ -388,7 +388,7 @@
 <wire x1="-1.27" y1="-2.54" x2="6.35" y2="-2.54" width="0.127" layer="21"/>
 <wire x1="6.35" y1="-2.54" x2="6.35" y2="7.62" width="0.127" layer="21"/>
 <wire x1="6.35" y1="7.62" x2="-1.27" y2="7.62" width="0.127" layer="21"/>
-<text x="-2.159" y="-3.048" size="1.27" layer="21">*</text>
+<text x="-1.27" y="-2.54" size="1.27" layer="21">*</text>
 <text x="7.62" y="0" size="1.27" layer="25" rot="R90">&gt;NAME</text>
 <polygon width="0.127" layer="1">
 <vertex x="-0.381" y="3.81"/>
@@ -417,10 +417,6 @@
 <pad name="P$11" x="3.81" y="2.413" drill="0.2032" diameter="0.6096"/>
 <pad name="P$12" x="5.08" y="3.429" drill="0.2032" diameter="0.6096"/>
 <pad name="P$13" x="5.08" y="2.413" drill="0.2032" diameter="0.6096"/>
-<pad name="P$14" x="1.27" y="7.112" drill="0.2032" diameter="0.6096"/>
-<pad name="P$15" x="2.54" y="7.112" drill="0.2032" diameter="0.6096"/>
-<pad name="P$16" x="3.81" y="7.112" drill="0.2032" diameter="0.6096"/>
-<pad name="P$17" x="5.08" y="7.112" drill="0.2032" diameter="0.6096"/>
 </package>
 <package name="5V_REG">
 <wire x1="-3.35" y1="-1.85" x2="-3.35" y2="1.85" width="0.127" layer="51"/>
