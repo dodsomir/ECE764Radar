@@ -434,6 +434,28 @@
 <wire x1="-26.162" y1="-0.254" x2="-26.162" y2="0.254" width="0.1524" layer="23"/>
 <text x="-16.3576" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="NHD-C12864A1Z-FSW-FBW-HTT">
+<pad name="1" x="7.62" y="0" drill="0.8128" diameter="1.3208" shape="square"/>
+<pad name="2" x="10.16" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="3" x="12.7" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="4" x="15.24" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="5" x="17.78" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="6" x="20.32" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="7" x="59.69" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="8" x="62.23" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="9" x="64.77" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="10" x="67.31" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="11" x="69.85" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="12" x="72.39" y="0" drill="0.8128" diameter="1.3208"/>
+<wire x1="0" y1="1.27" x2="0" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="0" y1="-1.27" x2="2.54" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="80.01" y1="-1.27" x2="80.01" y2="1.27" width="0.127" layer="21"/>
+<wire x1="80.01" y1="-1.27" x2="77.47" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="0" y1="53.34" x2="0" y2="55.88" width="0.127" layer="21"/>
+<wire x1="0" y1="55.88" x2="2.54" y2="55.88" width="0.127" layer="21"/>
+<wire x1="80.01" y1="53.34" x2="80.01" y2="55.88" width="0.127" layer="21"/>
+<wire x1="80.01" y1="55.88" x2="77.47" y2="55.88" width="0.127" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="LMX2326TM/NOPB">
@@ -532,37 +554,37 @@
 <wire x1="15.24" y1="22.86" x2="15.24" y2="-22.86" width="0.254" layer="94"/>
 <wire x1="15.24" y1="-22.86" x2="-15.24" y2="-22.86" width="0.254" layer="94"/>
 <wire x1="-15.24" y1="-22.86" x2="-15.24" y2="22.86" width="0.254" layer="94"/>
-<pin name="GND_0" x="-2.54" y="-27.94" length="middle" rot="R90"/>
-<pin name="0" x="-20.32" y="15.24" length="middle"/>
-<pin name="1" x="-20.32" y="12.7" length="middle"/>
-<pin name="2" x="-20.32" y="10.16" length="middle"/>
-<pin name="3" x="-20.32" y="7.62" length="middle"/>
-<pin name="4" x="-20.32" y="5.08" length="middle"/>
-<pin name="5" x="-20.32" y="2.54" length="middle"/>
-<pin name="6" x="-20.32" y="0" length="middle"/>
-<pin name="7" x="-20.32" y="-2.54" length="middle"/>
-<pin name="8" x="-20.32" y="-5.08" length="middle"/>
-<pin name="9" x="-20.32" y="-7.62" length="middle"/>
-<pin name="10" x="-20.32" y="-10.16" length="middle"/>
-<pin name="11" x="-20.32" y="-12.7" length="middle"/>
-<pin name="12" x="-20.32" y="-15.24" length="middle"/>
-<pin name="13" x="20.32" y="-15.24" length="middle" rot="R180"/>
-<pin name="14" x="20.32" y="-12.7" length="middle" rot="R180"/>
-<pin name="15" x="20.32" y="-10.16" length="middle" rot="R180"/>
-<pin name="16" x="20.32" y="-7.62" length="middle" rot="R180"/>
-<pin name="17" x="20.32" y="-5.08" length="middle" rot="R180"/>
-<pin name="18" x="20.32" y="-2.54" length="middle" rot="R180"/>
-<pin name="19" x="20.32" y="0" length="middle" rot="R180"/>
-<pin name="20" x="20.32" y="2.54" length="middle" rot="R180"/>
-<pin name="21" x="20.32" y="5.08" length="middle" rot="R180"/>
-<pin name="22" x="20.32" y="7.62" length="middle" rot="R180"/>
-<pin name="23" x="20.32" y="10.16" length="middle" rot="R180"/>
-<pin name="3V3_LIM" x="5.08" y="27.94" length="middle" rot="R270"/>
-<pin name="AGND" x="2.54" y="-27.94" length="middle" rot="R90"/>
-<pin name="VIN" x="-5.08" y="27.94" length="middle" rot="R270"/>
-<pin name="3V3" x="2.54" y="27.94" length="middle" rot="R270"/>
-<pin name="GND_1" x="0" y="-27.94" length="middle" rot="R90"/>
-<pin name="DAC" x="20.32" y="15.24" length="middle" rot="R180"/>
+<pin name="GND_0" x="-2.54" y="-27.94" visible="pin" length="middle" rot="R90"/>
+<pin name="0" x="-20.32" y="15.24" visible="pin" length="middle"/>
+<pin name="1" x="-20.32" y="12.7" visible="pin" length="middle"/>
+<pin name="2" x="-20.32" y="10.16" visible="pin" length="middle"/>
+<pin name="3" x="-20.32" y="7.62" visible="pin" length="middle"/>
+<pin name="4" x="-20.32" y="5.08" visible="pin" length="middle"/>
+<pin name="5" x="-20.32" y="2.54" visible="pin" length="middle"/>
+<pin name="6" x="-20.32" y="0" visible="pin" length="middle"/>
+<pin name="7" x="-20.32" y="-2.54" visible="pin" length="middle"/>
+<pin name="8" x="-20.32" y="-5.08" visible="pin" length="middle"/>
+<pin name="9" x="-20.32" y="-7.62" visible="pin" length="middle"/>
+<pin name="10" x="-20.32" y="-10.16" visible="pin" length="middle"/>
+<pin name="11" x="-20.32" y="-12.7" visible="pin" length="middle"/>
+<pin name="12" x="-20.32" y="-15.24" visible="pin" length="middle"/>
+<pin name="13" x="20.32" y="-15.24" visible="pin" length="middle" rot="R180"/>
+<pin name="14" x="20.32" y="-12.7" visible="pin" length="middle" rot="R180"/>
+<pin name="15" x="20.32" y="-10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="16" x="20.32" y="-7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="17" x="20.32" y="-5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="18" x="20.32" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="19" x="20.32" y="0" visible="pin" length="middle" rot="R180"/>
+<pin name="20" x="20.32" y="2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="21" x="20.32" y="5.08" visible="pin" length="middle" rot="R180"/>
+<pin name="22" x="20.32" y="7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="23" x="20.32" y="10.16" visible="pin" length="middle" rot="R180"/>
+<pin name="3V3_LIM" x="5.08" y="27.94" visible="pin" length="middle" rot="R270"/>
+<pin name="AGND" x="2.54" y="-27.94" visible="pin" length="middle" rot="R90"/>
+<pin name="VIN" x="-5.08" y="27.94" visible="pin" length="middle" rot="R270"/>
+<pin name="3V3" x="2.54" y="27.94" visible="pin" length="middle" rot="R270"/>
+<pin name="GND_1" x="0" y="-27.94" visible="pin" length="middle" rot="R90"/>
+<pin name="DAC" x="20.32" y="15.24" visible="pin" length="middle" rot="R180"/>
 <text x="0" y="0" size="1.27" layer="94" align="bottom-center">&gt;NAME</text>
 </symbol>
 <symbol name="KWL-R1025VB">
@@ -758,6 +780,58 @@
 <wire x1="25.4" y1="12.7" x2="25.4" y2="10.16" width="0.2032" layer="94"/>
 <text x="0" y="13.5128" size="2.54" layer="96" ratio="10" rot="SR0">&gt;Value</text>
 <text x="0" y="16.0528" size="2.54" layer="95" ratio="10" rot="SR0">&gt;Name</text>
+</symbol>
+<symbol name="NHD-C12864A1Z-FSW-FBW-HTT">
+<wire x1="-15.24" y1="17.78" x2="15.24" y2="17.78" width="0.254" layer="94"/>
+<wire x1="15.24" y1="17.78" x2="15.24" y2="-17.78" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-17.78" x2="-15.24" y2="-17.78" width="0.254" layer="94"/>
+<wire x1="-15.24" y1="-17.78" x2="-15.24" y2="17.78" width="0.254" layer="94"/>
+<text x="-22.86" y="20.32" size="1.27" layer="95" ratio="10">&gt;NAME</text>
+<text x="-22.86" y="22.86" size="1.27" layer="96" ratio="10">&gt;VALUE</text>
+<pin name="SCLK" x="-22.86" y="5.08" direction="pas"/>
+<pin name="MOSI" x="-22.86" y="2.54" direction="pas"/>
+<pin name="VDD" x="5.08" y="25.4" direction="pas" rot="R270"/>
+<pin name="A0" x="-22.86" y="0" direction="pas"/>
+<pin name="/RESET" x="-22.86" y="-2.54" direction="pas"/>
+<pin name="/CS" x="-22.86" y="-5.08" direction="pas"/>
+<pin name="VSS" x="5.08" y="-25.4" direction="pas" rot="R90"/>
+<pin name="H-" x="7.62" y="-25.4" direction="pas" rot="R90"/>
+<pin name="H+" x="7.62" y="25.4" direction="pas" rot="R270"/>
+<pin name="LED-" x="10.16" y="-25.4" direction="pas" rot="R90"/>
+<pin name="LED+" x="10.16" y="25.4" direction="pas" rot="R270"/>
+<pin name="NC" x="-22.86" y="-12.7" direction="nc"/>
+</symbol>
+<symbol name="NKK_SPDT_MOM">
+<pin name="1" x="5.08" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<pin name="2" x="10.16" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<pin name="3" x="15.24" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<wire x1="0" y1="15.24" x2="20.32" y2="15.24" width="0.254" layer="94"/>
+<wire x1="20.32" y1="15.24" x2="20.32" y2="0" width="0.254" layer="94"/>
+<wire x1="20.32" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="15.24" width="0.254" layer="94"/>
+<text x="0" y="20.32" size="1.27" layer="94" ratio="10">&gt;NAME</text>
+<text x="0" y="17.78" size="1.27" layer="94" ratio="10">&gt;VALUE</text>
+<circle x="10.16" y="12.7" radius="0.635" width="0.254" layer="94"/>
+<circle x="5.08" y="5.715" radius="0.635" width="0.254" layer="94"/>
+<circle x="15.24" y="5.715" radius="0.635" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="10.16" y2="3.81" width="0.254" layer="94"/>
+<text x="4.445" y="6.985" size="1.27" layer="94" ratio="10">M</text>
+<text x="14.605" y="6.985" size="1.27" layer="94" ratio="10">M</text>
+</symbol>
+<symbol name="NKK_SPDT_TOG">
+<pin name="1" x="5.08" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<pin name="2" x="10.16" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<pin name="3" x="15.24" y="-7.62" visible="pin" direction="pas" rot="R90"/>
+<wire x1="0" y1="15.24" x2="20.32" y2="15.24" width="0.254" layer="94"/>
+<wire x1="20.32" y1="15.24" x2="20.32" y2="0" width="0.254" layer="94"/>
+<wire x1="20.32" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="15.24" width="0.254" layer="94"/>
+<text x="0" y="20.32" size="1.27" layer="94" ratio="10">&gt;NAME</text>
+<text x="0" y="17.78" size="1.27" layer="94" ratio="10">&gt;VALUE</text>
+<circle x="10.16" y="12.7" radius="0.635" width="0.254" layer="94"/>
+<circle x="5.08" y="5.715" radius="0.635" width="0.254" layer="94"/>
+<circle x="15.24" y="5.715" radius="0.635" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="10.16" y2="3.81" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -986,6 +1060,32 @@
 <attribute name="MANUFACTURER_PART_NUMBER" value="4611X101102LF" constant="no"/>
 <attribute name="VENDOR" value="Bourns Electronics" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="NHD-C12864A1Z-FSW-FBW-HTT">
+<gates>
+<gate name="A" symbol="NHD-C12864A1Z-FSW-FBW-HTT" x="15.24" y="17.78"/>
+</gates>
+<devices>
+<device name="" package="NHD-C12864A1Z-FSW-FBW-HTT">
+<connects>
+<connect gate="A" pin="/CS" pad="6"/>
+<connect gate="A" pin="/RESET" pad="5"/>
+<connect gate="A" pin="A0" pad="4"/>
+<connect gate="A" pin="H+" pad="9"/>
+<connect gate="A" pin="H-" pad="8"/>
+<connect gate="A" pin="LED+" pad="11"/>
+<connect gate="A" pin="LED-" pad="10"/>
+<connect gate="A" pin="MOSI" pad="2"/>
+<connect gate="A" pin="NC" pad="12"/>
+<connect gate="A" pin="SCLK" pad="1"/>
+<connect gate="A" pin="VDD" pad="3"/>
+<connect gate="A" pin="VSS" pad="7"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
