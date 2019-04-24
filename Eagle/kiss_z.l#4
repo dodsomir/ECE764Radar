@@ -1124,6 +1124,23 @@
 </device>
 </devices>
 </deviceset>
+<deviceset name="NKK_B12AB" prefix="S">
+<gates>
+<gate name="A" symbol="NKK_SPDT_TOG" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="NKK_SPDT_BRKT">
+<connects>
+<connect gate="A" pin="1" pad="3"/>
+<connect gate="A" pin="2" pad="4"/>
+<connect gate="A" pin="3" pad="5"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </drawing>

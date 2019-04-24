@@ -416,7 +416,7 @@
 <wire x1="0.8636" y1="-1.2446" x2="-26.3906" y2="-1.2446" width="0.1524" layer="51"/>
 <wire x1="0.8636" y1="1.2446" x2="0.8636" y2="-1.2446" width="0.1524" layer="51"/>
 <wire x1="-26.3906" y1="1.2446" x2="-26.3906" y2="-1.2446" width="0.1524" layer="51"/>
-<text x="-16.3576" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
+<text x="-25.8826" y="1.905" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 <pad name="2" x="-2.54" y="0" drill="0.8128" diameter="1.3208"/>
 <pad name="3" x="-5.08" y="0" drill="0.8128" diameter="1.3208"/>
 <pad name="4" x="-7.62" y="0" drill="0.8128" diameter="1.3208"/>
