@@ -2751,7 +2751,7 @@ Tip (2)</text>
 Digital Pot
 3.3V Power</text>
 <text x="208.28" y="-30.48" size="1.778" layer="97">MCP4251</text>
-<text x="177.8" y="53.34" size="1.778" layer="97">LMV822 OP AMP</text>
+<text x="177.8" y="53.34" size="1.778" layer="97">LM821 OP AMP</text>
 <text x="76.2" y="-10.16" size="1.778" layer="97">MCA1-85L+
 
 ASSUME CONVERSION
