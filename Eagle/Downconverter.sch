@@ -2723,7 +2723,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <plain>
 <text x="139.7" y="134.62" size="2.54" layer="97">Downconverter/Preamp - Miranda Dodson</text>
 <text x="86.36" y="83.82" size="1.778" layer="97" align="top-left">To TX/RX</text>
-<text x="142.24" y="-40.64" size="1.778" layer="97">LPF fc = 5k
+<text x="142.24" y="-43.18" size="1.778" layer="97">Low Pass Filter
+fc = 5k
 Gain = R5/R4 = 100</text>
 <text x="198.12" y="-17.78" size="1.778" layer="97" align="bottom-right">N/C</text>
 <text x="198.12" y="-20.32" size="1.778" layer="97" align="bottom-right">N/C</text>
@@ -2753,7 +2754,7 @@ Digital Pot
 <text x="177.8" y="53.34" size="1.778" layer="97">LM821 OP AMP</text>
 <text x="76.2" y="-10.16" size="1.778" layer="97">MCA1-85L+
 
-ASSUME INSERTION
+ASSUME CONVERSION
 LOSS 6dBm</text>
 <text x="68.58" y="55.88" size="1.778" layer="97">-50 dBm
 1E-8W
@@ -2762,7 +2763,7 @@ LOSS 6dBm</text>
 0.00398W
 0.624V</text>
 <text x="96.52" y="43.18" size="1.778" layer="97">-56 dBm
-2.5E-9
+2.5E-9W
 0.000248 V</text>
 <text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
 <text x="45.72" y="86.36" size="1.778" layer="97">ZLD0117</text>
@@ -2775,6 +2776,10 @@ LOSS 6dBm</text>
 <wire x1="170.18" y1="10.16" x2="132.08" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="132.08" y1="10.16" x2="132.08" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
 <text x="10.16" y="116.84" size="1.778" layer="97">9V</text>
+<wire x1="114.3" y1="-12.7" x2="180.34" y2="-12.7" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="114.3" y1="-33.02" x2="180.34" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="114.3" y1="-12.7" x2="114.3" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="180.34" y1="-12.7" x2="180.34" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">

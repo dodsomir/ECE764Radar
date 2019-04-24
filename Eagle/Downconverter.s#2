@@ -2753,7 +2753,7 @@ Digital Pot
 <text x="177.8" y="53.34" size="1.778" layer="97">LM821 OP AMP</text>
 <text x="76.2" y="-10.16" size="1.778" layer="97">MCA1-85L+
 
-ASSUME INSERTION
+ASSUME CONVERSION
 LOSS 6dBm</text>
 <text x="68.58" y="55.88" size="1.778" layer="97">-50 dBm
 1E-8W
@@ -2762,7 +2762,7 @@ LOSS 6dBm</text>
 0.00398W
 0.624V</text>
 <text x="96.52" y="43.18" size="1.778" layer="97">-56 dBm
-2.5E-9
+2.5E-9W
 0.000248 V</text>
 <text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
 <text x="45.72" y="86.36" size="1.778" layer="97">ZLD0117</text>
@@ -2774,6 +2774,7 @@ LOSS 6dBm</text>
 <wire x1="170.18" y1="38.1" x2="170.18" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="10.16" x2="132.08" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="132.08" y1="10.16" x2="132.08" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
+<text x="10.16" y="116.84" size="1.778" layer="97">9V</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
@@ -3052,7 +3053,6 @@ LOSS 6dBm</text>
 <pinref part="J1" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="101.6" x2="20.32" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="9V" gate="G$1" pin="V_BATT"/>
-<label x="20.32" y="109.22" size="1.778" layer="95"/>
 <wire x1="20.32" y1="106.68" x2="20.32" y2="114.3" width="0.1524" layer="91"/>
 <junction x="20.32" y="106.68"/>
 <pinref part="U1" gate="A" pin="VIN"/>
@@ -3063,6 +3063,11 @@ LOSS 6dBm</text>
 <wire x1="30.48" y1="106.68" x2="20.32" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="106.68" x2="30.48" y2="101.6" width="0.1524" layer="91"/>
 <junction x="30.48" y="106.68"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="2"/>
+<wire x1="91.44" y1="104.14" x2="91.44" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="9V1" gate="G$1" pin="V_BATT"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -3309,13 +3314,6 @@ LOSS 6dBm</text>
 <wire x1="281.94" y1="27.94" x2="281.94" y2="2.54" width="0.1524" layer="91"/>
 <junction x="281.94" y="27.94"/>
 <label x="281.94" y="7.62" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="V_BATT" class="0">
-<segment>
-<pinref part="J3" gate="G$1" pin="2"/>
-<wire x1="91.44" y1="104.14" x2="91.44" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="9V1" gate="G$1" pin="V_BATT"/>
 </segment>
 </net>
 </nets>
