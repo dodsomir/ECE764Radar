@@ -2679,7 +2679,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C2" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100uF"/>
 <part name="GND3" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J3" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
-<part name="SUPPLY3" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
 <part name="GND2" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="U2" library="764Library" deviceset="MIXER" device=""/>
 <part name="GND5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -2717,6 +2716,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J8" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
 <part name="GND15" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="9V1" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="V_BATT" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2774,6 +2774,7 @@ LOSS 6dBm</text>
 <wire x1="170.18" y1="38.1" x2="170.18" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="10.16" x2="132.08" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="132.08" y1="10.16" x2="132.08" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
+<text x="10.16" y="116.84" size="1.778" layer="97">9V</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
@@ -2811,9 +2812,6 @@ LOSS 6dBm</text>
 <instance part="J3" gate="G$1" x="83.82" y="101.6" smashed="yes">
 <attribute name="VALUE" x="81.28" y="96.774" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="81.28" y="107.188" size="1.778" layer="95" font="vector"/>
-</instance>
-<instance part="SUPPLY3" gate="G$1" x="91.44" y="114.3" smashed="yes">
-<attribute name="VALUE" x="91.44" y="117.094" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="GND2" gate="1" x="91.44" y="91.44" smashed="yes">
 <attribute name="VALUE" x="91.44" y="91.186" size="1.778" layer="96" align="top-center"/>
@@ -2945,6 +2943,9 @@ LOSS 6dBm</text>
 <instance part="GND15" gate="1" x="281.94" y="-7.62" smashed="yes">
 <attribute name="VALUE" x="281.94" y="-7.874" size="1.778" layer="96" align="top-center"/>
 </instance>
+<instance part="9V1" gate="G$1" x="91.44" y="114.3" smashed="yes">
+<attribute name="VALUE" x="91.44" y="117.094" size="1.778" layer="96" align="bottom-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -3052,7 +3053,6 @@ LOSS 6dBm</text>
 <pinref part="J1" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="101.6" x2="20.32" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="9V" gate="G$1" pin="V_BATT"/>
-<label x="20.32" y="109.22" size="1.778" layer="95"/>
 <wire x1="20.32" y1="106.68" x2="20.32" y2="114.3" width="0.1524" layer="91"/>
 <junction x="20.32" y="106.68"/>
 <pinref part="U1" gate="A" pin="VIN"/>
@@ -3063,6 +3063,11 @@ LOSS 6dBm</text>
 <wire x1="30.48" y1="106.68" x2="20.32" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="106.68" x2="30.48" y2="101.6" width="0.1524" layer="91"/>
 <junction x="30.48" y="106.68"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="2"/>
+<wire x1="91.44" y1="104.14" x2="91.44" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="9V1" gate="G$1" pin="V_BATT"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -3088,11 +3093,6 @@ LOSS 6dBm</text>
 <pinref part="C2" gate="G$1" pin="1"/>
 <wire x1="71.12" y1="106.68" x2="71.12" y2="104.14" width="0.1524" layer="91"/>
 <junction x="71.12" y="106.68"/>
-</segment>
-<segment>
-<pinref part="J3" gate="G$1" pin="2"/>
-<wire x1="91.44" y1="104.14" x2="91.44" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="SUPPLY3" gate="G$1" pin="5V"/>
 </segment>
 <segment>
 <pinref part="U3" gate="A" pin="VDD"/>
