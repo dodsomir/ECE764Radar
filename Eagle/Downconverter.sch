@@ -2106,8 +2106,39 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-1.27" y1="-2.54" x2="6.35" y2="-2.54" width="0.127" layer="21"/>
 <wire x1="6.35" y1="-2.54" x2="6.35" y2="7.62" width="0.127" layer="21"/>
 <wire x1="6.35" y1="7.62" x2="-1.27" y2="7.62" width="0.127" layer="21"/>
-<text x="-1.27" y="-3.81" size="1.27" layer="21">*</text>
+<text x="-2.159" y="-3.048" size="1.27" layer="21">*</text>
 <text x="7.62" y="0" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<polygon width="0.127" layer="1">
+<vertex x="-0.381" y="3.81"/>
+<vertex x="-0.381" y="-2.159"/>
+<vertex x="1.651" y="-2.159"/>
+<vertex x="1.651" y="1.524"/>
+<vertex x="3.429" y="1.524"/>
+<vertex x="3.429" y="-2.159"/>
+<vertex x="4.191" y="-2.159"/>
+<vertex x="4.191" y="1.524"/>
+<vertex x="5.461" y="1.524"/>
+<vertex x="5.461" y="7.366"/>
+<vertex x="0.889" y="7.366"/>
+<vertex x="0.889" y="3.81"/>
+</polygon>
+<pad name="P$1" x="0" y="-1.778" drill="0.2032" diameter="0.6096"/>
+<pad name="P$2" x="1.27" y="-1.778" drill="0.2032" diameter="0.6096"/>
+<pad name="P$3" x="3.81" y="-1.778" drill="0.2032" diameter="0.6096"/>
+<pad name="P$4" x="0" y="2.413" drill="0.2032" diameter="0.6096"/>
+<pad name="P$5" x="0" y="3.429" drill="0.2032" diameter="0.6096"/>
+<pad name="P$6" x="1.27" y="2.413" drill="0.2032" diameter="0.6096"/>
+<pad name="P$7" x="1.27" y="3.429" drill="0.2032" diameter="0.6096"/>
+<pad name="P$8" x="2.54" y="3.429" drill="0.2032" diameter="0.6096"/>
+<pad name="P$9" x="2.54" y="2.413" drill="0.2032" diameter="0.6096"/>
+<pad name="P$10" x="3.81" y="3.429" drill="0.2032" diameter="0.6096"/>
+<pad name="P$11" x="3.81" y="2.413" drill="0.2032" diameter="0.6096"/>
+<pad name="P$12" x="5.08" y="3.429" drill="0.2032" diameter="0.6096"/>
+<pad name="P$13" x="5.08" y="2.413" drill="0.2032" diameter="0.6096"/>
+<pad name="P$14" x="1.27" y="7.112" drill="0.2032" diameter="0.6096"/>
+<pad name="P$15" x="2.54" y="7.112" drill="0.2032" diameter="0.6096"/>
+<pad name="P$16" x="3.81" y="7.112" drill="0.2032" diameter="0.6096"/>
+<pad name="P$17" x="5.08" y="7.112" drill="0.2032" diameter="0.6096"/>
 </package>
 <package name="U.FL">
 <description>U.FL Series 50 Ohm Receptacle Male Pins Ultra Small SMT Coaxial Connector</description>
@@ -2517,7 +2548,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <devices>
 <device name="" package="MIXER">
 <connects>
-<connect gate="A" pin="GND" pad="1 2 4 6 7 8 9"/>
+<connect gate="A" pin="GND" pad="1 2 4 6 7 8 9 P$1 P$2 P$3 P$4 P$5 P$6 P$7 P$8 P$9 P$10 P$11 P$12 P$13 P$14 P$15 P$16 P$17"/>
 <connect gate="A" pin="IF" pad="3"/>
 <connect gate="A" pin="LO" pad="10"/>
 <connect gate="A" pin="RF" pad="5"/>
@@ -2706,7 +2737,7 @@ Supply</text>
 <text x="205.74" y="-45.72" size="1.778" layer="97">Adjustable Gain
 100k Digital potentiometer
 Max Gain = 100</text>
-<text x="256.54" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
+<text x="254" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
 Min Output = 2.48V
 100k digipot</text>
 <text x="317.5" y="20.32" size="1.778" layer="97">Sleeve (1)
@@ -3294,6 +3325,7 @@ LOSS 6dBm</text>
 <approved hash="113,1,88.2227,104.303,J3,,,,,"/>
 <approved hash="113,1,108.737,104.14,J7,,,,,"/>
 <approved hash="113,1,136.483,104.303,J4,,,,,"/>
+<approved hash="113,1,285.157,-0.162559,J8,,,,,"/>
 </errors>
 </schematic>
 </drawing>
