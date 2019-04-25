@@ -1,0 +1,259 @@
+{\rtf1\ansi\deff0\deftab432
+
+{\fonttbl
+{\f000 Courier New;}
+{\f001 Courier New;}
+{\f002 Courier New;}
+{\f003 Courier New;}
+{\f004 Courier New;}
+{\f005 Courier New;}
+{\f006 Courier New;}
+{\f007 Courier New;}
+{\f008 Courier New;}
+{\f009 Courier New;}
+}
+
+{\colortbl
+\red255\green255\blue255;
+\red000\green000\blue000;
+\red000\green255\blue000;
+\red000\green000\blue000;
+\red255\green128\blue000;
+\red000\green000\blue000;
+\red255\green102\blue000;
+\red000\green000\blue000;
+\red102\green255\blue000;
+\red000\green000\blue000;
+\red192\green192\blue192;
+\red000\green000\blue000;
+\red255\green204\blue000;
+\red000\green000\blue000;
+\red255\green255\blue255;
+\red000\green000\blue000;
+\red102\green255\blue000;
+\red000\green000\blue000;
+\red255\green255\blue255;
+\red000\green000\blue000;
+}
+
+\f6881388\fs18\cb19\cf18 \highlight11\cf10 #define ADC_pin A9 \highlight3\cf2\i0 //waveform input pin\par
+\highlight1\cf0\i0 \par
+\highlight3\cf2\i0 //*****INITIALIZE ALL CONSTANTS*****//\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 sample_flag_period\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 150\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //ms, time betweem cycles\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 sample_T\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 100\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //ms, sample period\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 sample_N\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 2048\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //samples per period\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 sample_delta\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sample_T\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight5\cf4 1000\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //us, time between samples\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint32_t\highlight1\cf0  \highlight15\cf14 sample_T_actual\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sample_delta\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //us, actual sampling period\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 speed_bin_N\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 10\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //number of speed bins (same as number of LEDs)\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 light_offset\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 3\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //offset number of pins to first light pin\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 max_speed\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 20\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //m/s, max bin speed\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 speed_per_bin\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 max_speed\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 speed_bin_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //(m/s)/index\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 speed_per_frequency\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0.02584\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //(m/s)/Hz, calculated at 5.8GHz, technically changes at different channels\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 indexdiff_to_freq\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight5\cf4 1000000\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight13\cf12\b (\highlight5\cf4\b0 2\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 sample_T_actual\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //Hz*index, divide by index difference to find frequency\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 indexdiff_to_speed\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 indexdiff_to_freq\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 speed_per_frequency\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //(m/s)*index, divide by index difference to find speed\par
+\highlight17\cf16\i0 const\highlight1\cf0  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 rms_percentage\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 15\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //the required deviation from 0 to record new zero crossing, in percentage of rms value\par
+\highlight1\cf0\i0 \par
+\highlight3\cf2\i0 //*****INITIALIZE ALL VARIABLES*****//\par
+\highlight15\cf14\i0 int16_t\highlight1\cf0  \highlight15\cf14 adc_buffer\highlight13\cf12\b [\highlight15\cf14\b0 sample_N\highlight13\cf12\b ];\highlight1\cf0\b0  \highlight3\cf2\i0 // initialize ADC buffer\par
+\highlight15\cf14\i0 uint16_t\highlight1\cf0  \highlight15\cf14 speed_bin\highlight13\cf12\b [\highlight15\cf14\b0 speed_bin_N\highlight13\cf12\b ];\highlight1\cf0\b0  \highlight3\cf2\i0 //initialize doppler speed bins\par
+\highlight15\cf14\i0 uint16_t\highlight1\cf0  \highlight15\cf14 current_rms_value\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //rms value of input signal, digital scale\par
+\highlight15\cf14\i0 uint16_t\highlight1\cf0  \highlight15\cf14 buffer_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //index for use in adc_buffer\par
+\highlight15\cf14\i0 uint16_t\highlight1\cf0  \highlight15\cf14 index_delta\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //difference between adc_buffer indices\par
+\highlight15\cf14\i0 uint8_t\highlight1\cf0  \highlight15\cf14 bin_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //index for use in speed_bin\par
+\highlight15\cf14\i0 uint8_t\highlight1\cf0  \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //the pin number for the light which is currently "on" during normal use\par
+\highlight15\cf14\i0 uint8_t\highlight1\cf0  \highlight15\cf14 sample_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //if true, allows start of next sampling period\par
+\highlight15\cf14\i0 uint8_t\highlight1\cf0  \highlight15\cf14 calc_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //if true, starts calculation loop\par
+\highlight15\cf14\i0 uint32_t\highlight1\cf0  \highlight15\cf14 adc_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //us, adc_timer\par
+\highlight17\cf16\i0 double\highlight1\cf0  \highlight15\cf14 freq_sum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //Hz, sum of recorded frequencies, then divided to find average\par
+\highlight15\cf14\i0 uint32_t\highlight1\cf0  \highlight15\cf14 sample_flag_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //ms, timer for resetting sample\par
+\highlight15\cf14\i0 uint32_t\highlight1\cf0  \highlight15\cf14 actual_time_0\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //ms, sample-start time\par
+\highlight15\cf14\i0 uint32_t\highlight1\cf0  \highlight15\cf14 actual_time_1\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //ms, sample-end time, for purpose of result verification\par
+\highlight1\cf0\i0 \par
+\highlight17\cf16 void\highlight1\cf0  \highlight15\cf14 setup\highlight13\cf12\b ()\highlight1\cf0\b0  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+\par
+  \highlight3\cf2\i0 //initialize Serial port\par
+\highlight1\cf0\i0   \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 begin\highlight13\cf12\b (\highlight5\cf4\b0 9600\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight7\cf6\b while\highlight1\cf0\b0  \highlight13\cf12\b (!\highlight15\cf14\b0 Serial\highlight13\cf12\b .\highlight15\cf14\b0 available\highlight13\cf12\b ());\highlight1\cf0\b0 \par
+  \par
+  \highlight3\cf2\i0 //print sensitive values to ensure inputs are valid\par
+\highlight1\cf0\i0   \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 sample_delta\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 indexdiff_to_freq\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight5\cf4 20\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 indexdiff_to_speed\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight5\cf4 20\highlight13\cf12\b );\highlight1\cf0\b0 \par
+\par
+  \highlight3\cf2\i0 //Set pin directions\par
+\highlight1\cf0\i0   \highlight15\cf14 pinMode\highlight13\cf12\b (\highlight15\cf14\b0 ADC_pin\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight15\cf14 INPUT\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 active_light\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 3\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b <=\highlight1\cf0\b0  \highlight5\cf4 12\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight13\cf12\b ++)\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 pinMode\highlight13\cf12\b (\highlight15\cf14\b0 active_light\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight15\cf14 OUTPUT\highlight13\cf12\b );\highlight1\cf0\b0 \par
+    \highlight15\cf14 digitalWrite\highlight13\cf12\b (\highlight15\cf14\b0 active_light\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight15\cf14 HIGH\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \par
+  \highlight15\cf14 sample_flag_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 millis\highlight13\cf12\b ();\highlight1\cf0\b0  \highlight3\cf2\i0 //preset sample flag timer\par
+\highlight13\cf12\b\i0 \}\highlight1\cf0\b0 \par
+\par
+\highlight17\cf16 void\highlight1\cf0  \highlight15\cf14 loop\highlight13\cf12\b ()\highlight1\cf0\b0  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+  \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 sample_flag\highlight13\cf12\b )\highlight1\cf0\b0  \highlight3\cf2\i0 //if not done sampling\par
+\highlight1\cf0\i0   \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 adc_timer\highlight1\cf0  \highlight13\cf12\b <=\highlight1\cf0\b0  \highlight15\cf14 micros\highlight13\cf12\b ())\highlight1\cf0\b0  \highlight3\cf2\i0 //*****************FIX FOR OVERFLOW\par
+\highlight1\cf0\i0     \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+      \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 buffer_index\highlight1\cf0  \highlight13\cf12\b ==\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b )\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+        \highlight15\cf14 actual_time_0\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 millis\highlight13\cf12\b ();\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+      \highlight15\cf14 adc_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 adc_timer\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 sample_delta\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //every sample_delta microseconds...\par
+\highlight1\cf0\i0       \highlight15\cf14 adc_buffer\highlight13\cf12\b [\highlight15\cf14\b0 buffer_index\highlight13\cf12\b ++]\highlight1\cf0\b0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 analogRead\highlight13\cf12\b (\highlight15\cf14\b0 ADC_pin\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //record adc values\par
+\highlight1\cf0\i0     \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+    \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 buffer_index\highlight1\cf0  \highlight13\cf12\b ==\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b )\highlight1\cf0\b0 \par
+    \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+      \highlight15\cf14 actual_time_1\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 millis\highlight13\cf12\b ()\highlight1\cf0\b0  \highlight13\cf12\b -\highlight1\cf0\b0  \highlight15\cf14 actual_time_0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+      \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 print\highlight13\cf12\b (\highlight9\cf8\b0 "Time Elapsed (ms): "\highlight13\cf12\b );\highlight1\cf0\b0 \par
+      \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 actual_time_1\highlight13\cf12\b );\highlight1\cf0\b0 \par
+      \highlight15\cf14 buffer_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //reset index\par
+\highlight1\cf0\i0       \highlight15\cf14 sample_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //stop sampling\par
+\highlight1\cf0\i0       \highlight15\cf14 calc_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //start calculations\par
+\highlight1\cf0\i0     \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\par
+  \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (!\highlight15\cf14\b0 sample_flag\highlight1\cf0  \highlight13\cf12\b &&\highlight1\cf0\b0  \highlight15\cf14 calc_flag\highlight1\cf0  \highlight13\cf12\b &&\highlight1\cf0\b0  \highlight15\cf14 sample_flag_timer\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 millis\highlight13\cf12\b ())\highlight1\cf0\b0  \highlight3\cf2\i0 //if not taking samples and ready to calculate\par
+\highlight1\cf0\i0   \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 sample_flag_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sample_flag_timer\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 sample_flag_period\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //reset sample timer\par
+\highlight1\cf0\i0     \highlight15\cf14 current_rms_value\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 zero_average_and_rms\highlight13\cf12\b (\highlight15\cf14\b0 adc_buffer\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //make samples bipolar, return rms value\par
+\highlight1\cf0\i0     \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 print\highlight13\cf12\b (\highlight9\cf8\b0 "RMS value = "\highlight13\cf12\b );\highlight1\cf0\b0 \par
+    \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 current_rms_value\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //print bipolar ADC RMS value\par
+\highlight1\cf0\i0     \highlight15\cf14 stitch_sandwich_stacker\highlight13\cf12\b (\highlight15\cf14\b0 adc_buffer\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //stack frequency data into bins\par
+\highlight1\cf0\i0     \highlight15\cf14 sample_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //start sampling\par
+\highlight1\cf0\i0     \highlight15\cf14 calc_flag\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //stop calcs\par
+\highlight1\cf0\i0   \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\par
+  \highlight7\cf6\b if\highlight13\cf12 (\highlight15\cf14\b0 adc_timer\highlight1\cf0  \highlight13\cf12\b -\highlight1\cf0\b0  \highlight15\cf14 sample_delta\highlight1\cf0  \highlight13\cf12\b >\highlight1\cf0\b0  \highlight15\cf14 micros\highlight13\cf12\b ())\highlight1\cf0\b0  \highlight15\cf14 adc_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 micros\highlight13\cf12\b ()\highlight1\cf0\b0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 sample_delta\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //timer overflow reset -- note that overflow will cause 1-2 false readings\par
+\highlight13\cf12\b\i0 \}\highlight1\cf0\b0 \par
+\par
+\highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 zero_average_and_rms\highlight13\cf12\b (\highlight15\cf14\b0 int16_t\highlight1\cf0  \highlight15\cf14 sample\highlight13\cf12\b [])\highlight1\cf0\b0  \highlight3\cf2\i0 //offsets input array to zero-average, calculates and returns ADC RMS value\par
+\highlight13\cf12\b\i0 \{\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 rms_value\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 int32_t\highlight1\cf0  \highlight15\cf14 sum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 int32_t\highlight1\cf0  \highlight15\cf14 squaresum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 int16_t\highlight1\cf0  \highlight15\cf14 diff\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 uint16_t\highlight1\cf0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight13\cf12\b ++)\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 sum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sum\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 sample\highlight13\cf12\b [\highlight15\cf14\b0 j\highlight13\cf12\b ];\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight15\cf14 diff\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sum\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight17\cf16\b0 int\highlight1\cf0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight13\cf12\b ++)\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 adc_buffer\highlight13\cf12\b [\highlight15\cf14\b0 j\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sample\highlight13\cf12\b [\highlight15\cf14\b0 j\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b -\highlight1\cf0\b0  \highlight15\cf14 diff\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight17\cf16\b0 int\highlight1\cf0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 j\highlight13\cf12\b ++)\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 squaresum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 squaresum\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 adc_buffer\highlight13\cf12\b [\highlight15\cf14\b0 j\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 adc_buffer\highlight13\cf12\b [\highlight15\cf14\b0 j\highlight13\cf12\b ]);\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\par
+  \highlight15\cf14 rms_value\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sqrt\highlight13\cf12\b (\highlight15\cf14\b0 squaresum\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //calculate rms value\par
+\highlight1\cf0\i0   \highlight7\cf6\b return\highlight1\cf0\b0  \highlight15\cf14 rms_value\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+\highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\par
+\highlight3\cf2\i0 //takes bipolar sample vector\par
+//steps through samples and finds zero crossing indices\par
+//calls bin_increment function to find frequency content\par
+//calculates and prints average frequency and speed\par
+//updates LED indicator\par
+\highlight17\cf16\i0 void\highlight1\cf0  \highlight15\cf14 stitch_sandwich_stacker\highlight13\cf12\b (\highlight15\cf14\b0 int16_t\highlight1\cf0  \highlight15\cf14 sample\highlight13\cf12\b [])\highlight1\cf0\b0 \par
+\highlight13\cf12\b \{\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 sign\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 old_sign\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 old_light\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 new_zero_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 old_zero_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 crossing_count\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 freq_float\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 speed_float\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 bin_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 bin_index\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 speed_bin_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 bin_index\highlight13\cf12\b ++)\highlight1\cf0\b0  \highlight3\cf2\i0 //reset bins\par
+\highlight1\cf0\i0   \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 speed_bin\highlight13\cf12\b [\highlight15\cf14\b0 bin_index\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 buffer_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 buffer_index\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 sample_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 buffer_index\highlight13\cf12\b ++)\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight3\cf2\i0 //Serial.println(adc_buffer[buffer_index]); //***TEST CODE***\par
+\highlight1\cf0\i0     \highlight3\cf2\i0 //step through samples\par
+\highlight1\cf0\i0     \highlight3\cf2\i0 //check if absolute value greater than or equal to XX% rms value\par
+\highlight1\cf0\i0     \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b ((\highlight15\cf14\b0 abs\highlight13\cf12\b (\highlight15\cf14\b0 sample\highlight13\cf12\b [\highlight15\cf14\b0 buffer_index\highlight13\cf12\b ])\highlight1\cf0\b0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight5\cf4 100\highlight13\cf12\b )\highlight1\cf0\b0  \highlight13\cf12\b >=\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 current_rms_value\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 rms_percentage\highlight13\cf12\b ))\highlight1\cf0\b0 \par
+    \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+      \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 sample\highlight13\cf12\b [\highlight15\cf14\b0 buffer_index\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b >\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b )\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+        \highlight15\cf14 sign\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \}\highlight1\cf0\b0  \highlight7\cf6\b else\highlight1\cf0\b0  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+        \highlight15\cf14 sign\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+      \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 sign\highlight1\cf0  \highlight13\cf12\b !=\highlight1\cf0\b0  \highlight15\cf14 old_sign\highlight13\cf12\b )\highlight1\cf0\b0 \par
+      \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+        \highlight15\cf14 old_sign\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 sign\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+        \highlight3\cf2\i0 //new_zero_index = (buffer_index + old_zero_index) / 2;\par
+\highlight1\cf0\i0         \highlight15\cf14 new_zero_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 buffer_index\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+        \highlight15\cf14 index_delta\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 new_zero_index\highlight1\cf0  \highlight13\cf12\b -\highlight1\cf0\b0  \highlight15\cf14 old_zero_index\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+        \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 old_zero_index\highlight1\cf0  \highlight13\cf12\b !=\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b )\highlight1\cf0\b0 \par
+        \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+          \highlight15\cf14 crossing_count\highlight13\cf12\b ++;\highlight1\cf0\b0 \par
+          \highlight15\cf14 bin_increment\highlight13\cf12\b (\highlight15\cf14\b0 index_delta\highlight13\cf12\b );\highlight1\cf0\b0 \par
+        \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+        \highlight15\cf14 old_zero_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 new_zero_index\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //update\par
+\highlight1\cf0\i0       \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+    \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+    \highlight3\cf2\i0 //if so, check if positive/negative\par
+\highlight1\cf0\i0     \highlight3\cf2\i0 //record sign, check if different than last sign\par
+\highlight1\cf0\i0     \highlight3\cf2\i0 //if so, record a zero crossing index halfway between indices\par
+\highlight1\cf0\i0     \highlight3\cf2\i0 //record difference between current and previous crossing index\par
+\highlight1\cf0\i0   \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight15\cf14 freq_float\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 freq_sum\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 crossing_count\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //find average frequency\par
+\highlight1\cf0\i0   \highlight15\cf14 freq_sum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //reset sum\par
+\highlight1\cf0\i0   \highlight15\cf14 speed_float\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 freq_float\highlight1\cf0  \highlight13\cf12\b *\highlight1\cf0\b0  \highlight15\cf14 speed_per_frequency\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //find average speed\par
+\highlight1\cf0\i0   \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 print\highlight13\cf12\b (\highlight9\cf8\b0 "Frequency (Hz): "\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 freq_float\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //print average frequency\par
+\highlight1\cf0\i0   \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 print\highlight13\cf12\b (\highlight9\cf8\b0 "Speed (m/s): "\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight15\cf14 Serial\highlight13\cf12\b .\highlight15\cf14\b0 println\highlight13\cf12\b (\highlight15\cf14\b0 speed_float\highlight13\cf12\b ,\highlight1\cf0\b0  \highlight5\cf4 1\highlight13\cf12\b );\highlight1\cf0\b0  \highlight3\cf2\i0 //print average speed\par
+\highlight1\cf0\i0   \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 bin_peak_search\highlight13\cf12\b (\highlight15\cf14\b0 speed_bin\highlight13\cf12\b )\highlight1\cf0\b0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 light_offset\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 old_light\highlight1\cf0  \highlight13\cf12\b !=\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b &&\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b >=\highlight1\cf0\b0  \highlight5\cf4 3\highlight1\cf0  \highlight13\cf12\b &&\highlight1\cf0\b0  \highlight15\cf14 active_light\highlight1\cf0  \highlight13\cf12\b <=\highlight1\cf0\b0  \highlight5\cf4 12\highlight13\cf12\b )\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 digitalWrite\highlight13\cf12\b ((\highlight15\cf14\b0 old_light\highlight13\cf12\b ),\highlight1\cf0\b0  \highlight15\cf14 HIGH\highlight13\cf12\b );\highlight1\cf0\b0 \par
+    \highlight15\cf14 digitalWrite\highlight13\cf12\b ((\highlight15\cf14\b0 active_light\highlight13\cf12\b ),\highlight1\cf0\b0  \highlight15\cf14 LOW\highlight13\cf12\b );\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight15\cf14 buffer_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //reset adc_buffer index\par
+\highlight1\cf0\i0   \highlight15\cf14 adc_timer\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 micros\highlight13\cf12\b ();\highlight1\cf0\b0  \highlight3\cf2\i0 //update adc_timer\par
+\highlight13\cf12\b\i0 \}\highlight1\cf0\b0 \par
+\par
+\highlight3\cf2\i0 //takes zero-crossing index delta\par
+//using defined constants, calculates frequency for the given delta\par
+//increments value inside of speed_bin vector\par
+\highlight17\cf16\i0 void\highlight1\cf0  \highlight15\cf14 bin_increment\highlight13\cf12\b (\highlight15\cf14\b0 uint16_t\highlight1\cf0  \highlight15\cf14 index_difference\highlight13\cf12\b )\highlight1\cf0\b0 \par
+\highlight13\cf12\b \{\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint8_t\highlight1\cf0  \highlight15\cf14 bin\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 freq_float\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight17\cf16 double\highlight1\cf0  \highlight15\cf14 speed_float\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 freq_float\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 indexdiff_to_freq\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 index_difference\highlight13\cf12\b ;\highlight3\cf2\b0\i0 // N/T\par
+\highlight1\cf0\i0   \highlight15\cf14 freq_sum\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 freq_sum\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight15\cf14 freq_float\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 speed_float\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 indexdiff_to_speed\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 index_difference\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //calculate single-sample speed\par
+\highlight1\cf0\i0   \highlight3\cf2\i0 //  Serial.print("speed (m/s) = ");\par
+\highlight1\cf0\i0   \highlight3\cf2\i0 //  Serial.println(speed_float);\par
+\highlight1\cf0\i0   \highlight3\cf2\i0 //    Serial.print("index difference = ");\par
+\highlight1\cf0\i0   \highlight3\cf2\i0 //    Serial.println(index_difference);\par
+\highlight1\cf0\i0   \highlight15\cf14 bin\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 speed_float\highlight1\cf0  \highlight13\cf12\b /\highlight1\cf0\b0  \highlight15\cf14 speed_per_bin\highlight1\cf0  \highlight13\cf12\b +\highlight1\cf0\b0  \highlight5\cf4 0.5\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //record rounded bin\par
+\highlight1\cf0\i0   \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 bin\highlight1\cf0  \highlight13\cf12\b <=\highlight1\cf0\b0  \highlight15\cf14 speed_bin_N\highlight13\cf12\b )\highlight1\cf0\b0  \highlight3\cf2\i0 //don't write outside of available bins\par
+\highlight1\cf0\i0   \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight15\cf14 speed_bin\highlight13\cf12\b [\highlight15\cf14\b0 bin\highlight13\cf12\b ]++;\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\highlight13\cf12\b \}\highlight1\cf0\b0 \par
+\par
+\highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 bin_peak_search\highlight13\cf12\b (\highlight15\cf14\b0 uint16_t\highlight1\cf0  \highlight15\cf14 vector\highlight13\cf12\b [])\highlight1\cf0\b0  \highlight3\cf2\i0 //take vector with unsigned 16-bit values and return the position of the max value\par
+\highlight13\cf12\b\i0 \{\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 search_index\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 peak_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight15\cf14 uint16_t\highlight1\cf0  \highlight15\cf14 current_max\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+  \highlight7\cf6\b for\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 search_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight5\cf4 0\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 search_index\highlight1\cf0  \highlight13\cf12\b <\highlight1\cf0\b0  \highlight15\cf14 speed_bin_N\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight15\cf14 search_index\highlight13\cf12\b ++)\highlight1\cf0\b0  \highlight3\cf2\i0 //for the length of the input vector\par
+\highlight1\cf0\i0   \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+    \highlight7\cf6\b if\highlight1\cf0\b0  \highlight13\cf12\b (\highlight15\cf14\b0 vector\highlight13\cf12\b [\highlight15\cf14\b0 search_index\highlight13\cf12\b ]\highlight1\cf0\b0  \highlight13\cf12\b >\highlight1\cf0\b0  \highlight15\cf14 current_max\highlight13\cf12\b )\highlight1\cf0\b0  \highlight3\cf2\i0 //check if value is larger than recorded max\par
+\highlight1\cf0\i0     \highlight13\cf12\b \{\highlight1\cf0\b0 \par
+      \highlight15\cf14 current_max\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 vector\highlight13\cf12\b [\highlight15\cf14\b0 search_index\highlight13\cf12\b ];\highlight1\cf0\b0  \highlight3\cf2\i0 //update max\par
+\highlight1\cf0\i0       \highlight15\cf14 peak_index\highlight1\cf0  \highlight13\cf12\b =\highlight1\cf0\b0  \highlight15\cf14 search_index\highlight13\cf12\b ;\highlight1\cf0\b0  \highlight3\cf2\i0 //update index\par
+\highlight1\cf0\i0     \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight13\cf12\b \}\highlight1\cf0\b0 \par
+  \highlight7\cf6\b return\highlight1\cf0\b0  \highlight15\cf14 peak_index\highlight13\cf12\b ;\highlight1\cf0\b0 \par
+\highlight13\cf12\b \}}

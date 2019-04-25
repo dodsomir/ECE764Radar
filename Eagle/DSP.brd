@@ -46,8 +46,8 @@
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
 <layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
 <layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
-<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
-<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
 <layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
@@ -162,6 +162,8 @@
 <wire x1="100" y1="0" x2="100" y2="75" width="0" layer="20"/>
 <wire x1="100" y1="75" x2="0" y2="75" width="0" layer="20"/>
 <wire x1="0" y1="75" x2="0" y2="0" width="0" layer="20"/>
+<dimension x1="0" y1="74.93" x2="100.33" y2="74.93" x3="50.165" y3="77.47" textsize="1.778" layer="20" precision="0" visible="yes"/>
+<dimension x1="100.33" y1="74.93" x2="100.33" y2="0" x3="104.14" y3="37.465" textsize="1.778" layer="20" precision="0" visible="yes"/>
 </plain>
 <libraries>
 <library name="kiss_z">
