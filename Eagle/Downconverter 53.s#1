@@ -3167,6 +3167,8 @@ LOSS 6dBm</text>
 <wire x1="114.3" y1="-12.7" x2="114.3" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="180.34" y1="-12.7" x2="180.34" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
 <text x="154.94" y="83.82" size="1.778" layer="97" align="top-left">To Source Module</text>
+<text x="45.72" y="88.9" size="1.778" layer="97">ZLD0117</text>
+<text x="106.68" y="91.44" size="1.778" layer="97">TC1185</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
