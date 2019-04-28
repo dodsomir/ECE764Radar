@@ -2778,10 +2778,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </symbol>
 <symbol name="TC1185-3.3VCT713">
 <pin name="VIN" x="2.54" y="0" length="middle" direction="in"/>
-<pin name="GND" x="2.54" y="-2.54" length="middle"/>
+<pin name="GND" x="2.54" y="-2.54" length="middle" direction="pas"/>
 <pin name="!SHDN" x="33.02" y="-5.08" length="middle" direction="in" rot="R180"/>
 <pin name="BYPASS" x="33.02" y="-2.54" length="middle" direction="in" rot="R180"/>
-<pin name="VOUT" x="33.02" y="0" length="middle" rot="R180"/>
+<pin name="VOUT" x="33.02" y="0" length="middle" direction="out" rot="R180"/>
 <wire x1="7.62" y1="5.08" x2="7.62" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="7.62" y1="-10.16" x2="27.94" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="27.94" y1="-10.16" x2="27.94" y2="5.08" width="0.1524" layer="94"/>
@@ -3598,7 +3598,7 @@ Biased on that board.</text>
 <label x="43.18" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="IF" class="0">
+<net name="N$2" class="0">
 <segment>
 <pinref part="U2" gate="A" pin="IF"/>
 <pinref part="R3" gate="G$1" pin="2"/>
@@ -3606,7 +3606,6 @@ Biased on that board.</text>
 <wire x1="106.68" y1="33.02" x2="99.06" y2="33.02" width="0.1524" layer="91"/>
 <junction x="99.06" y="33.02"/>
 <pinref part="C3" gate="G$1" pin="1"/>
-<label x="101.6" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -3837,13 +3836,11 @@ Biased on that board.</text>
 </sheets>
 <errors>
 <approved hash="102,1,20.32,114.3,V_BATT,9V,,,,"/>
-<approved hash="102,1,162.56,114.3,V_BATT,9V,,,,"/>
-<approved hash="102,1,182.88,114.3,V_BATT,9V,,,,"/>
-<approved hash="113,1,17.1027,101.732,J1,,,,,"/>
-<approved hash="113,1,159.343,104.272,J3,,,,,"/>
-<approved hash="113,1,200.147,104.14,J7,,,,,"/>
-<approved hash="113,1,179.663,104.272,J4,,,,,"/>
-<approved hash="113,1,285.157,-0.132078,J8,,,,,"/>
+<approved hash="113,1,17.1027,101.763,J1,,,,,"/>
+<approved hash="113,1,88.2227,104.303,J3,,,,,"/>
+<approved hash="113,1,108.737,104.14,J7,,,,,"/>
+<approved hash="113,1,136.483,104.303,J4,,,,,"/>
+<approved hash="113,1,285.157,-0.162559,J8,,,,,"/>
 </errors>
 </schematic>
 </drawing>

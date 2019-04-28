@@ -1110,10 +1110,10 @@
 </symbol>
 <symbol name="TC1185-3.3VCT713">
 <pin name="VIN" x="2.54" y="0" length="middle" direction="in"/>
-<pin name="GND" x="2.54" y="-2.54" length="middle"/>
+<pin name="GND" x="2.54" y="-2.54" length="middle" direction="pas"/>
 <pin name="!SHDN" x="33.02" y="-5.08" length="middle" direction="in" rot="R180"/>
 <pin name="BYPASS" x="33.02" y="-2.54" length="middle" direction="in" rot="R180"/>
-<pin name="VOUT" x="33.02" y="0" length="middle" rot="R180"/>
+<pin name="VOUT" x="33.02" y="0" length="middle" direction="pwr" rot="R180"/>
 <wire x1="7.62" y1="5.08" x2="7.62" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="7.62" y1="-10.16" x2="27.94" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="27.94" y1="-10.16" x2="27.94" y2="5.08" width="0.1524" layer="94"/>
