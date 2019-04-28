@@ -2992,7 +2992,7 @@ CONN_11
 <part name="SUPPLY14" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="C7" library="kiss_z" deviceset="C0603" device="" value="0.22uF"/>
 <part name="SUPPLY15" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="R8" library="kiss_z" deviceset="R0603" device="" value="100K"/>
+<part name="R8" library="kiss_z" deviceset="R0603" device="" value="1K"/>
 </parts>
 <sheets>
 <sheet>
