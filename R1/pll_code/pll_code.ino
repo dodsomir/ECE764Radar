@@ -5,8 +5,8 @@
 #include "SPI.h"
 
 //CONSTANT GLOBALS
-const uint8_t pll_CS = 10; //chip select pin for pll
-const uint8_t ADC_pin = A9; //waveform input sampling pin
+const uint8_t pll_CS = 17; //chip select pin for pll
+const uint8_t ADC_pin = 18; //waveform input sampling pin
 const uint8_t pll_P = 32; //default prescaler
 const uint16_t f_osc = 10000; //reference oscillator frequency in KHz
 const uint32_t f_default = 5802000; //default target frequency in KHz
