@@ -1,7 +1,6 @@
 #define ADC_pin A9 //waveform input pin
 
 //*****INITIALIZE ALL CONSTANTS*****//
-const uint16_t sample_flag_period = 150; //ms, time betweem cycles
 const uint16_t sample_T = 100; //ms, sample period
 const uint16_t sample_N = 2048; //samples per period
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
