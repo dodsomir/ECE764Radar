@@ -164,6 +164,17 @@
 <wire x1="0" y1="75" x2="0" y2="0" width="0" layer="20"/>
 <dimension x1="0" y1="74.93" x2="100.33" y2="74.93" x3="50.165" y3="77.47" textsize="1.778" layer="20" precision="0" visible="yes"/>
 <dimension x1="100.33" y1="74.93" x2="100.33" y2="0" x3="104.14" y3="37.465" textsize="1.778" layer="20" precision="0" visible="yes"/>
+<text x="42.545" y="42.545" size="1.778" layer="21" rot="R90">21</text>
+<text x="45.085" y="42.545" size="1.778" layer="21" rot="R90">20</text>
+<text x="47.625" y="42.545" size="1.778" layer="21" rot="R90">19</text>
+<text x="50.165" y="42.545" size="1.778" layer="21" rot="R90">18</text>
+<text x="52.705" y="42.545" size="1.778" layer="21" rot="R90">17</text>
+<text x="55.245" y="42.545" size="1.778" layer="21" rot="R90">16</text>
+<text x="57.785" y="42.545" size="1.778" layer="21" rot="R90">+3V3</text>
+<text x="62.865" y="42.545" size="1.778" layer="21" rot="R90">SCLK</text>
+<text x="65.405" y="42.545" size="1.778" layer="21" rot="R90">MOSI</text>
+<text x="67.945" y="42.545" size="1.778" layer="21" rot="R90">MISO</text>
+<text x="60.325" y="42.545" size="1.778" layer="21" rot="R90">GND</text>
 </plain>
 <libraries>
 <library name="kiss_z">
@@ -686,7 +697,7 @@ design rules under a new name.</description>
 <elements>
 <element name="C1" library="kiss_z" package="0603" value="0.1uF" x="24.765" y="71.12" smashed="yes">
 <attribute name="NAME" x="22.86" y="72.39" size="1.27" layer="25" rot="R180"/>
-<attribute name="VALUE" x="33.02" y="72.39" size="1.27" layer="27" rot="R180"/>
+<attribute name="VALUE" x="32.385" y="72.39" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="C2" library="kiss_z" package="0603" value="0.22uF" x="29.21" y="17.78" smashed="yes">
 <attribute name="NAME" x="29.845" y="16.51" size="1.27" layer="25" rot="R180"/>
@@ -1174,9 +1185,6 @@ design rules under a new name.</description>
 <wire x1="31.75" y1="22.86" x2="31.75" y2="21.17" width="0.6096" layer="1"/>
 </signal>
 </signals>
-<errors>
-<approved hash="21,19,4160439c3d9c419e"/>
-</errors>
 </board>
 </drawing>
 <compatibility>

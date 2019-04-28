@@ -2992,6 +2992,7 @@ CONN_11
 <part name="SUPPLY14" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="C7" library="kiss_z" deviceset="C0603" device="" value="0.22uF"/>
 <part name="SUPPLY15" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
+<part name="R8" library="kiss_z" deviceset="R0603" device="" value="100K"/>
 </parts>
 <sheets>
 <sheet>
@@ -3027,7 +3028,7 @@ CONN_11
 <instance part="R2" gate="G$1" x="167.64" y="162.56" rot="R270"/>
 <instance part="R3" gate="G$1" x="167.64" y="147.32" rot="R270"/>
 <instance part="C2" gate="G$1" x="154.94" y="154.94" rot="R90"/>
-<instance part="+3V4" gate="G$1" x="167.64" y="193.04"/>
+<instance part="+3V4" gate="G$1" x="152.4" y="193.04"/>
 <instance part="SUPPLY8" gate="GND" x="167.64" y="134.62"/>
 <instance part="+3V5" gate="G$1" x="114.3" y="190.5"/>
 <instance part="SUPPLY9" gate="GND" x="114.3" y="154.94"/>
@@ -3052,6 +3053,7 @@ CONN_11
 <instance part="SUPPLY14" gate="GND" x="266.7" y="76.2"/>
 <instance part="C7" gate="G$1" x="182.88" y="180.34"/>
 <instance part="SUPPLY15" gate="GND" x="182.88" y="170.18"/>
+<instance part="R8" gate="G$1" x="160.02" y="185.42"/>
 </instances>
 <busses>
 </busses>
@@ -3255,14 +3257,10 @@ CONN_11
 <wire x1="114.3" y1="170.18" x2="114.3" y2="187.96" width="0.1524" layer="91"/>
 </segment>
 <segment>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="185.42" x2="152.4" y2="185.42" width="0.1524" layer="91"/>
 <pinref part="+3V4" gate="G$1" pin="+3V3"/>
-<wire x1="167.64" y1="190.5" x2="167.64" y2="185.42" width="0.1524" layer="91"/>
-<wire x1="167.64" y1="185.42" x2="182.88" y2="185.42" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
-<wire x1="182.88" y1="185.42" x2="182.88" y2="182.88" width="0.1524" layer="91"/>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="167.64" y1="185.42" x2="167.64" y2="167.64" width="0.1524" layer="91"/>
-<junction x="167.64" y="185.42"/>
+<wire x1="152.4" y1="185.42" x2="152.4" y2="190.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -3677,6 +3675,18 @@ CONN_11
 <pinref part="S1" gate="A" pin="2"/>
 <pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="246.38" y1="187.96" x2="251.46" y2="187.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$24" class="0">
+<segment>
+<wire x1="167.64" y1="185.42" x2="182.88" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="C7" gate="G$1" pin="1"/>
+<wire x1="182.88" y1="185.42" x2="182.88" y2="182.88" width="0.1524" layer="91"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="167.64" y1="185.42" x2="167.64" y2="167.64" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<wire x1="165.1" y1="185.42" x2="167.64" y2="185.42" width="0.1524" layer="91"/>
+<junction x="167.64" y="185.42"/>
 </segment>
 </net>
 </nets>
