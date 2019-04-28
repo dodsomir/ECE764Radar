@@ -175,7 +175,7 @@
 <text x="65.405" y="42.545" size="1.778" layer="21" rot="R90">MOSI</text>
 <text x="67.945" y="42.545" size="1.778" layer="21" rot="R90">MISO</text>
 <text x="60.325" y="42.545" size="1.778" layer="21" rot="R90">GND</text>
-<text x="91.44" y="3.175" size="1.778" layer="21" align="bottom-right">KISS RADARS INC
+<text x="92.075" y="3.81" size="1.778" layer="21" align="bottom-right">KISS RADARS INC
 DSP R0
 Z. DARPINIAN</text>
 </plain>

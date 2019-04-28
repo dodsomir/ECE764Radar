@@ -686,7 +686,7 @@ design rules under a new name.</description>
 <elements>
 <element name="C1" library="kiss_z" package="0603" value="0.1uF" x="24.765" y="71.12" smashed="yes">
 <attribute name="NAME" x="22.86" y="72.39" size="1.27" layer="25" rot="R180"/>
-<attribute name="VALUE" x="33.02" y="72.39" size="1.27" layer="27" rot="R180"/>
+<attribute name="VALUE" x="32.385" y="72.39" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="C2" library="kiss_z" package="0603" value="0.22uF" x="29.21" y="17.78" smashed="yes">
 <attribute name="NAME" x="29.845" y="16.51" size="1.27" layer="25" rot="R180"/>
