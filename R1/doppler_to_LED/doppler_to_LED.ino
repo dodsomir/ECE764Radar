@@ -27,7 +27,6 @@ uint8_t sample_flag = 1; //if true, allows start of next sampling period
 uint8_t calc_flag = 0; //if true, starts calculation loop
 uint32_t adc_timer = 0; //us, adc_timer
 double freq_sum = 0; //Hz, sum of recorded frequencies, then divided to find average
-uint32_t sample_flag_timer = 0; //ms, timer for resetting sample
 uint32_t actual_time_0 = 0; //ms, sample-start time
 uint32_t actual_time_1 = 0; //ms, sample-end time, for purpose of result verification
 
@@ -49,8 +48,6 @@ void setup() {
     pinMode(active_light, OUTPUT);
     digitalWrite(active_light, HIGH);
   }
-  
-  sample_flag_timer = millis(); //preset sample flag timer
 }
 
 void loop() {
@@ -76,9 +73,8 @@ void loop() {
     }
   }
 
-  if (!sample_flag && calc_flag && sample_flag_timer < millis()) //if not taking samples and ready to calculate
+  if (!sample_flag && calc_flag) //if not taking samples and ready to calculate
   {
-    sample_flag_timer = sample_flag_timer + sample_flag_period; //reset sample timer
     current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
     Serial.print("RMS value = ");
     Serial.println(current_rms_value); //print bipolar ADC RMS value
@@ -86,7 +82,7 @@ void loop() {
     sample_flag = 1; //start sampling
     calc_flag = 0; //stop calcs
   }
-
+  
   if(adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta; //timer overflow reset -- note that overflow will cause 1-2 false readings
 }
 
