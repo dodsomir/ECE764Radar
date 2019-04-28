@@ -4,12 +4,13 @@
 // INCLUDES (fft, pll library, etc)
 #include "SPI.h"
 
-//GLOBAL VARIABLES
+//CONSTANT GLOBALS
 const uint8_t pll_CS = 10; //chip select pin for pll
 const uint8_t ADC_pin = A9; //waveform input sampling pin
 const uint8_t pll_P = 32; //default prescaler
 const uint16_t f_osc = 10000; //reference oscillator frequency in KHz
-const uint32_t f_default = 5800000; //default target frequency in KHz
+const uint32_t f_default = 5802000; //default target frequency in KHz
+const uint16_t pll_channel_spacing = 1000; //channel spacing in KHz
 const uint16_t sample_N = 800; //number of ADC samples to take at a time
 const uint16_t sample_T = 100;
 const uint16_t sample_delta = 1000 * sample_T / sample_N; //change in time between ADC samples in microseconds
@@ -35,13 +36,11 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
+  SPI.begin();
   pinMode(ADC_pin, INPUT);
   pinMode(pll_CS, OUTPUT);
   pll_init();
   freq_set(f_default);
-  //  ADC *adc = wave_in ADC();
-  //  adc->enableInterrupts(ADC_0);
-  sample_flag_timer = millis();
   while (!Serial) ;
   Serial.print("Setup Finished. Reference frequency expected: ");
   Serial.print(f_osc);
@@ -50,6 +49,7 @@ void setup()
   Serial.print(f_default);
   Serial.println(" KHz.");
   Serial.println("To change PLL frequency, enter Target Frequency in KHz");
+  sample_flag_timer = millis();
 }
 
 void loop()
@@ -100,63 +100,63 @@ void loop()
 }
 
 //FUNCTIONS
+void pll_24b_transfer(uint32_t data) //writes contents of 'data' to pll shift register, ignoring MSByte
+{
+  uint8_t i = 0;
+  byte data_buffer[3];
+  //pll uses 21-bit shift register
+  for (i = 0; i < 3; i++)
+  {
+    data_buffer[2 - i] = data >> (i * 8); //bitshift 32 bit int into 3 byte array. Drop the MSByte
+  }
+  SPI.beginTransaction(pll_spi);
+  digitalWrite(pll_CS, LOW);
+  SPI.transfer(&data_buffer, 3);
+  digitalWrite(pll_CS, HIGH);
+  SPI.endTransaction();
+}
 
 void pll_init(void)
 //frequency of reference oscillator in KHz
 {
   //initialize pll by following startup sequence from datasheet (p15)
-  SPI.begin();
-  SPI.beginTransaction(pll_spi);
-  digitalWrite(pll_CS, LOW);
-  SPI.transfer16(0); //WILL ONLY WORK IF SHIFT REGISTER PUSHES OUT EXTRA VALUES
-  SPI.transfer(0x03); //set control bits to 0b11 to reset
-  digitalWrite(pll_CS, HIGH);
-  SPI.endTransaction();
+  //WILL ONLY WORK IF SHIFT REGISTER PUSHES OUT EXTRA VALUES
+
+
+  //SET FUNCTION/INITIALIZATION LATCH
+  Serial.print("Setting Function Latch, transfer input = ");
+  Serial.println(0x000000C3, BIN);
+  pll_24b_transfer(0x000000C3);
+
+  //SET R-DIVIDER LATCH
+  uint32_t R = f_osc / pll_channel_spacing; //find R divider
+  R = R << 2; // //shift R parameter to correct location
+  //R requires 0b00 as control bits
+  Serial.print("Setting R Value, transfer input = ");
+  Serial.println(R, BIN);
+  pll_24b_transfer(R);
 }
 
 void freq_set(uint32_t freq)
-//sets OUTPUT frequency in KHz, rounded down to nearest 300 KHz.
+//sets OUTPUT frequency in KHz, rounded down to nearest channel KHz.
 //ENSURE VALUE IS WITHIN VCO RANGE*3 (after multiplier)
 {
-  uint8_t i = 0;
-  byte data_buffer[3];
   //calculations
-  freq = freq - freq % 300; //round down input
-  uint16_t R = f_osc / 50; //find R divider
-  uint32_t N = freq / 300; //find N divider
+  freq = (freq - freq % (pll_channel_spacing * 3)) / 3; //round down input, divide by 3
+  uint32_t N = freq / pll_channel_spacing; //find N divider
   uint32_t B = N / pll_P; //find B parameter
-  uint8_t  A = N - (B * pll_P); //find A parameter
+  uint16_t  A = N - (B * pll_P); //find A parameter
 
   //N divider
   A = A << 2; //shift A parameter to correct location
   B = B << 7; //shift B parameter to correct location
-  uint32_t data_temp = 0; //init temp variable
+  uint32_t data_temp = 0; //allocate temp variable
   data_temp |= A; //place A
   data_temp |= B; //place B
   data_temp |= 1; //set N control bit
-  //pll uses 21-bit shift register
-  for (i = 0; i < 3; i++)
-  {
-    data_buffer[2 - i] = data_temp >> (i * 8); //bitshift 32 bit int into 3 byte array. Drop the MSByte
-  }
-  digitalWrite(pll_CS, LOW);
-  SPI.beginTransaction(pll_spi);
-  SPI.transfer(&data_buffer, 3);
-  digitalWrite(pll_CS, HIGH);
-
-  //R divider
-  data_temp = 0; //reset temp variable
-  R = R << 2; // //shift R parameter to correct location
-  data_temp |= R; //place R
-  //R requires 0b00 as control bits
-  for (i = 0; i < 3; i++)
-  {
-    data_buffer[2 - i] = data_temp >> (i * 8); //bitshift 32 bit int into 3 byte array. Drop the MSByte
-  }
-  digitalWrite(pll_CS, LOW);
-  SPI.transfer(&data_buffer, 3);
-  digitalWrite(pll_CS, HIGH);
-  SPI.endTransaction();
+  Serial.print("Setting N Value, transfer input = ");
+  Serial.println(data_temp, BIN);
+  pll_24b_transfer(data_temp);
 }
 
 void zero_average(int16_t sample[]) //offsets input array to zero-average
