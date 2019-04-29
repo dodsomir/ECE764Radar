@@ -423,9 +423,17 @@ UsedLibrary="kiss_z.lbr"
 UsedLibrary="/Users/miranda/Documents/EAGLE/projects/3D Print HV Board/HVLib.lbr"
 
 [Win_1]
+Type="Text Editor"
+Number=1
+File="/Users/miranda/Documents/EAGLE/projects/3D Print HV Board/3D Print HV Schematic.sch.rpt"
+CursorPos="0 0"
+Font="Artifakt Element Book,11,-1,5,50,0,0,0,0,0"
+
+[Win_2]
 Type="Control Panel"
 Number=0
 
 [Desktop]
 Screen="1440 900"
 Window="Win_1"
+Window="Win_2"
