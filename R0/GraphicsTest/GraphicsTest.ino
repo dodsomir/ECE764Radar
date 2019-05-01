@@ -34,7 +34,7 @@
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
 
 */
-#include <Arduino.h>
+//#include <Arduino.h>
 #include <U8x8lib.h>
 
 #ifdef U8X8_HAVE_HW_SPI
@@ -216,4 +216,3 @@ void loop(void)
   delay(1000);
 
 }
-
