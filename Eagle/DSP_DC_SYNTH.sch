@@ -7397,6 +7397,8 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="J15" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_03" device="" package3d_urn="urn:adsk.eagle:package:38063/1"/>
 <part name="J16" library="764Library" deviceset="U.FL_CONN" device=""/>
 <part name="GND32" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="J17" library="764Library" deviceset="U.FL_CONN" device=""/>
+<part name="GND33" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8853,7 +8855,7 @@ Biased on that board.</text>
 <sheet>
 <plain>
 <text x="228.6" y="30.48" size="1.778" layer="91">Cin = 1/(2*pi*Fin*1Ohm)</text>
-<text x="292.1" y="30.48" size="1.778" layer="91">Cout = 1/(2*pi*Fout*1Ohm)</text>
+<text x="292.1" y="48.26" size="1.778" layer="91">Cout = 1/(2*pi*Fout*1Ohm)</text>
 <text x="15.24" y="53.34" size="1.778" layer="91">Loop Filter</text>
 <text x="228.6" y="50.8" size="1.778" layer="91">X3 Frequency Multiplier</text>
 <text x="15.24" y="182.88" size="1.778" layer="91">Connection Header</text>
@@ -8866,6 +8868,9 @@ Biased on that board.</text>
 <text x="15.24" y="127" size="1.778" layer="91">Temperature-Compensated Crystal Oscillaor</text>
 <text x="53.34" y="165.1" size="3.302" layer="91">delete this</text>
 <text x="40.64" y="53.34" size="3.302" layer="91">UPDATE VALUES</text>
+<text x="172.72" y="53.34" size="3.302" layer="91">ADD AMPLIFIER</text>
+<text x="172.72" y="48.26" size="3.302" layer="91">ADD SPLITTER</text>
+<text x="172.72" y="43.18" size="3.302" layer="91">ADD AMPLIFIER</text>
 </plain>
 <instances>
 <instance part="U6" gate="A" x="185.42" y="88.9"/>
@@ -8913,6 +8918,11 @@ Biased on that board.</text>
 <attribute name="VALUE" x="89.916" y="94.742" size="1.778" layer="96"/>
 </instance>
 <instance part="GND32" gate="1" x="116.84" y="86.36"/>
+<instance part="J17" gate="G$1" x="317.5" y="35.56" smashed="yes" rot="MR0">
+<attribute name="NAME" x="321.31" y="39.624" size="1.778" layer="95" rot="MR0"/>
+<attribute name="VALUE" x="336.804" y="36.322" size="1.778" layer="96" rot="MR0"/>
+</instance>
+<instance part="GND33" gate="1" x="309.88" y="27.94"/>
 </instances>
 <busses>
 </busses>
@@ -9047,6 +9057,12 @@ Biased on that board.</text>
 <wire x1="111.76" y1="91.44" x2="116.84" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="91.44" x2="116.84" y2="88.9" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="J17" gate="G$1" pin="GND"/>
+<wire x1="314.96" y1="33.02" x2="309.88" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="GND33" gate="1" pin="GND"/>
+<wire x1="309.88" y1="33.02" x2="309.88" y2="30.48" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="CPOUT" class="0">
 <segment>
@@ -9069,8 +9085,7 @@ Biased on that board.</text>
 <net name="MULT_OUT" class="0">
 <segment>
 <pinref part="C22" gate="G$1" pin="2"/>
-<wire x1="302.26" y1="38.1" x2="304.8" y2="38.1" width="0.1524" layer="91"/>
-<label x="304.8" y="38.1" size="1.778" layer="95"/>
+<wire x1="302.26" y1="38.1" x2="314.96" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="FL_OUT" class="0">
