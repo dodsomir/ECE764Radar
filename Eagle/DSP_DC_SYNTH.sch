@@ -8870,7 +8870,6 @@ Biased on that board.</text>
 <text x="40.64" y="53.34" size="3.302" layer="91">UPDATE VALUES</text>
 <text x="172.72" y="53.34" size="3.302" layer="91">ADD AMPLIFIER</text>
 <text x="172.72" y="48.26" size="3.302" layer="91">ADD SPLITTER</text>
-<text x="172.72" y="43.18" size="3.302" layer="91">ADD AMPLIFIER</text>
 </plain>
 <instances>
 <instance part="U6" gate="A" x="185.42" y="88.9"/>
