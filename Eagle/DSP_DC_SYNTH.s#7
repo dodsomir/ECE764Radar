@@ -8864,8 +8864,7 @@ Biased on that board.</text>
 <text x="157.48" y="127" size="1.778" layer="91">Phase-Locked Loop</text>
 <text x="106.68" y="53.34" size="1.778" layer="91">Voltage-Controlled Oscillator</text>
 <text x="15.24" y="127" size="1.778" layer="91">Temperature-Compensated Crystal Oscillaor</text>
-<text x="53.34" y="165.1" size="3.302" layer="91">delete this</text>
-<text x="40.64" y="53.34" size="3.302" layer="91">UPDATE VALUES</text>
+<text x="45.72" y="165.1" size="1.778" layer="91">delete this</text>
 </plain>
 <instances>
 <instance part="U6" gate="A" x="185.42" y="88.9"/>
