@@ -6934,6 +6934,7 @@ LOSS 6dBm</text>
 <text x="86.36" y="142.24" size="1.778" layer="97">TC1185</text>
 <text x="279.4" y="48.26" size="1.778" layer="97">To Biasing for Teensy 3.2</text>
 <text x="137.16" y="134.62" size="1.778" layer="97" align="top-left">To TX/RX</text>
+<text x="208.28" y="27.94" size="1.778" layer="97">N/C</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="-7.62" y="149.86" smashed="yes">
@@ -7377,25 +7378,25 @@ LOSS 6dBm</text>
 <junction x="175.26" y="83.82"/>
 </segment>
 </net>
-<net name="CS" class="0">
+<net name="CS_POT" class="0">
 <segment>
 <pinref part="U4" gate="A" pin="!CS"/>
 <wire x1="177.8" y1="40.64" x2="172.72" y2="40.64" width="0.1524" layer="91"/>
-<label x="172.72" y="40.64" size="1.778" layer="95"/>
+<label x="162.56" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="SCK" class="0">
+<net name="SCLK" class="0">
 <segment>
 <pinref part="U4" gate="A" pin="SCK"/>
 <wire x1="177.8" y1="38.1" x2="172.72" y2="38.1" width="0.1524" layer="91"/>
-<label x="172.72" y="38.1" size="1.778" layer="95"/>
+<label x="165.1" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="SDI" class="0">
+<net name="MOSI" class="0">
 <segment>
 <pinref part="U4" gate="A" pin="SDI"/>
 <wire x1="177.8" y1="35.56" x2="172.72" y2="35.56" width="0.1524" layer="91"/>
-<label x="172.72" y="35.56" size="1.778" layer="95"/>
+<label x="165.1" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="AUDIO_OUT" class="0">
@@ -7428,20 +7429,6 @@ LOSS 6dBm</text>
 <pinref part="U3" gate="B" pin="-"/>
 <wire x1="177.8" y1="73.66" x2="177.8" y2="58.42" width="0.1524" layer="91"/>
 <junction x="177.8" y="58.42"/>
-</segment>
-</net>
-<net name="SDO" class="0">
-<segment>
-<pinref part="U4" gate="A" pin="SDO"/>
-<wire x1="208.28" y1="30.48" x2="213.36" y2="30.48" width="0.1524" layer="91"/>
-<label x="213.36" y="30.48" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SHDN" class="0">
-<segment>
-<pinref part="U4" gate="A" pin="!SHDN"/>
-<wire x1="208.28" y1="27.94" x2="213.36" y2="27.94" width="0.1524" layer="91"/>
-<label x="213.36" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -7573,6 +7560,13 @@ LOSS 6dBm</text>
 <pinref part="P+3" gate="1" pin="+5V"/>
 <wire x1="73.66" y1="167.64" x2="73.66" y2="165.1" width="0.1524" layer="91"/>
 <junction x="73.66" y="165.1"/>
+</segment>
+</net>
+<net name="MISO" class="0">
+<segment>
+<pinref part="U4" gate="A" pin="SDO"/>
+<wire x1="208.28" y1="30.48" x2="213.36" y2="30.48" width="0.1524" layer="91"/>
+<label x="213.36" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
@@ -8719,13 +8713,6 @@ LOSS 6dBm</text>
 <wire x1="309.88" y1="33.02" x2="309.88" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="CPOUT" class="0">
-<segment>
-<pinref part="U6" gate="A" pin="CPO"/>
-<wire x1="220.98" y1="109.22" x2="223.52" y2="109.22" width="0.1524" layer="91"/>
-<label x="223.52" y="109.22" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="VCO_OUT" class="0">
 <segment>
 <pinref part="U7" gate="A" pin="OUT"/>
@@ -8861,6 +8848,7 @@ LOSS 6dBm</text>
 <segment>
 <wire x1="25.4" y1="165.1" x2="30.48" y2="165.1" width="0.1524" layer="91"/>
 <label x="30.48" y="165.1" size="1.778" layer="95"/>
+<pinref part="J14" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="U7" gate="A" pin="!SHDN"/>
@@ -8886,12 +8874,14 @@ LOSS 6dBm</text>
 <segment>
 <wire x1="30.48" y1="162.56" x2="25.4" y2="162.56" width="0.1524" layer="91"/>
 <label x="30.48" y="162.56" size="1.778" layer="95"/>
+<pinref part="J14" gate="G$1" pin="4"/>
 </segment>
 </net>
 <net name="PLL_MOSI" class="0">
 <segment>
 <wire x1="30.48" y1="160.02" x2="25.4" y2="160.02" width="0.1524" layer="91"/>
 <label x="30.48" y="160.02" size="1.778" layer="95"/>
+<pinref part="J14" gate="G$1" pin="5"/>
 </segment>
 </net>
 <net name="PLL_LE" class="0">
@@ -8903,6 +8893,7 @@ LOSS 6dBm</text>
 <segment>
 <wire x1="30.48" y1="157.48" x2="25.4" y2="157.48" width="0.1524" layer="91"/>
 <label x="30.48" y="157.48" size="1.778" layer="95"/>
+<pinref part="J14" gate="G$1" pin="6"/>
 </segment>
 </net>
 <net name="PLL_BU_MUX" class="0">
@@ -8943,6 +8934,11 @@ LOSS 6dBm</text>
 <pinref part="U7" gate="A" pin="TUNE"/>
 <wire x1="116.84" y1="22.86" x2="114.3" y2="22.86" width="0.1524" layer="91"/>
 <label x="114.3" y="22.86" size="1.778" layer="95" rot="MR0"/>
+</segment>
+<segment>
+<pinref part="U6" gate="A" pin="CPO"/>
+<wire x1="220.98" y1="109.22" x2="223.52" y2="109.22" width="0.1524" layer="91"/>
+<label x="223.52" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$37" class="0">
@@ -9005,6 +9001,10 @@ LOSS 6dBm</text>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="106,2,88.9,203.2,19,,,,,"/>
+<approved hash="106,2,88.9,205.74,20,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>

@@ -2047,19 +2047,6 @@ design rules under a new name.</description>
 <wire x1="-24.98" y1="124.46" x2="-27.94" y2="134.62" width="0" layer="19" extent="1-1"/>
 <wire x1="-33.26" y1="62.915" x2="-24.98" y2="124.46" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="5V">
-<contactref element="U1" pad="2"/>
-<contactref element="U1" pad="4"/>
-<contactref element="C2" pad="1"/>
-<contactref element="U5" pad="1"/>
-<contactref element="C9" pad="1"/>
-<contactref element="U5" pad="3"/>
-<wire x1="-31.33" y1="124.46" x2="-18.63" y2="114.3" width="0" layer="19" extent="1-1"/>
-<wire x1="-35.56" y1="69.165" x2="-18.63" y2="114.3" width="0" layer="19" extent="1-1"/>
-<wire x1="-35.56" y1="62.915" x2="-35.56" y2="69.165" width="0" layer="19" extent="1-1"/>
-<wire x1="-83.8454" y1="107.63" x2="-31.33" y2="124.46" width="0" layer="19" extent="1-1"/>
-<wire x1="-83.8454" y1="105.73" x2="-83.8454" y2="107.63" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="RAW_RF">
 <contactref element="J5" pad="1"/>
 <contactref element="U2" pad="5"/>
@@ -2195,8 +2182,20 @@ design rules under a new name.</description>
 <contactref element="TEENSY_3.2" pad="VIN"/>
 <contactref element="C15" pad="1"/>
 <contactref element="J9" pad="1"/>
-<wire x1="-37.68" y1="119.38" x2="-43.18" y2="134.62" width="0" layer="19" extent="1-1"/>
-<wire x1="-13.97" y1="92.71" x2="-37.68" y2="119.38" width="0" layer="19" extent="1-1"/>
+<contactref element="U1" pad="2"/>
+<contactref element="U1" pad="4"/>
+<contactref element="C2" pad="1"/>
+<contactref element="U5" pad="1"/>
+<contactref element="C9" pad="1"/>
+<contactref element="U5" pad="3"/>
+<wire x1="-31.33" y1="124.46" x2="-18.63" y2="114.3" width="0" layer="19" extent="1-1"/>
+<wire x1="-37.68" y1="119.38" x2="-31.33" y2="124.46" width="0" layer="19" extent="1-1"/>
+<wire x1="-43.18" y1="134.62" x2="-31.33" y2="124.46" width="0" layer="19" extent="1-1"/>
+<wire x1="-13.97" y1="92.71" x2="-18.63" y2="114.3" width="0" layer="19" extent="1-1"/>
+<wire x1="-35.56" y1="69.165" x2="-13.97" y2="92.71" width="0" layer="19" extent="1-1"/>
+<wire x1="-35.56" y1="62.915" x2="-35.56" y2="69.165" width="0" layer="19" extent="1-1"/>
+<wire x1="-83.8454" y1="107.63" x2="-37.68" y2="119.38" width="0" layer="19" extent="1-1"/>
+<wire x1="-83.8454" y1="105.73" x2="-83.8454" y2="107.63" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="TEENSY_3.2" pad="3V3_LIM"/>
@@ -2496,9 +2495,6 @@ design rules under a new name.</description>
 <contactref element="C21" pad="1"/>
 <wire x1="-87.9856" y1="107.005" x2="-37.68" y2="124.46" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="MULT_OUT">
-<contactref element="C22" pad="2"/>
-</signal>
 <signal name="FL_OUT">
 <contactref element="R18" pad="2"/>
 </signal>
@@ -2552,15 +2548,20 @@ design rules under a new name.</description>
 <contactref element="C32" pad="1"/>
 <wire x1="-92.3544" y1="107.655" x2="-75.78" y2="119.38" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="EXT_REF">
-<contactref element="J15" pad="3"/>
-<contactref element="J16" pad="1"/>
-<wire x1="-75.185" y1="99.06" x2="-100.33" y2="129.54" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="PLL_IN">
 <contactref element="C26" pad="2"/>
 <contactref element="J15" pad="2"/>
 <wire x1="-102.87" y1="129.54" x2="-55.03" y2="114.3" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$39">
+<contactref element="J16" pad="1"/>
+<contactref element="J15" pad="3"/>
+<wire x1="-75.185" y1="99.06" x2="-100.33" y2="129.54" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$40">
+<contactref element="J17" pad="1"/>
+<contactref element="C22" pad="2"/>
+<wire x1="-85.345" y1="99.06" x2="-42.33" y2="124.46" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
