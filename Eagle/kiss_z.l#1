@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.6.0">
+<eagle version="9.4.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -472,16 +472,7 @@
 <smd name="P$2" x="0" y="-1.585" dx="1.55" dy="0.61" layer="1" rot="R90"/>
 <smd name="P$3" x="1.585" y="0" dx="1.55" dy="0.61" layer="1" rot="R180"/>
 <smd name="P$4" x="0" y="1.585" dx="1.55" dy="0.61" layer="1" rot="R270"/>
-<pad name="P$5" x="0" y="1.18875" drill="0.25"/>
-<pad name="P$6" x="0" y="1.98125" drill="0.25"/>
-<pad name="P$7" x="0" y="-1.18875" drill="0.25"/>
-<pad name="P$8" x="0" y="-1.98125" drill="0.25"/>
-<pad name="P$9" x="0.7925" y="-1.585" drill="0.25"/>
-<pad name="P$10" x="-0.7925" y="-1.585" drill="0.25"/>
-<pad name="P$11" x="0.7925" y="1.585" drill="0.25"/>
-<pad name="P$12" x="-0.7925" y="1.585" drill="0.25"/>
 <polygon width="0.127" layer="1">
-<vertex x="-0.39625" y="-0.7925"/>
 <vertex x="0.39625" y="-0.7925"/>
 <vertex x="0.7925" y="-0.7925"/>
 <vertex x="1.18875" y="-1.18875"/>
@@ -502,6 +493,42 @@
 <vertex x="-1.18875" y="1.98125"/>
 <vertex x="-1.18875" y="1.18875"/>
 </polygon>
+<polygon width="0.127" layer="16">
+<vertex x="-0.39625" y="-0.7925"/>
+<vertex x="0.39625" y="-0.7925"/>
+<vertex x="0.7925" y="-0.7925"/>
+<vertex x="1.18875" y="-1.18875"/>
+<vertex x="1.18875" y="-1.98125"/>
+<vertex x="0.7925" y="-2.3775"/>
+<vertex x="-0.7925" y="-2.3775"/>
+<vertex x="-1.18875" y="-1.98125"/>
+<vertex x="-1.18875" y="-1.18875"/>
+<vertex x="-0.7925" y="-0.7925"/>
+</polygon>
+<polygon width="0.127" layer="16">
+<vertex x="-0.39625" y="2.3775"/>
+<vertex x="0.39625" y="2.3775"/>
+<vertex x="0.7925" y="2.3775"/>
+<vertex x="1.18875" y="1.98125"/>
+<vertex x="1.18875" y="1.18875"/>
+<vertex x="0.7925" y="0.7925"/>
+<vertex x="-0.7925" y="0.7925"/>
+<vertex x="-1.18875" y="1.18875"/>
+<vertex x="-1.18875" y="1.98125"/>
+<vertex x="-0.7925" y="2.3775"/>
+</polygon>
+<pad name="ARRAY1" x="-0.762" y="2.032" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY2" x="0" y="2.032" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY3" x="0.762" y="2.032" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY4" x="0.762" y="1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY5" x="0" y="1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY6" x="-0.762" y="1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY7" x="-0.762" y="-1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY8" x="0" y="-1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY9" x="0.762" y="-1.143" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY10" x="0.762" y="-2.032" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY11" x="0" y="-2.032" drill="0.2286" diameter="0.3302"/>
+<pad name="ARRAY12" x="-0.762" y="-2.032" drill="0.2286" diameter="0.3302"/>
 </package>
 </packages>
 <symbols>
@@ -1199,8 +1226,8 @@
 <devices>
 <device name="" package="FG873">
 <connects>
-<connect gate="G$1" pin="GND" pad="P$2"/>
-<connect gate="G$1" pin="GND_2" pad="P$4"/>
+<connect gate="G$1" pin="GND" pad="ARRAY1 ARRAY2 ARRAY3 ARRAY4 ARRAY5 ARRAY6 P$2"/>
+<connect gate="G$1" pin="GND_2" pad="ARRAY7 ARRAY8 ARRAY9 ARRAY10 ARRAY11 ARRAY12 P$4"/>
 <connect gate="G$1" pin="RF_IN" pad="P$1"/>
 <connect gate="G$1" pin="RF_OUT" pad="P$3"/>
 </connects>
