@@ -1210,6 +1210,24 @@
 </device>
 </devices>
 </deviceset>
+<deviceset name="LEE-39+">
+<gates>
+<gate name="G$1" symbol="LEE-39+" x="12.7" y="10.16"/>
+</gates>
+<devices>
+<device name="" package="FG873">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="GND_2" pad="P$4"/>
+<connect gate="G$1" pin="RF_IN" pad="P$1"/>
+<connect gate="G$1" pin="RF_OUT" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </drawing>

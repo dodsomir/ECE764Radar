@@ -1192,7 +1192,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="LEE-19+">
+<deviceset name="LEE-19+" prefix="U">
 <gates>
 <gate name="G$1" symbol="LEE-19+" x="12.7" y="10.16"/>
 </gates>
