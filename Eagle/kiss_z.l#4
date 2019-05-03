@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -396,43 +396,37 @@
 </polygon>
 </package>
 <package name="BO_4611X">
-<pad name="1" x="-26.162" y="0" drill="0.8128" diameter="1.3208" shape="square"/>
-<pad name="2" x="-23.5458" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="3" x="-20.9296" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="4" x="-18.3134" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="5" x="-15.6972" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="6" x="-13.081" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="7" x="-10.4648" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="8" x="-7.8486" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="9" x="-5.2324" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="10" x="-2.6162" y="0" drill="0.8128" diameter="1.3208"/>
-<pad name="11" x="0" y="0" drill="0.8128" diameter="1.3208"/>
-<wire x1="-27.2796" y1="1.4986" x2="-27.2796" y2="-1.4986" width="0.1524" layer="39"/>
-<wire x1="-27.2796" y1="-1.4986" x2="1.1176" y2="-1.4986" width="0.1524" layer="39"/>
+<pad name="1" x="0" y="0" drill="0.8128" diameter="1.3208" shape="square"/>
+<wire x1="-26.6446" y1="1.4986" x2="-26.6446" y2="-1.4986" width="0.1524" layer="39"/>
+<wire x1="-26.6446" y1="-1.4986" x2="1.1176" y2="-1.4986" width="0.1524" layer="39"/>
 <wire x1="1.1176" y1="-1.4986" x2="1.1176" y2="1.4986" width="0.1524" layer="39"/>
-<wire x1="1.1176" y1="1.4986" x2="-27.2796" y2="1.4986" width="0.1524" layer="39"/>
+<wire x1="1.1176" y1="1.4986" x2="-26.6446" y2="1.4986" width="0.1524" layer="39"/>
 <polygon width="0.1524" layer="39">
-<vertex x="-27.2796" y="1.4986"/>
-<vertex x="-27.2796" y="-1.4986"/>
+<vertex x="-26.6446" y="1.4986"/>
+<vertex x="-26.6446" y="-1.4986"/>
 <vertex x="1.1176" y="-1.4986"/>
 <vertex x="1.1176" y="1.4986"/>
 </polygon>
-<wire x1="-28.9814" y1="0" x2="-27.7114" y2="0" width="0.1524" layer="21"/>
-<wire x1="-28.3464" y1="0.635" x2="-28.3464" y2="-0.635" width="0.1524" layer="21"/>
-<wire x1="0.9906" y1="1.3716" x2="-27.1526" y2="1.3716" width="0.1524" layer="21"/>
-<wire x1="0.9906" y1="-1.3716" x2="-27.1526" y2="-1.3716" width="0.1524" layer="21"/>
+<wire x1="0.9906" y1="1.3716" x2="-26.5176" y2="1.3716" width="0.1524" layer="21"/>
+<wire x1="0.9906" y1="-1.3716" x2="-26.5176" y2="-1.3716" width="0.1524" layer="21"/>
 <wire x1="0.9906" y1="1.3716" x2="0.9906" y2="-1.3716" width="0.1524" layer="21"/>
-<wire x1="-27.1526" y1="1.3716" x2="-27.1526" y2="0.7112" width="0.1524" layer="21"/>
-<wire x1="-27.1526" y1="-0.7112" x2="-27.1526" y2="-1.3716" width="0.1524" layer="21"/>
-<wire x1="-28.9814" y1="0" x2="-27.7114" y2="0" width="0.1524" layer="51"/>
-<wire x1="-28.3464" y1="0.635" x2="-28.3464" y2="-0.635" width="0.1524" layer="51"/>
-<wire x1="0.8636" y1="1.2446" x2="-27.0256" y2="1.2446" width="0.1524" layer="51"/>
-<wire x1="0.8636" y1="-1.2446" x2="-27.0256" y2="-1.2446" width="0.1524" layer="51"/>
+<wire x1="-26.5176" y1="1.3716" x2="-26.5176" y2="0.7112" width="0.1524" layer="21"/>
+<wire x1="-26.5176" y1="-0.7112" x2="-26.5176" y2="-1.3716" width="0.1524" layer="21"/>
+<wire x1="0.8636" y1="1.2446" x2="-26.3906" y2="1.2446" width="0.1524" layer="51"/>
+<wire x1="0.8636" y1="-1.2446" x2="-26.3906" y2="-1.2446" width="0.1524" layer="51"/>
 <wire x1="0.8636" y1="1.2446" x2="0.8636" y2="-1.2446" width="0.1524" layer="51"/>
-<wire x1="-27.0256" y1="1.2446" x2="-27.0256" y2="-1.2446" width="0.1524" layer="51"/>
-<wire x1="-26.416" y1="0" x2="-25.908" y2="0" width="0.1524" layer="23"/>
-<wire x1="-26.162" y1="-0.254" x2="-26.162" y2="0.254" width="0.1524" layer="23"/>
-<text x="-16.3576" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
+<wire x1="-26.3906" y1="1.2446" x2="-26.3906" y2="-1.2446" width="0.1524" layer="51"/>
+<text x="-25.8826" y="1.905" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
+<pad name="2" x="-2.54" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="3" x="-5.08" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="4" x="-7.62" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="5" x="-10.16" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="6" x="-12.7" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="7" x="-15.24" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="8" x="-17.78" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="9" x="-20.32" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="10" x="-22.86" y="0" drill="0.8128" diameter="1.3208"/>
+<pad name="11" x="-25.4" y="0" drill="0.8128" diameter="1.3208"/>
 </package>
 <package name="NHD-C12864A1Z-FSW-FBW-HTT">
 <pad name="1" x="7.62" y="0" drill="0.8128" diameter="1.3208" shape="square"/>
@@ -848,7 +842,19 @@
 <circle x="10.16" y="12.7" radius="0.635" width="0.254" layer="94"/>
 <circle x="5.08" y="5.715" radius="0.635" width="0.254" layer="94"/>
 <circle x="15.24" y="5.715" radius="0.635" width="0.254" layer="94"/>
-<wire x1="10.16" y1="12.7" x2="10.16" y2="3.81" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="5.08" y2="3.81" width="0.254" layer="94"/>
+</symbol>
+<symbol name="LEE-39+">
+<wire x1="-12.7" y1="10.16" x2="12.7" y2="10.16" width="0.254" layer="94"/>
+<wire x1="12.7" y1="10.16" x2="12.7" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-10.16" x2="-12.7" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-12.7" y1="-10.16" x2="-12.7" y2="10.16" width="0.254" layer="94"/>
+<pin name="RF_IN" x="-17.78" y="5.08" length="middle"/>
+<pin name="GND" x="-2.54" y="-15.24" length="middle" rot="R90"/>
+<pin name="RF_OUT" x="17.78" y="5.08" length="middle" rot="R180"/>
+<pin name="GND_2" x="2.54" y="-15.24" length="middle" rot="R90"/>
+<text x="-12.7" y="12.7" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="10.16" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -1053,34 +1059,6 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="4611X-101-102LF" prefix="R">
-<gates>
-<gate name="A" symbol="RES11-101" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="BO_4611X">
-<connects>
-<connect gate="A" pin="1" pad="1"/>
-<connect gate="A" pin="10" pad="10"/>
-<connect gate="A" pin="11" pad="11"/>
-<connect gate="A" pin="2" pad="2"/>
-<connect gate="A" pin="3" pad="3"/>
-<connect gate="A" pin="4" pad="4"/>
-<connect gate="A" pin="5" pad="5"/>
-<connect gate="A" pin="6" pad="6"/>
-<connect gate="A" pin="7" pad="7"/>
-<connect gate="A" pin="8" pad="8"/>
-<connect gate="A" pin="9" pad="9"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MANUFACTURER_PART_NUMBER" value="4611X101102LF" constant="no"/>
-<attribute name="VENDOR" value="Bourns Electronics" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="NHD-C12864A1Z-FSW-FBW-HTT">
 <gates>
 <gate name="A" symbol="NHD-C12864A1Z-FSW-FBW-HTT" x="15.24" y="17.78"/>
@@ -1134,6 +1112,31 @@
 <connect gate="A" pin="1" pad="3"/>
 <connect gate="A" pin="2" pad="4"/>
 <connect gate="A" pin="3" pad="5"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="4711X_RES" prefix="R">
+<gates>
+<gate name="A" symbol="RES11-101" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BO_4611X">
+<connects>
+<connect gate="A" pin="1" pad="1"/>
+<connect gate="A" pin="10" pad="10"/>
+<connect gate="A" pin="11" pad="11"/>
+<connect gate="A" pin="2" pad="2"/>
+<connect gate="A" pin="3" pad="3"/>
+<connect gate="A" pin="4" pad="4"/>
+<connect gate="A" pin="5" pad="5"/>
+<connect gate="A" pin="6" pad="6"/>
+<connect gate="A" pin="7" pad="7"/>
+<connect gate="A" pin="8" pad="8"/>
+<connect gate="A" pin="9" pad="9"/>
 </connects>
 <technologies>
 <technology name=""/>
