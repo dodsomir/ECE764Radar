@@ -1,6 +1,7 @@
 //This sketch is for the combination of all radar functions in the ECE764 project
 
 #include <U8x8lib.h>
+#include <fix_fft.h>
 #include "SPI.h"
 
 #define lcd_CS 10 //chip select pin for LCD
@@ -38,8 +39,11 @@ const double indexdiff_to_speed = indexdiff_to_freq * speed_per_frequency; //(m/
 const uint8_t rms_percentage = 15; //the required deviation from 0 to record new zero crossing, in percentage of rms value
 
 //ADC VARIABLES
-int16_t adc_buffer[sample_N]; // initialize ADC buffer
-uint16_t speed_bin[speed_bin_N]; //initialize doppler speed bins
+int8_t adc_buffer[sample_N]; // allocate ADC buffer
+int8_t fft_mag_old[sample_N]; 
+int8_t fft_mag_new[sample_N];
+int8_t fft_mag_temp[sample_N];
+uint16_t speed_bin[speed_bin_N]; //allocate doppler speed bins
 uint16_t current_rms_value = 0; //rms value of input signal, digital scale
 uint16_t buffer_index = 0; //index for use in adc_buffer
 uint16_t index_delta = 0; //difference between adc_buffer indices
@@ -65,6 +69,7 @@ SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
 void setup() {
   // put your setup code here, to run once:
   pin_init();
+  analogReadRes(8); //limit to 8 bit precision for FFT library (needs updating)
   pll_init();
   Serial.begin(9600); //Teensy USB Serial accepts any speed
   u8x8.begin();
@@ -102,13 +107,12 @@ void loop() {
         stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
         break;
       case FMCW: //**************NOT YET WRITTEN************************************************//
-        for (active_light = light_offset; active_light <= light_offset + 9; active_light++)
-        {
-          digitalWrite(active_light, LOW);
-          delay(20);
-          digitalWrite(active_light, HIGH);
-        }
-        delay(100);
+      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+      {
+        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
+      }
+        buffer_index = 0;
+        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);      
         break;
     }
     switch_poll(state);
@@ -129,11 +133,11 @@ uint16_t zero_average_and_rms(int16_t sample[]) //offsets input array to zero-av
     sum = sum + sample[j];
   }
   diff = sum / sample_N;
-  for (int j = 0; j < sample_N; j++)
+  for (uint16_t j = 0; j < sample_N; j++)
   {
     adc_buffer[j] = sample[j] - diff;
   }
-  for (int j = 0; j < sample_N; j++)
+  for (uint16_t j = 0; j < sample_N; j++)
   {
     squaresum = squaresum + (adc_buffer[j] * adc_buffer[j]);
   }
@@ -248,7 +252,7 @@ uint16_t bin_peak_search(uint16_t vector[]) //take vector with unsigned 16-bit v
   return peak_index;
 }
 
-void switch_poll(enum state current_state) //returns new frequency
+void switch_poll(uint8_t current_state) //returns new frequency
 {
   uint32_t f_new = f_current;
   uint16_t momentary_sw_in = 0;
