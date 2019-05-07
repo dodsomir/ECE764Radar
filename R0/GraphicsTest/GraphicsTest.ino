@@ -47,6 +47,7 @@
 
 //U8X8_ST7565_NHD_C12864_4W_SW_SPI u8x8(/* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ 10, /* dc=*/ 15, /* reset=*/ 14); 
+SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
 
 
 // End of constructor list

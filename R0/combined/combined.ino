@@ -2,7 +2,7 @@
 
 #include <U8x8lib.h>
 #include <fix_fft.h>
-#include "SPI.h"
+#include <SPI.h>
 
 #define lcd_CS 10 //chip select pin for LCD
 #define lcd_RST 14 //active LOW reset pin for LCD
@@ -39,10 +39,10 @@ const double indexdiff_to_speed = indexdiff_to_freq * speed_per_frequency; //(m/
 const uint8_t rms_percentage = 15; //the required deviation from 0 to record new zero crossing, in percentage of rms value
 
 //ADC VARIABLES
-int8_t adc_buffer[sample_N]; // allocate ADC buffer
-int8_t fft_mag_old[sample_N]; 
-int8_t fft_mag_new[sample_N];
-int8_t fft_mag_temp[sample_N];
+int16_t adc_buffer[sample_N]; // allocate ADC buffer
+uint16_t fft_mag_old[sample_N]; 
+uint16_t fft_mag_new[sample_N];
+uint16_t fft_mag_temp[sample_N];
 uint16_t speed_bin[speed_bin_N]; //allocate doppler speed bins
 uint16_t current_rms_value = 0; //rms value of input signal, digital scale
 uint16_t buffer_index = 0; //index for use in adc_buffer
@@ -69,12 +69,16 @@ SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
 void setup() {
   // put your setup code here, to run once:
   pin_init();
-  analogReadRes(8); //limit to 8 bit precision for FFT library (needs updating)
-  pll_init();
+  //pll_init();
   Serial.begin(9600); //Teensy USB Serial accepts any speed
+  digitalWrite(5, LOW);
+  while (!Serial);
+  Serial.println("Serial Port Initialized");
+  delay(1000);
+  digitalWrite(5, HIGH);
   u8x8.begin();
   SPI.begin();
-  while (!Serial);
+
 }
 
 void loop() {
@@ -100,19 +104,22 @@ void loop() {
     current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
     Serial.print("RMS value = ");
     Serial.println(current_rms_value); //print bipolar ADC RMS value
-
+  u8x8.setFont(u8x8_font_amstrad_cpc_extended_f);    
+  u8x8.clear();
+  u8x8.print(" KISS Intel ");
     switch(state)
     {
       case DOPPLER:
         stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
         break;
       case FMCW: //**************NOT YET WRITTEN************************************************//
-      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-      {
-        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
-      }
-        buffer_index = 0;
-        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);      
+//      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+//      {
+//        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
+//      }
+//        buffer_index = 0;
+//        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);  
+delay(100);    
         break;
     }
     switch_poll(state);
@@ -372,4 +379,16 @@ void freq_set(uint32_t freq)
   Serial.print("Setting N Value, transfer input = ");
   Serial.println(data_temp, BIN);
   pll_24b_transfer(data_temp);
+}
+
+void pre(void)
+{
+  u8x8.setFont(u8x8_font_amstrad_cpc_extended_f);
+  u8x8.clear();
+
+  u8x8.inverse();
+  u8x8.print(" U8x8 Library ");
+  u8x8.setFont(u8x8_font_chroma48medium8_r);
+  u8x8.noInverse();
+  u8x8.setCursor(0, 1);
 }
