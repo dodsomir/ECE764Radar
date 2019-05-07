@@ -8,7 +8,7 @@
 #define lcd_RST 14 //active LOW reset pin for LCD
 #define lcd_REG 15 //register select pin for LCD, 0: instruction, 1: data
 #define pll_CS 17 //chip select pin for PLL
-#define ADC_pin 16 //waveform input sampling pin
+#define ADC_pin 18 //waveform input sampling pin
 #define sw_MOM_pin 22 //momentary switch input pin
 #define sw_TOG_pin 23 //toggle switch input pin
 
@@ -30,7 +30,7 @@ const uint16_t sample_N = 2048; //samples per period
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
 const uint32_t sample_T_actual = sample_delta * sample_N; //us, actual sampling period
 const uint8_t speed_bin_N = 10; //number of speed bins (same as number of LEDs)
-const uint8_t light_offset = 0; //offset number of pins to first light pin
+const uint8_t light_offset = 9; //offset number of pins to first light pin
 const uint8_t max_speed = 20; //m/s, max bin speed
 const double speed_per_bin = max_speed / speed_bin_N; //(m/s)/index
 const double speed_per_frequency = 0.02584; //(m/s)/Hz, calculated at 5.8GHz, technically changes at different channels
@@ -48,7 +48,7 @@ uint16_t current_rms_value = 0; //rms value of input signal, digital scale
 uint16_t buffer_index = 0; //index for use in adc_buffer
 uint16_t index_delta = 0; //difference between adc_buffer indices
 uint8_t bin_index = 0; //index for use in speed_bin
-uint8_t active_light = 0; //the pin number for the light which is currently "on" during normal use
+uint8_t active_light = 9; //the pin number for the light which is currently "on" during normal use
 uint8_t sample_flag = 1; //if true, allows start of next sampling period
 uint8_t calc_flag = 0; //if true, starts calculation loop
 uint32_t adc_timer = 0; //us, adc_timer
@@ -60,7 +60,6 @@ uint32_t actual_time_1 = 0; //ms, sample-end time, for purpose of result verific
 enum state {DOPPLER, FMCW} state = DOPPLER;
 
 //MAKE LCD INSTANCE
-//U8X8_ST7565_NHD_C12864_4W_SW_SPI u8x8(/* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8); //for software spi
 U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ lcd_CS, /* dc=*/ lcd_REG, /* reset=*/ lcd_RST);
 
 //MAKE SPISettings INSTANCE for pll
@@ -71,16 +70,13 @@ void pin_init(void);
 void setup() {
   // put your setup code here, to run once:
   pin_init();
-  //pll_init();
   Serial.begin(9600); //Teensy USB Serial accepts any speed
-  digitalWrite(5, LOW);
   while (!Serial);
   Serial.println("Serial Port Initialized");
-  delay(1000);
-  digitalWrite(5, HIGH);
-  u8x8.begin();
   SPI.begin();
-
+  u8x8.begin();
+  pll_init();
+  pre();
 }
 
 void loop() {
@@ -208,17 +204,17 @@ void stitch_sandwich_stacker(int16_t sample[])
   speed_float = freq_float * speed_per_frequency; //find average speed
   //  Serial.print("Frequency (Hz): ");
   //  Serial.println(freq_float, 1); //print average frequency
-  //  Serial.print("Speed (m/s): ");
-  //  Serial.println(speed_float, 1); //print average speed
-  pre();
-  u8x8.setCursor(0, 1);
-  u8x8.print("Frequency=");
-  u8x8.print(freq_float, 1);
+  Serial.print("Speed (m/s): ");
+  Serial.println(speed_float, 1); //print average speed
+  u8x8.clearLine(2);
+  u8x8.setFont(u8x8_font_chroma48medium8_r);
+  u8x8.noInverse();
   u8x8.setCursor(0, 2);
   u8x8.print("Speed=");
   u8x8.print(speed_float, 1);
-  active_light = bin_peak_search(speed_bin) + light_offset;
-  if (old_light != active_light && active_light >= light_offset && active_light <= light_offset + 9)
+  u8x8.print(" m/s");
+  active_light = light_offset - bin_peak_search(speed_bin);
+  if (old_light != active_light && active_light <= light_offset && active_light >= light_offset - 9)
   {
     digitalWrite((old_light), HIGH);
     digitalWrite((active_light), LOW);
@@ -265,25 +261,27 @@ void switch_poll(uint8_t current_state) //returns new frequency
 {
   uint32_t f_new = f_current;
   uint16_t momentary_sw_in = 0;
-  Serial.println(digitalRead(sw_TOG_pin));
-  if (current_state != digitalRead(sw_TOG_pin))
+  uint8_t toggle_sw_in = digitalRead(sw_TOG_pin);
+  if (current_state != toggle_sw_in)
     //if the current state isn't equal to TOGGLE switch (0 or 1, in both cases)
   {
     delay(10); //debounce
-    if (digitalRead(sw_TOG_pin))
+    if (current_state != digitalRead(sw_TOG_pin))
       //if still not equal
     {
-      state != state; //toggle state
+      if (toggle_sw_in) state = FMCW;
+      else if (!toggle_sw_in) state = DOPPLER;
+      Serial.println("toggled");
+      pre();
     }
   }
   momentary_sw_in = analogRead(sw_MOM_pin); //measure MOMENTARY switch
   if (momentary_sw_in > 819)
   {
     while (analogRead(sw_MOM_pin) > 819)
-
     {
       f_new -= (pll_channel_spacing * 3);
-      delay(50);
+      delay(150);
       if (f_new < f_lim_lower) f_new = f_lim_upper - (f_lim_upper % (pll_channel_spacing * 3)); //wraparound
     }
   }
@@ -303,6 +301,7 @@ void switch_poll(uint8_t current_state) //returns new frequency
     Serial.println(f_new);
     freq_set(f_new);
     f_current = f_new;
+    pre();
   }
 }
 
@@ -315,13 +314,15 @@ void pin_init(void)
   pinMode(ADC_pin, INPUT);
   pinMode(sw_MOM_pin, INPUT);
   pinMode(sw_TOG_pin, INPUT);
-  for (active_light = light_offset; active_light <= light_offset + 9; active_light++)
+  for (active_light = light_offset - 9; active_light <= light_offset; active_light++)
   {
+
     pinMode(active_light, OUTPUT);
     digitalWrite(active_light, LOW);
     delay(20);
     digitalWrite(active_light, HIGH);
   }
+  Serial.println("Pin Directions initialized");
 }
 
 void pll_24b_transfer(uint32_t data) //writes contents of 'data' to pll shift register, ignoring MSByte
@@ -391,8 +392,23 @@ void pre(void)
   u8x8.clear();
 
   u8x8.inverse();
-  u8x8.print(" KISS Intel ");
-  u8x8.setFont(u8x8_font_chroma48medium8_r);
-  u8x8.noInverse();
-  u8x8.setCursor(0, 1);
+  u8x8.print(" KISSintel ");
+  if (!state)
+  {
+    u8x8.print("DPLR ");
+    u8x8.setFont(u8x8_font_chroma48medium8_r);
+    u8x8.noInverse();
+    u8x8.setCursor(0, 1);
+    u8x8.print("Ch: ");
+    u8x8.print(f_current);
+    u8x8.print(" KHz");
+    u8x8.setCursor(0, 2);
+  }
+  else if (state)
+  {
+    u8x8.print("FMCW ");
+    u8x8.setFont(u8x8_font_chroma48medium8_r);
+    u8x8.noInverse();
+    u8x8.setCursor(0, 1);
+  }
 }
