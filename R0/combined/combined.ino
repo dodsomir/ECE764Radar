@@ -97,12 +97,12 @@ void loop() {
   //if all samples are taken, start calculations
 
   actual_time_1 = millis() - actual_time_0;
-//  Serial.print("Time Elapsed (ms): ");
-//  Serial.println(actual_time_1);
+  //  Serial.print("Time Elapsed (ms): ");
+  //  Serial.println(actual_time_1);
   buffer_index = 0; //reset index
   current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
-//  Serial.print("RMS value = ");
-//  Serial.println(current_rms_value); //print bipolar ADC RMS value
+  //  Serial.print("RMS value = ");
+  //  Serial.println(current_rms_value); //print bipolar ADC RMS value
   switch (state)
   {
     case DOPPLER:
@@ -120,8 +120,8 @@ void loop() {
   }
   switch_poll(state);
 
-//timer overflow reset -- note that overflow will cause 1-2 false readings
-if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
+  //timer overflow reset -- note that overflow will cause 1-2 false readings
+  if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
 }
 
 uint16_t zero_average_and_rms(int16_t sample[]) //offsets input array to zero-average, calculates and returns ADC RMS value
@@ -206,10 +206,10 @@ void stitch_sandwich_stacker(int16_t sample[])
   freq_float = freq_sum / crossing_count; //find average frequency
   freq_sum = 0; //reset sum
   speed_float = freq_float * speed_per_frequency; //find average speed
-//  Serial.print("Frequency (Hz): ");
-//  Serial.println(freq_float, 1); //print average frequency
-//  Serial.print("Speed (m/s): ");
-//  Serial.println(speed_float, 1); //print average speed
+  //  Serial.print("Frequency (Hz): ");
+  //  Serial.println(freq_float, 1); //print average frequency
+  //  Serial.print("Speed (m/s): ");
+  //  Serial.println(speed_float, 1); //print average speed
   pre();
   u8x8.setCursor(0, 1);
   u8x8.print("Frequency=");
@@ -265,6 +265,7 @@ void switch_poll(uint8_t current_state) //returns new frequency
 {
   uint32_t f_new = f_current;
   uint16_t momentary_sw_in = 0;
+  Serial.println(digitalRead(sw_TOG_pin));
   if (current_state != digitalRead(sw_TOG_pin))
     //if the current state isn't equal to TOGGLE switch (0 or 1, in both cases)
   {
@@ -276,18 +277,19 @@ void switch_poll(uint8_t current_state) //returns new frequency
     }
   }
   momentary_sw_in = analogRead(sw_MOM_pin); //measure MOMENTARY switch
-  if (momentary_sw_in < 205)
+  if (momentary_sw_in > 819)
   {
-    while (analogRead(sw_MOM_pin) < 205)
+    while (analogRead(sw_MOM_pin) > 819)
+
     {
       f_new -= (pll_channel_spacing * 3);
       delay(50);
       if (f_new < f_lim_lower) f_new = f_lim_upper - (f_lim_upper % (pll_channel_spacing * 3)); //wraparound
     }
   }
-  else if (momentary_sw_in > 819)
+  else if (momentary_sw_in < 205)
   {
-    while (analogRead(sw_MOM_pin) > 819)
+    while (analogRead(sw_MOM_pin) < 205)
     {
       f_new += (pll_channel_spacing * 3);
       delay(50);
