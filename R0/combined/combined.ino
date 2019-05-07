@@ -8,7 +8,7 @@
 #define lcd_RST 14 //active LOW reset pin for LCD
 #define lcd_REG 15 //register select pin for LCD, 0: instruction, 1: data
 #define pll_CS 17 //chip select pin for PLL
-#define ADC_pin 18 //waveform input sampling pin
+#define ADC_pin 16 //waveform input sampling pin
 #define sw_MOM_pin 22 //momentary switch input pin
 #define sw_TOG_pin 23 //toggle switch input pin
 
@@ -40,7 +40,7 @@ const uint8_t rms_percentage = 15; //the required deviation from 0 to record new
 
 //ADC VARIABLES
 int16_t adc_buffer[sample_N]; // allocate ADC buffer
-uint16_t fft_mag_old[sample_N]; 
+uint16_t fft_mag_old[sample_N];
 uint16_t fft_mag_new[sample_N];
 uint16_t fft_mag_temp[sample_N];
 uint16_t speed_bin[speed_bin_N]; //allocate doppler speed bins
@@ -66,6 +66,8 @@ U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ lcd_CS, /* dc=*/ lcd_REG, /* rese
 //MAKE SPISettings INSTANCE for pll
 SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
 
+void pin_init(void);
+
 void setup() {
   // put your setup code here, to run once:
   pin_init();
@@ -83,50 +85,43 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-  if (adc_timer <= micros()) //*****************FIX FOR OVERFLOW
+  actual_time_0 = millis();
+  //*****************FIX FOR OVERFLOW
+  adc_timer = micros();
+  while (buffer_index < sample_N)
   {
-    if (buffer_index == 0)
-    {
-      actual_time_0 = millis();
-    }
+    while (adc_timer > micros());
     adc_timer = adc_timer + sample_delta; //every sample_delta microseconds...
     adc_buffer[buffer_index++] = analogRead(ADC_pin); //record adc values
   }
-
   //if all samples are taken, start calculations
-  if (buffer_index == sample_N)
-  {
-    actual_time_1 = millis() - actual_time_0;
-    Serial.print("Time Elapsed (ms): ");
-    Serial.println(actual_time_1);
-    buffer_index = 0; //reset index
-    current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
-    Serial.print("RMS value = ");
-    Serial.println(current_rms_value); //print bipolar ADC RMS value
-  u8x8.setFont(u8x8_font_amstrad_cpc_extended_f);    
-  u8x8.clear();
-  u8x8.print(" KISS Intel ");
-    switch(state)
-    {
-      case DOPPLER:
-        stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
-        break;
-      case FMCW: //**************NOT YET WRITTEN************************************************//
-//      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-//      {
-//        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
-//      }
-//        buffer_index = 0;
-//        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);  
-delay(100);    
-        break;
-    }
-    switch_poll(state);
-  }
 
-  //timer overflow reset -- note that overflow will cause 1-2 false readings
-  if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
+  actual_time_1 = millis() - actual_time_0;
+//  Serial.print("Time Elapsed (ms): ");
+//  Serial.println(actual_time_1);
+  buffer_index = 0; //reset index
+  current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
+//  Serial.print("RMS value = ");
+//  Serial.println(current_rms_value); //print bipolar ADC RMS value
+  switch (state)
+  {
+    case DOPPLER:
+      stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
+      break;
+    case FMCW: //**************NOT YET WRITTEN************************************************//
+      //      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+      //      {
+      //        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
+      //      }
+      //        buffer_index = 0;
+      //        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);
+      delay(100);
+      break;
+  }
+  switch_poll(state);
+
+//timer overflow reset -- note that overflow will cause 1-2 false readings
+if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
 }
 
 uint16_t zero_average_and_rms(int16_t sample[]) //offsets input array to zero-average, calculates and returns ADC RMS value
@@ -211,10 +206,17 @@ void stitch_sandwich_stacker(int16_t sample[])
   freq_float = freq_sum / crossing_count; //find average frequency
   freq_sum = 0; //reset sum
   speed_float = freq_float * speed_per_frequency; //find average speed
-  Serial.print("Frequency (Hz): ");
-  Serial.println(freq_float, 1); //print average frequency
-  Serial.print("Speed (m/s): ");
-  Serial.println(speed_float, 1); //print average speed
+//  Serial.print("Frequency (Hz): ");
+//  Serial.println(freq_float, 1); //print average frequency
+//  Serial.print("Speed (m/s): ");
+//  Serial.println(speed_float, 1); //print average speed
+  pre();
+  u8x8.setCursor(0, 1);
+  u8x8.print("Frequency=");
+  u8x8.print(freq_float, 1);
+  u8x8.setCursor(0, 2);
+  u8x8.print("Speed=");
+  u8x8.print(speed_float, 1);
   active_light = bin_peak_search(speed_bin) + light_offset;
   if (old_light != active_light && active_light >= light_offset && active_light <= light_offset + 9)
   {
@@ -387,7 +389,7 @@ void pre(void)
   u8x8.clear();
 
   u8x8.inverse();
-  u8x8.print(" U8x8 Library ");
+  u8x8.print(" KISS Intel ");
   u8x8.setFont(u8x8_font_chroma48medium8_r);
   u8x8.noInverse();
   u8x8.setCursor(0, 1);
