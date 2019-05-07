@@ -1,7 +1,6 @@
 //This sketch is for the combination of all radar functions in the ECE764 project
 
 #include <U8x8lib.h>
-#include <fix_fft.h>
 #include <SPI.h>
 
 #define lcd_CS 10 //chip select pin for LCD
