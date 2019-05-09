@@ -2,10 +2,12 @@
 
 #include <U8x8lib.h>
 #include <SPI.h>
+#include <fix_fft.h>
 
 #define lcd_CS 10 //chip select pin for LCD
 #define lcd_RST 14 //active LOW reset pin for LCD
 #define lcd_REG 15 //register select pin for LCD, 0: instruction, 1: data
+#define pll_POT 16 //chip select pin for potentiometer
 #define pll_CS 17 //chip select pin for PLL
 #define ADC_pin 18 //waveform input sampling pin
 #define sw_MOM_pin 22 //momentary switch input pin
@@ -25,7 +27,7 @@ uint32_t f_new = 0;
 
 //ADC CONSTANTS
 const uint16_t sample_T = 100; //ms, sample period
-const uint16_t sample_N = 2048; //samples per period
+const uint16_t sample_N = 1024; //samples per period
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
 const uint32_t sample_T_actual = sample_delta * sample_N; //us, actual sampling period
 const uint8_t speed_bin_N = 10; //number of speed bins (same as number of LEDs)
@@ -39,9 +41,9 @@ const uint8_t rms_percentage = 15; //the required deviation from 0 to record new
 
 //ADC VARIABLES
 int16_t adc_buffer[sample_N]; // allocate ADC buffer
+char in_place_buffer[sample_N];
 uint16_t fft_mag_old[sample_N];
 uint16_t fft_mag_new[sample_N];
-uint16_t fft_mag_temp[sample_N];
 uint16_t speed_bin[speed_bin_N]; //allocate doppler speed bins
 uint16_t current_rms_value = 0; //rms value of input signal, digital scale
 uint16_t buffer_index = 0; //index for use in adc_buffer
@@ -63,6 +65,9 @@ U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ lcd_CS, /* dc=*/ lcd_REG, /* rese
 
 //MAKE SPISettings INSTANCE for pll
 SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
+
+//TEST VARIABLES
+uint8_t test_flag = 1;
 
 void pin_init(void);
 
@@ -95,22 +100,32 @@ void loop() {
   //  Serial.print("Time Elapsed (ms): ");
   //  Serial.println(actual_time_1);
   buffer_index = 0; //reset index
-  current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
   //  Serial.print("RMS value = ");
   //  Serial.println(current_rms_value); //print bipolar ADC RMS value
   switch (state)
   {
     case DOPPLER:
+      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
+
       stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
       break;
     case FMCW: //**************NOT YET WRITTEN************************************************//
-      //      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-      //      {
-      //        fft_mag_old[buffer_index] = fft_mag_new[buffer_index]; //copy old values over
-      //      }
-      //        buffer_index = 0;
-      //        fft_mag_new = fix_fftr(adc_buffer, sample_N, 0);
-      delay(100);
+      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+      {
+        in_place_buffer[buffer_index] = (adc_buffer[buffer_index] + 2) / 4 - 128; //convert 10 bit int to 8 bit uint
+      }
+      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
+
+      if (test_flag)
+      {
+        for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+        {
+          Serial.println(adc_buffer[buffer_index]);
+        }
+        Serial.println("BREAK");
+      }
+
+      update_fft(adc_buffer);
       break;
   }
   switch_poll(state);
@@ -410,4 +425,48 @@ void pre(void)
     u8x8.noInverse();
     u8x8.setCursor(0, 1);
   }
+}
+
+void update_fft(int16_t sample[])
+{
+  char zero_buffer[sample_N];
+  for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+  {
+    zero_buffer[buffer_index] = 127;
+    if (test_flag)
+    {
+      Serial.println(in_place_buffer[buffer_index] - '0');
+    }
+  }
+
+  fix_fft(in_place_buffer, zero_buffer, 10, 0);
+  //fix_fftr(in_place_buffer, 10, 0);
+  if (test_flag)
+  {
+    Serial.println("BREAK");
+    for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+    {
+      in_place_buffer[buffer_index] = sqrt(in_place_buffer[buffer_index]  *  in_place_buffer[buffer_index]
+                                           +  zero_buffer[buffer_index] *  zero_buffer[buffer_index]);
+      //      if (buffer_index % 2 == 0)
+      //      {
+      Serial.println(in_place_buffer[buffer_index] - '0');
+      //      }
+    }
+    Serial.println("BREAK");
+    test_flag = 0;
+  }
+  //  int8_t fft_mag_old[sample_N];
+  //  int8_t fft_mag_temp[sample_N];
+}
+
+void MCP41010Write(byte value)
+{
+  // Note that the integer value passed to this subroutine
+  // is cast to a byte
+
+  digitalWrite(pll_POT, LOW);
+  SPI.transfer(B00010001); // This tells the chip to set the pot
+  SPI.transfer(value);     // This tells it the pot position
+  digitalWrite(pll_POT, HIGH);
 }
