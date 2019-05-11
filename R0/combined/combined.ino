@@ -24,7 +24,6 @@ const uint8_t pll_P = 32; //default prescaler
 uint32_t f_current = f_default;
 uint32_t f_new = 0;
 
-
 //POT CONSTANTS and VARIABLES
 const uint16_t rms_target = 275; //358 is max for full-range operation
 //rms_hysteresis * loop_gain > 100
@@ -33,30 +32,20 @@ const uint8_t loop_gain = 8; //this number divided by 100 is the loop gain
 int16_t pot_pos = 127; //start at midpoint gain, NOTE LOWER NUMBER IS HIGHER GAIN
 uint8_t old_pos = 0;
 
-//FFT CONSTANTS and VARIABLES
+//ADC CONSTANTS and VARIABLES
 const uint16_t sample_T = 100; //ms, sample period
 const uint16_t sample_N = 1024; // = 2^m, samples per period
-const uint8_t m = 10; //fft parameter
-uint8_t tile[4][128]; //2D array of 'tile' objects
-int32_t x_bin[128]; //128-wide vector for display pixels
-int16_t fft_mag[sample_N];
-
-typedef union //data structure for efficient plotting
-{
-  uint32_t values;
-  uint8_t val[4];
-} column_tile;
-
-//ADC CONSTANTS and VARIABLES
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
 const uint32_t sample_T_actual = sample_delta * sample_N; //us, actual sampling period
 const uint8_t speed_bin_N = 10; //number of speed bins (same as number of LEDs)
 const uint8_t light_offset = 9; //offset number of pins to first light pin
 const uint8_t max_speed = 20; //m/s, max bin speed
+const uint8_t max_distance = 50; //m, max expected distance
 const double speed_per_bin = max_speed / speed_bin_N; //(m/s)/index
 const double speed_per_frequency = 0.02584; //(m/s)/Hz, calculated at 5.8GHz, technically changes at different channels
 const double indexdiff_to_freq = sample_N * 1000000 / (2 * sample_T_actual); //Hz*index, divide by index difference to find frequency
 const double indexdiff_to_speed = indexdiff_to_freq * speed_per_frequency; //(m/s)*index, divide by index difference to find speed
+const float range_res = 299792458 / (2000 * (f_lim_upper - f_lim_lower)); //m, FMCW range resolution
 const uint8_t rms_percentage = 20; //the required deviation from 0 to record new zero crossing, in percentage of rms value
 int16_t adc_buffer_new[sample_N]; // allocate ADC buffer
 int16_t adc_buffer_diff[sample_N];
@@ -73,6 +62,27 @@ uint32_t adc_timer = 0; //us, adc_timer
 double freq_sum = 0; //Hz, sum of recorded frequencies, then divided to find average
 uint32_t actual_time_0 = 0; //ms, sample-start time
 uint32_t actual_time_1 = 0; //ms, sample-end time, for purpose of result verification
+
+//FFT CONSTANTS and VARIABLES
+const double delta_f = 1000 / sample_T; //Hz, FFT frequency spacing
+//const uint8_t plot_bins = (double)max_distance  delta_f  range_res
+const uint8_t m = 10; //fft parameter
+uint8_t tile[4][128]; //2D array of 'tile' objects
+int32_t x_bin[128]; //128-wide vector for display pixels
+int16_t fft_mag[sample_N];
+const uint8_t target_N = 1; // 1-3 target capable
+
+//PLOT CONSTANTS AND VARIABLES
+const uint8_t plot_wait = 5; //for time-domain plots, reduces update rate
+uint8_t plot_wait_count = 0;
+uint8_t vert_bar_x2[8] = {0, 255, 0, 0, 0, 0, 0, 0};
+uint8_t vert_bar_x4[8] = {0, 0, 0, 255, 0, 0, 0, 0};
+
+typedef union //data structure for efficient plotting
+{
+  uint32_t values;
+  uint8_t val[4];
+} column_tile;
 
 //MEASUREMENT STATES
 enum state {DOPPLER, FMCW} state = DOPPLER;
@@ -102,14 +112,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(state == FMCW) 
-  {
-    while(digitalRead(SYNC_pin)); //wait for new cycle
-    while(!digitalRead(SYNC_pin)); //wait for positive transition
-  }
+  //***************UNCOMMENT FOR MTI
+  //  if(state == FMCW)
+  //  {
+  //    while(digitalRead(SYNC_pin)); //wait for new cycle
+  //    while(!digitalRead(SYNC_pin)); //wait for positive transition
+  //  }
   actual_time_0 = millis();
   adc_timer = micros();
-  while (buffer_index < sample_N)
+  for (buffer_index = 0; buffer_index < sample_N;)
   {
     while (adc_timer > micros());
     adc_timer = adc_timer + sample_delta; //every sample_delta microseconds...
@@ -127,20 +138,26 @@ void loop() {
   {
     case DOPPLER:
       stitch_sandwich_stacker(adc_buffer_new); //stack frequency data from zero-crossings into bins and update output
-      plot_samples(adc_buffer_new, sample_N, 1);
+      if (plot_wait_count++ == plot_wait)
+      {
+        plot_samples(adc_buffer_new, sample_N, 1);
+        plot_wait_count = 0;
+      }
       break;
-    case FMCW: 
-      moving_target_indication(); //update difference buffer
-      update_fft(adc_buffer_diff, sample_N); //perform fft on adc_buffer_diff
-      //update_fft(adc_buffer_new, sample_N); //to disable MTI, uncomment
-      plot_samples(fft_mag, sample_N/2, 0);
+    case FMCW:
+      //***************UNCOMMENT FOR MTI
+      //moving_target_indication(); //update difference buffer
+      //update_fft(adc_buffer_diff, sample_N); //perform fft on adc_buffer_diff
+
+      update_fft(adc_buffer_new, sample_N); //to disable MTI, uncomment
+      if (plot_wait_count++ == plot_wait)
+      {
+        plot_samples(fft_mag, 128, 0); //each FFT div is ~1m in range
+        plot_wait_count = 0;
+      }
       break;
   }
   switch_poll(state);
-  if (Serial.available())
-  {
-
-  }
 
   //timer overflow reset -- note that overflow will cause 1-2 false readings
   if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
@@ -451,7 +468,12 @@ void pre(void)
     u8x8.print("FMCW ");
     u8x8.setFont(u8x8_font_chroma48medium8_r);
     u8x8.noInverse();
-    u8x8.setCursor(0, 1);
+    u8x8.setCursor(4, 3);
+    u8x8.print("50 m");
+    u8x8.drawTile(6, 3, 1, vert_bar_x2);
+    u8x8.setCursor(9, 3);
+    u8x8.print("100 m");
+    u8x8.drawTile(12, 3, 1, vert_bar_x4);
   }
 }
 
@@ -552,9 +574,9 @@ void plot_samples(int16_t *samples, uint16_t samples_len, uint8_t avg_or_peak)
 
 void moving_target_indication(void)
 {
-  for(buffer_index = 0; buffer_index < sample_N; buffer_index++)
+  for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
   {
-  adc_buffer_diff[buffer_index] = adc_buffer_new[buffer_index] - adc_buffer_old[buffer_index];
-  adc_buffer_old[buffer_index] = adc_buffer_new[buffer_index];
+    adc_buffer_diff[buffer_index] = adc_buffer_new[buffer_index] - adc_buffer_old[buffer_index];
+    adc_buffer_old[buffer_index] = adc_buffer_new[buffer_index];
   }
 }
