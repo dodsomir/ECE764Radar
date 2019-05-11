@@ -15,13 +15,17 @@ typedef union
 } column_tile;
 
 uint16_t buffer_index;
-const uint16_t function_length = 1024;
+const uint8_t m = 10;
+const uint16_t function_length = 1024; // = 2^m
+const uint16_t min_f = 100;
 double function_value[function_length];
 const uint16_t function_scale = 20;
 int16_t function_ints[function_length];
-int32_t char_temp[function_length];
-char char_out[function_length];
-int16_t fft_int[function_length];
+//int32_t char_temp[function_length];
+//int16_t char_out[function_length];
+//int16_t imag_out[function_length];
+int16_t fft_real[function_length];
+//int16_t fft_imag[function_length];
 
 uint8_t tile[4][128];
 int32_t x_bin[128];
@@ -30,12 +34,22 @@ U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ 10, /* dc=*/ 15, /* reset=*/ 14);
 
 void setup(void)
 {
+
   Serial.begin(9600);
-  while(!Serial);
+  delay(2000);
   make_curve();
-  int16_to_char(function_ints, function_length);
-  fix_fftr(char_out, 10, 0);
-  char_to_int16(char_out, function_length);
+  //  int16_to_char(function_ints, function_length);
+  for (buffer_index = 0; buffer_index < function_length; buffer_index++)
+  {
+    fft_real[buffer_index] = function_ints[buffer_index];
+  }
+  fix_fftr(fft_real, m, 0);
+  for (buffer_index = 0; buffer_index < function_length; buffer_index++)
+  {
+    Serial.println(fft_real[buffer_index]);
+  }
+  //  char_to_int16();
+  //  fft_mag();
   SPI.begin();
   delay(200);
   u8x8.begin();
@@ -45,50 +59,24 @@ void setup(void)
 
 void loop(void)
 {
-  delay(2000);
   u8x8.clearLine(2);
   u8x8.setCursor(0, 2);
   u8x8.print("Time Domain");
-  plot_samples(function_ints, function_length, 1);
-  delay(2000);
+  plot_samples(function_ints, function_length / min_f * 16, 1);
+  delay(5000);
   u8x8.clearLine(2);
   u8x8.setCursor(0, 2);
   u8x8.print("Freq Domain");
-  plot_samples(fft_int, function_length/2, 1);
+  plot_samples(fft_real, function_length / 2, 0);
+  delay(5000);
 }
 
 void make_curve(void)
 {
   for (buffer_index = 0; buffer_index < function_length; buffer_index++)
   {
-    function_ints[buffer_index] = (int16_t)function_scale * sin(20 * 3.14159 * ((double)buffer_index) / function_length) ;
-  }
-}
-
-void int16_to_char(int16_t *samples, uint16_t samples_len)
-{
-  int16_t sample_min = 32767;
-  int16_t sample_max =-32768;
-  uint16_t range = 0;
-  for(buffer_index = 0; buffer_index < samples_len; buffer_index++)
-  {
-    if (samples[buffer_index] > sample_max) sample_max = samples[buffer_index];
-    if (samples[buffer_index] < sample_min) sample_min = samples[buffer_index];
-  }
-  range = sample_max - sample_min;
-    for(buffer_index = 0; buffer_index < samples_len; buffer_index++)
-  {
-    char_temp[buffer_index] = samples[buffer_index] * 256 / range;
-    char_out[buffer_index] = char_temp[buffer_index];
-    Serial.println(char_out[buffer_index]);
-  }
-}
-
-void char_to_int16(char *samples, uint16_t samples_len)
-{
-      for(buffer_index = 0; buffer_index < samples_len; buffer_index++)
-  {
-    fft_int[buffer_index] = char_out[buffer_index];
+    function_ints[buffer_index] = (int16_t)function_scale * cos(min_f * 3.14159 * ((double)buffer_index) / function_length) +
+                                  (int16_t)function_scale * cos(6 * min_f * 3.14159 * ((double)buffer_index) / function_length);
   }
 }
 
@@ -129,7 +117,7 @@ void plot_samples(int16_t *samples, uint16_t samples_len, uint8_t avg_or_peak)
         buffer_index++;
       }
     }
-    //x_bin[x_bin_index] = -x_bin[x_bin_index]; //invert for proper plotting on display
+    x_bin[x_bin_index] = -x_bin[x_bin_index]; //invert for proper plotting on display
     if (avg_or_peak)
     {
       if (!value_N) x_bin[x_bin_index] /= value_N; //avoid divide by 0
@@ -143,6 +131,7 @@ void plot_samples(int16_t *samples, uint16_t samples_len, uint8_t avg_or_peak)
   { //goal is to map all values to 0-31 values
     x_bin[x_bin_index] = (x_bin[x_bin_index] - bin_min) * 32 / range - 0.5;
     column.values = 1 << x_bin[x_bin_index];
+    if (!avg_or_peak) column.values = ~(column.values - 1); //create solid bars for peak measurements
     for (row_index = 0; row_index < 4; row_index++)
     {
       tile[row_index][x_bin_index] = column.val[row_index];
