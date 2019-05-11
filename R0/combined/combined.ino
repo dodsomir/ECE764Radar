@@ -2,7 +2,7 @@
 
 #include <U8x8lib.h>
 #include <SPI.h>
-#include <fix_fft.h>
+#include "fix_fft.h"
 
 #define lcd_CS 10 //chip select pin for LCD
 #define lcd_RST 14 //active LOW reset pin for LCD
@@ -10,6 +10,7 @@
 #define pot_CS 16 //chip select pin for potentiometer
 #define pll_CS 17 //chip select pin for PLL
 #define ADC_pin 18 //waveform input sampling pin
+#define SYNC_pin 21 //signal generator pulse synchronization pin
 #define sw_MOM_pin 22 //momentary switch input pin
 #define sw_TOG_pin 23 //toggle switch input pin
 
@@ -32,10 +33,21 @@ const uint8_t loop_gain = 8; //this number divided by 100 is the loop gain
 int16_t pot_pos = 127; //start at midpoint gain, NOTE LOWER NUMBER IS HIGHER GAIN
 uint8_t old_pos = 0;
 
+//FFT CONSTANTS and VARIABLES
+const uint16_t sample_T = 100; //ms, sample period
+const uint16_t sample_N = 1024; // = 2^m, samples per period
+const uint8_t m = 10; //fft parameter
+uint8_t tile[4][128]; //2D array of 'tile' objects
+int32_t x_bin[128]; //128-wide vector for display pixels
+int16_t fft_mag[sample_N];
+
+typedef union //data structure for efficient plotting
+{
+  uint32_t values;
+  uint8_t val[4];
+} column_tile;
 
 //ADC CONSTANTS and VARIABLES
-const uint16_t sample_T = 100; //ms, sample period
-const uint16_t sample_N = 512; //samples per period
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
 const uint32_t sample_T_actual = sample_delta * sample_N; //us, actual sampling period
 const uint8_t speed_bin_N = 10; //number of speed bins (same as number of LEDs)
@@ -46,14 +58,13 @@ const double speed_per_frequency = 0.02584; //(m/s)/Hz, calculated at 5.8GHz, te
 const double indexdiff_to_freq = sample_N * 1000000 / (2 * sample_T_actual); //Hz*index, divide by index difference to find frequency
 const double indexdiff_to_speed = indexdiff_to_freq * speed_per_frequency; //(m/s)*index, divide by index difference to find speed
 const uint8_t rms_percentage = 20; //the required deviation from 0 to record new zero crossing, in percentage of rms value
-int16_t adc_buffer[sample_N]; // allocate ADC buffer
-char in_place_buffer[sample_N];
-uint16_t fft_mag_old[sample_N];
-uint16_t fft_mag_new[sample_N];
+int16_t adc_buffer_new[sample_N]; // allocate ADC buffer
+int16_t adc_buffer_diff[sample_N];
+int16_t adc_buffer_old[sample_N]; // allocate MTI ADC buffer
 uint16_t speed_bin[speed_bin_N]; //allocate doppler speed bins
 uint16_t current_rms_value = 0; //rms value of input signal, digital scale
-uint16_t buffer_index = 0; //index for use in adc_buffer
-uint16_t index_delta = 0; //difference between adc_buffer indices
+uint16_t buffer_index = 0; //index for use in adc_buffer_new
+uint16_t index_delta = 0; //difference between adc_buffer_new indices
 uint8_t bin_index = 0; //index for use in speed_bin
 uint8_t active_light = 9; //the pin number for the light which is currently "on" during normal use
 uint8_t sample_flag = 1; //if true, allows start of next sampling period
@@ -91,14 +102,18 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  if(state == FMCW) 
+  {
+    while(digitalRead(SYNC_pin)); //wait for new cycle
+    while(!digitalRead(SYNC_pin)); //wait for positive transition
+  }
   actual_time_0 = millis();
-  //*****************FIX FOR OVERFLOW
   adc_timer = micros();
   while (buffer_index < sample_N)
   {
     while (adc_timer > micros());
     adc_timer = adc_timer + sample_delta; //every sample_delta microseconds...
-    adc_buffer[buffer_index++] = analogRead(ADC_pin); //record adc values
+    adc_buffer_new[buffer_index++] = analogRead(ADC_pin); //record adc values
   }
   //if all samples are taken, start calculations
 
@@ -106,29 +121,19 @@ void loop() {
   //  Serial.print("Time Elapsed (ms): ");
   //  Serial.println(actual_time_1);
   buffer_index = 0; //reset index
-  //  Serial.print("RMS value = ");
-  //  Serial.println(current_rms_value); //print bipolar ADC RMS value
+  current_rms_value = zero_average_and_rms(adc_buffer_new); //make samples bipolar, return rms value
+  pot_update(current_rms_value);
   switch (state)
   {
     case DOPPLER:
-      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
-      pot_update(current_rms_value);
-      stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
+      stitch_sandwich_stacker(adc_buffer_new); //stack frequency data from zero-crossings into bins and update output
+      plot_samples(adc_buffer_new, sample_N, 1);
       break;
-    case FMCW: //**************NOT YET WRITTEN************************************************//
-
-      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
-      pot_update(current_rms_value);
-      if (test_flag)
-      {
-        for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-        {
-          Serial.println(adc_buffer[buffer_index]);
-        }
-        Serial.println("BREAK");
-      }
-
-      update_fft(adc_buffer);
+    case FMCW: 
+      moving_target_indication(); //update difference buffer
+      update_fft(adc_buffer_diff, sample_N); //perform fft on adc_buffer_diff
+      //update_fft(adc_buffer_new, sample_N); //to disable MTI, uncomment
+      plot_samples(fft_mag, sample_N/2, 0);
       break;
   }
   switch_poll(state);
@@ -154,11 +159,11 @@ uint16_t zero_average_and_rms(int16_t sample[]) //offsets input array to zero-av
   diff = sum / sample_N;
   for (uint16_t j = 0; j < sample_N; j++)
   {
-    adc_buffer[j] = sample[j] - diff;
+    adc_buffer_new[j] = sample[j] - diff;
   }
   for (uint16_t j = 0; j < sample_N; j++)
   {
-    squaresum = squaresum + (adc_buffer[j] * adc_buffer[j]);
+    squaresum = squaresum + (adc_buffer_new[j] * adc_buffer_new[j]);
   }
 
   rms_value = sqrt(squaresum / sample_N); //calculate rms value
@@ -186,7 +191,7 @@ void stitch_sandwich_stacker(int16_t sample[])
   }
   for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
   {
-    //Serial.println(adc_buffer[buffer_index]); //***TEST CODE***
+    //Serial.println(adc_buffer_new[buffer_index]); //***TEST CODE***
     //step through samples
     //check if absolute value greater than or equal to XX% rms value
     if ((abs(sample[buffer_index]) * 100) >= (current_rms_value * rms_percentage))
@@ -240,7 +245,7 @@ void stitch_sandwich_stacker(int16_t sample[])
     digitalWrite((old_light), HIGH);
     digitalWrite((active_light), LOW);
   }
-  buffer_index = 0; //reset adc_buffer index
+  buffer_index = 0; //reset adc_buffer_new index
   adc_timer = micros(); //update adc_timer
 }
 
@@ -278,7 +283,7 @@ uint16_t bin_peak_search(uint16_t vector[]) //take vector with unsigned 16-bit v
   return peak_index;
 }
 
-void switch_poll(uint8_t current_state) 
+void switch_poll(uint8_t current_state)
 {
   uint32_t f_new = f_current;
   uint16_t momentary_sw_in = 0;
@@ -290,13 +295,13 @@ void switch_poll(uint8_t current_state)
     if (current_state != digitalRead(sw_TOG_pin))
       //if still not equal
     {
-      if (toggle_sw_in) 
+      if (toggle_sw_in)
       {
         state = FMCW;
         pll_init();
         f_current = f_default;
       }
-      else if (!toggle_sw_in) 
+      else if (!toggle_sw_in)
       {
         state = DOPPLER;
         pll_init();
@@ -344,6 +349,7 @@ void pin_init(void)
   pinMode(pll_CS, OUTPUT);
   pinMode(pot_CS, OUTPUT);
   pinMode(ADC_pin, INPUT);
+  pinMode(SYNC_pin, INPUT);
   pinMode(sw_MOM_pin, INPUT);
   pinMode(sw_TOG_pin, INPUT);
   for (active_light = light_offset - 9; active_light <= light_offset; active_light++)
@@ -449,41 +455,13 @@ void pre(void)
   }
 }
 
-void update_fft(int16_t sample[])
+void update_fft(int16_t *samples, uint16_t sample_length)
 {
-  for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+  for (buffer_index = 0; buffer_index < sample_length; buffer_index++)
   {
-    in_place_buffer[buffer_index] = (char)((adc_buffer[buffer_index] + 2) / 4); //convert 10 bit int to 8 bit char
+    fft_mag[buffer_index] = samples[buffer_index];
   }
-  char zero_buffer[sample_N];
-  for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-  {
-    zero_buffer[buffer_index] = 127;
-    if (test_flag)
-    {
-      Serial.println((int8_t)in_place_buffer[buffer_index] - '0');
-    }
-  }
-
-  fix_fft(in_place_buffer, zero_buffer, 5, 0);
-  //fix_fftr(in_place_buffer, 10, 0);
-  if (test_flag)
-  {
-    Serial.println("BREAK");
-    for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-    {
-      in_place_buffer[buffer_index] = sqrt(in_place_buffer[buffer_index]  *  in_place_buffer[buffer_index]
-                                           +  zero_buffer[buffer_index] *  zero_buffer[buffer_index]);
-      //      if (buffer_index % 2 == 0)
-      //      {
-      Serial.println(in_place_buffer[buffer_index] - '0');
-      //      }
-    }
-    Serial.println("BREAK");
-    test_flag = 0;
-  }
-  //  int8_t fft_mag_old[sample_N];
-  //  int8_t fft_mag_temp[sample_N];
+  fix_fftr(fft_mag, m, 0);
 }
 
 void MCP41010Write(uint8_t value)
@@ -512,5 +490,71 @@ void pot_update(uint16_t rms_in)
       Serial.println(pot_pos);
       old_pos = pot_pos;
     }
+  }
+}
+
+void plot_samples(int16_t *samples, uint16_t samples_len, uint8_t avg_or_peak)
+//plots input across the bottom 4 rows of display, INPUT MUST BE LONGER THAN 128 VALUES
+//samples_len MUST STAY INSIDE OF samples VECTOR
+//avg_or_peak is 1 for averaging, 0 for peak measurement. PEAK MEASUREMENT ONLY VALID FOR POSITIVE-VALUED INPUTS
+{
+  column_tile column;
+  buffer_index = 0;
+  uint8_t value_N = 0;
+  int16_t bin_min = 0;
+  int16_t bin_max = 0;
+  uint8_t x_bin_index = 0;
+  uint8_t row_index = 0;
+  uint16_t range = 0;
+  for (x_bin_index = 0; x_bin_index < 128; x_bin_index++) //step through bins
+  {
+    x_bin[x_bin_index] = 0;
+    while (buffer_index < ((x_bin_index + 1) * samples_len / 128)) //bin input samples
+    {
+      if (avg_or_peak) //if input is 1, perform averaging
+      {
+        x_bin[x_bin_index] += samples[buffer_index++]; //add to bin the sample, increment sample index
+        value_N++;
+      } else { //if input is 0, perform peak measurement
+        if (x_bin[x_bin_index] < samples[buffer_index]) x_bin[x_bin_index] = samples[buffer_index];
+        buffer_index++;
+      }
+    }
+    x_bin[x_bin_index] = -x_bin[x_bin_index]; //invert for proper plotting on display
+    if (avg_or_peak)
+    {
+      if (!value_N) x_bin[x_bin_index] /= value_N; //avoid divide by 0
+      value_N = 0;
+    }
+    if (x_bin[x_bin_index] > bin_max) bin_max = x_bin[x_bin_index]; //record max
+    else if (x_bin[x_bin_index] < bin_min) bin_min = x_bin[x_bin_index]; //record min
+  }
+  range = bin_max - bin_min;
+  for (x_bin_index = 0; x_bin_index < 128; x_bin_index++) //scale to y axis
+  { //goal is to map all values to 0-31 values
+    x_bin[x_bin_index] = (x_bin[x_bin_index] - bin_min) * 32 / range - 0.5;
+    column.values = 1 << x_bin[x_bin_index];
+    if (!avg_or_peak) column.values = ~(column.values - 1); //create solid bars for peak measurements
+    for (row_index = 0; row_index < 4; row_index++)
+    {
+      tile[row_index][x_bin_index] = column.val[row_index];
+    }
+  }
+  //bin samples in x axis (x128)
+  //bin lower limit = bin# * samples_len / 128
+  //average or peak measure time bins
+  //bin samples in y axis (x32)
+  for (row_index = 0; row_index < 4; row_index++)
+  {
+    u8x8.drawTile(/* tile x */ 0,/* tile y */ 4 + row_index,/* nTiles */ 16,/* tile ptr */ tile[row_index]);
+  }
+}
+
+void moving_target_indication(void)
+{
+  for(buffer_index = 0; buffer_index < sample_N; buffer_index++)
+  {
+  adc_buffer_diff[buffer_index] = adc_buffer_new[buffer_index] - adc_buffer_old[buffer_index];
+  adc_buffer_old[buffer_index] = adc_buffer_new[buffer_index];
   }
 }

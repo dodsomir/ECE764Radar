@@ -17,13 +17,10 @@ typedef union
 uint16_t buffer_index;
 const uint8_t m = 10;
 const uint16_t function_length = 1024; // = 2^m
-const uint16_t min_f = 100;
+const uint16_t max_f = 80;
 double function_value[function_length];
 const uint16_t function_scale = 20;
 int16_t function_ints[function_length];
-//int32_t char_temp[function_length];
-//int16_t char_out[function_length];
-//int16_t imag_out[function_length];
 int16_t fft_real[function_length];
 //int16_t fft_imag[function_length];
 
@@ -62,7 +59,7 @@ void loop(void)
   u8x8.clearLine(2);
   u8x8.setCursor(0, 2);
   u8x8.print("Time Domain");
-  plot_samples(function_ints, function_length / min_f * 16, 1);
+  plot_samples(function_ints, function_length / max_f * 16, 1);
   delay(5000);
   u8x8.clearLine(2);
   u8x8.setCursor(0, 2);
@@ -75,8 +72,8 @@ void make_curve(void)
 {
   for (buffer_index = 0; buffer_index < function_length; buffer_index++)
   {
-    function_ints[buffer_index] = (int16_t)function_scale * cos(min_f * 3.14159 * ((double)buffer_index) / function_length) +
-                                  (int16_t)function_scale * cos(6 * min_f * 3.14159 * ((double)buffer_index) / function_length);
+    function_ints[buffer_index] = (int16_t)function_scale * cos(max_f/3.5 * 3.14159 * ((double)buffer_index) / function_length) +
+                                  (int16_t)function_scale * cos(max_f * 3.14159 * ((double)buffer_index) / function_length);
   }
 }
 
