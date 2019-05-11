@@ -3050,7 +3050,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="U1" library="764Library" deviceset="5V_REG" device=""/>
 <part name="C1" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="10uF"/>
 <part name="SUPPLY1" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
-<part name="C2" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100uF"/>
+<part name="C2" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
 <part name="GND3" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J3" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
 <part name="GND2" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -3062,13 +3062,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="R3" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="50"/>
 <part name="GND8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="C3" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="5.6uF"/>
-<part name="R4" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1k"/>
+<part name="C3" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.2uF"/>
+<part name="R4" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.7k"/>
 <part name="U3" library="764Library" deviceset="DUAL_OP_AMP_LMV822" device=""/>
 <part name="GND9" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="R5" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100k"/>
-<part name="R6" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1k"/>
-<part name="C4" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="5.6uF"/>
+<part name="R6" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.7k"/>
+<part name="C4" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.2uF"/>
 <part name="C5" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="330pF"/>
 <part name="U4" library="764Library" deviceset="DIGITAL_POT" device="DIGITAL_POT" package3d_urn="urn:adsk.eagle:package:10501669/1"/>
 <part name="C6" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
@@ -3104,7 +3104,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="C9" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="10uF"/>
 <part name="GND18" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="C10" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100uF"/>
+<part name="C10" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
 <part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="C11" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="470pF"/>
 <part name="C12" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>

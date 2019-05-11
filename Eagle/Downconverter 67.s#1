@@ -3050,7 +3050,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="U1" library="764Library" deviceset="5V_REG" device=""/>
 <part name="C1" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="10uF"/>
 <part name="SUPPLY1" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
-<part name="C2" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
+<part name="C2" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100uF"/>
 <part name="GND3" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J3" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
 <part name="GND2" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -3104,11 +3104,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="C9" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="10uF"/>
 <part name="GND18" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="C10" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
+<part name="C10" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="100uF"/>
 <part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="C11" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="470pF"/>
 <part name="C12" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
-<part name="C13" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -3157,9 +3156,9 @@ LOSS 6dBm</text>
 <text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
 <wire x1="137.16" y1="50.8" x2="233.68" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="233.68" y1="50.8" x2="233.68" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="233.68" y1="10.16" x2="200.66" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="200.66" y1="10.16" x2="200.66" y2="38.1" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="200.66" y1="38.1" x2="170.18" y2="38.1" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="233.68" y1="10.16" x2="195.58" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="195.58" y1="10.16" x2="195.58" y2="38.1" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="195.58" y1="38.1" x2="170.18" y2="38.1" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="38.1" x2="170.18" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="10.16" x2="137.16" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="137.16" y1="10.16" x2="137.16" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
@@ -3345,7 +3344,7 @@ Biased on that board.</text>
 </instance>
 <instance part="R9" gate="G$1" x="193.04" y="27.94" smashed="yes" rot="R270">
 <attribute name="NAME" x="191.77" y="31.9786" size="1.778" layer="95" rot="R180" align="center"/>
-<attribute name="VALUE" x="191.77" y="29.718" size="1.778" layer="96" rot="R180" align="center"/>
+<attribute name="VALUE" x="194.31" y="24.638" size="1.778" layer="96" rot="R180" align="center"/>
 </instance>
 <instance part="R10" gate="G$1" x="193.04" y="38.1" smashed="yes" rot="R270">
 <attribute name="NAME" x="189.23" y="42.1386" size="1.778" layer="95" rot="R180" align="center"/>
@@ -3394,10 +3393,6 @@ Biased on that board.</text>
 <instance part="C12" gate="G$1" x="129.54" y="27.94" smashed="yes">
 <attribute name="NAME" x="131.699" y="29.464" size="1.778" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="133.096" y="25.019" size="1.778" layer="96" rot="R180" align="center"/>
-</instance>
-<instance part="C13" gate="G$1" x="195.58" y="27.94" smashed="yes">
-<attribute name="NAME" x="197.739" y="32.004" size="1.778" layer="95" rot="R180" align="center"/>
-<attribute name="VALUE" x="199.136" y="30.099" size="1.778" layer="96" rot="R180" align="center"/>
 </instance>
 </instances>
 <busses>
@@ -3532,10 +3527,6 @@ Biased on that board.</text>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="GND17" gate="1" pin="GND"/>
 <wire x1="193.04" y1="22.86" x2="193.04" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="193.04" y1="20.32" x2="195.58" y2="20.32" width="0.1524" layer="91"/>
-<junction x="193.04" y="20.32"/>
-<pinref part="C13" gate="G$1" pin="2"/>
-<wire x1="195.58" y1="20.32" x2="195.58" y2="22.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="9V" class="0">
@@ -3655,14 +3646,10 @@ Biased on that board.</text>
 <net name="N$8" class="0">
 <segment>
 <pinref part="U3" gate="B" pin="+"/>
-<wire x1="193.04" y1="33.02" x2="195.58" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="33.02" x2="198.12" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="R9" gate="G$1" pin="1"/>
 <junction x="193.04" y="33.02"/>
-<pinref part="C13" gate="G$1" pin="1"/>
-<wire x1="195.58" y1="33.02" x2="198.12" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="195.58" y1="30.48" x2="195.58" y2="33.02" width="0.1524" layer="91"/>
-<junction x="195.58" y="33.02"/>
 </segment>
 </net>
 <net name="CS" class="0">
@@ -3725,12 +3712,8 @@ Biased on that board.</text>
 <wire x1="228.6" y1="-12.7" x2="243.84" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="243.84" y1="-12.7" x2="243.84" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="243.84" y1="7.62" x2="198.12" y2="7.62" width="0.1524" layer="91"/>
-<pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="198.12" y1="7.62" x2="190.5" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="190.5" y1="27.94" x2="190.5" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="U3" gate="B" pin="-"/>
-<wire x1="198.12" y1="22.86" x2="198.12" y2="7.62" width="0.1524" layer="91"/>
-<junction x="198.12" y="7.62"/>
+<wire x1="198.12" y1="7.62" x2="198.12" y2="22.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SDO" class="0">
@@ -3867,11 +3850,11 @@ Biased on that board.</text>
 <approved hash="102,1,20.32,114.3,V_BATT,9V,,,,"/>
 <approved hash="102,1,162.56,114.3,V_BATT,9V,,,,"/>
 <approved hash="102,1,182.88,114.3,V_BATT,9V,,,,"/>
-<approved hash="113,1,17.1027,101.763,J1,,,,,"/>
-<approved hash="113,1,159.343,104.303,J3,,,,,"/>
-<approved hash="113,1,200.177,104.14,J7,,,,,"/>
-<approved hash="113,1,179.663,104.303,J4,,,,,"/>
-<approved hash="113,1,285.157,-0.162559,J8,,,,,"/>
+<approved hash="113,1,17.1027,101.732,J1,,,,,"/>
+<approved hash="113,1,159.343,104.272,J3,,,,,"/>
+<approved hash="113,1,200.147,104.14,J7,,,,,"/>
+<approved hash="113,1,179.663,104.272,J4,,,,,"/>
+<approved hash="113,1,285.157,-0.132078,J8,,,,,"/>
 </errors>
 </schematic>
 </drawing>
