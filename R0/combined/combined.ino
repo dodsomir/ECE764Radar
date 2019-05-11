@@ -7,27 +7,35 @@
 #define lcd_CS 10 //chip select pin for LCD
 #define lcd_RST 14 //active LOW reset pin for LCD
 #define lcd_REG 15 //register select pin for LCD, 0: instruction, 1: data
-#define pll_POT 16 //chip select pin for potentiometer
+#define pot_CS 16 //chip select pin for potentiometer
 #define pll_CS 17 //chip select pin for PLL
 #define ADC_pin 18 //waveform input sampling pin
 #define sw_MOM_pin 22 //momentary switch input pin
 #define sw_TOG_pin 23 //toggle switch input pin
 
-//PLL CONSTANTS
+//PLL CONSTANTS and VARIABLES
 const uint32_t f_default = 5802000; //default target frequency in KHz
 const uint32_t f_lim_upper = 5875000; //upper limit of frequency in KHz
 const uint32_t f_lim_lower = 5725000; //lower limit of frequency in KHz
 const uint16_t f_osc = 10000; //reference oscillator frequency in KHz
 const uint16_t pll_channel_spacing = 1000; //channel spacing in KHz
 const uint8_t pll_P = 32; //default prescaler
-
-//PLL VARIABLES
 uint32_t f_current = f_default;
 uint32_t f_new = 0;
 
-//ADC CONSTANTS
+
+//POT CONSTANTS and VARIABLES
+const uint16_t rms_target = 275; //358 is max for full-range operation
+//rms_hysteresis * loop_gain > 100
+const uint8_t rms_hysteresis = 15; //acceptable input power difference range
+const uint8_t loop_gain = 8; //this number divided by 100 is the loop gain
+int16_t pot_pos = 127; //start at midpoint gain, NOTE LOWER NUMBER IS HIGHER GAIN
+uint8_t old_pos = 0;
+
+
+//ADC CONSTANTS and VARIABLES
 const uint16_t sample_T = 100; //ms, sample period
-const uint16_t sample_N = 1024; //samples per period
+const uint16_t sample_N = 512; //samples per period
 const uint16_t sample_delta = sample_T * 1000 / sample_N; //us, time between samples
 const uint32_t sample_T_actual = sample_delta * sample_N; //us, actual sampling period
 const uint8_t speed_bin_N = 10; //number of speed bins (same as number of LEDs)
@@ -37,9 +45,7 @@ const double speed_per_bin = max_speed / speed_bin_N; //(m/s)/index
 const double speed_per_frequency = 0.02584; //(m/s)/Hz, calculated at 5.8GHz, technically changes at different channels
 const double indexdiff_to_freq = sample_N * 1000000 / (2 * sample_T_actual); //Hz*index, divide by index difference to find frequency
 const double indexdiff_to_speed = indexdiff_to_freq * speed_per_frequency; //(m/s)*index, divide by index difference to find speed
-const uint8_t rms_percentage = 15; //the required deviation from 0 to record new zero crossing, in percentage of rms value
-
-//ADC VARIABLES
+const uint8_t rms_percentage = 20; //the required deviation from 0 to record new zero crossing, in percentage of rms value
 int16_t adc_buffer[sample_N]; // allocate ADC buffer
 char in_place_buffer[sample_N];
 uint16_t fft_mag_old[sample_N];
@@ -64,22 +70,22 @@ enum state {DOPPLER, FMCW} state = DOPPLER;
 U8X8_ST7565_NHD_C12864_4W_HW_SPI u8x8(/* cs=*/ lcd_CS, /* dc=*/ lcd_REG, /* reset=*/ lcd_RST);
 
 //MAKE SPISettings INSTANCE for pll
-SPISettings pll_spi(10000000, MSBFIRST, SPI_MODE0);
+SPISettings pll_spi(1000000, MSBFIRST, SPI_MODE0);
+SPISettings pot_spi(500000, MSBFIRST, SPI_MODE0);
 
 //TEST VARIABLES
 uint8_t test_flag = 1;
-
-void pin_init(void);
 
 void setup() {
   // put your setup code here, to run once:
   pin_init();
   Serial.begin(9600); //Teensy USB Serial accepts any speed
-  while (!Serial);
-  Serial.println("Serial Port Initialized");
   SPI.begin();
   u8x8.begin();
   pll_init();
+  //while (!Serial);
+  delay(1000);
+  Serial.println("Serial Port Initialized");
   pre();
 }
 
@@ -106,16 +112,13 @@ void loop() {
   {
     case DOPPLER:
       current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
-
+      pot_update(current_rms_value);
       stitch_sandwich_stacker(adc_buffer); //stack frequency data from zero-crossings into bins and update output
       break;
     case FMCW: //**************NOT YET WRITTEN************************************************//
-      for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
-      {
-        in_place_buffer[buffer_index] = (adc_buffer[buffer_index] + 2) / 4 - 128; //convert 10 bit int to 8 bit uint
-      }
-      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
 
+      current_rms_value = zero_average_and_rms(adc_buffer); //make samples bipolar, return rms value
+      pot_update(current_rms_value);
       if (test_flag)
       {
         for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
@@ -129,6 +132,10 @@ void loop() {
       break;
   }
   switch_poll(state);
+  if (Serial.available())
+  {
+
+  }
 
   //timer overflow reset -- note that overflow will cause 1-2 false readings
   if (adc_timer - sample_delta > micros()) adc_timer = micros() + sample_delta;
@@ -218,8 +225,8 @@ void stitch_sandwich_stacker(int16_t sample[])
   speed_float = freq_float * speed_per_frequency; //find average speed
   //  Serial.print("Frequency (Hz): ");
   //  Serial.println(freq_float, 1); //print average frequency
-  Serial.print("Speed (m/s): ");
-  Serial.println(speed_float, 1); //print average speed
+  //  Serial.print("Speed (m/s): ");
+  //  Serial.println(speed_float, 1); //print average speed
   u8x8.clearLine(2);
   u8x8.setFont(u8x8_font_chroma48medium8_r);
   u8x8.noInverse();
@@ -271,7 +278,7 @@ uint16_t bin_peak_search(uint16_t vector[]) //take vector with unsigned 16-bit v
   return peak_index;
 }
 
-void switch_poll(uint8_t current_state) //returns new frequency
+void switch_poll(uint8_t current_state) 
 {
   uint32_t f_new = f_current;
   uint16_t momentary_sw_in = 0;
@@ -283,8 +290,18 @@ void switch_poll(uint8_t current_state) //returns new frequency
     if (current_state != digitalRead(sw_TOG_pin))
       //if still not equal
     {
-      if (toggle_sw_in) state = FMCW;
-      else if (!toggle_sw_in) state = DOPPLER;
+      if (toggle_sw_in) 
+      {
+        state = FMCW;
+        pll_init();
+        f_current = f_default;
+      }
+      else if (!toggle_sw_in) 
+      {
+        state = DOPPLER;
+        pll_init();
+        f_current = f_default;
+      }
       Serial.println("toggled");
       pre();
     }
@@ -325,6 +342,7 @@ void pin_init(void)
   //  pinMode(lcd_RST, OUTPUT);
   //  pinMode(lcd_REG, OUTPUT);
   pinMode(pll_CS, OUTPUT);
+  pinMode(pot_CS, OUTPUT);
   pinMode(ADC_pin, INPUT);
   pinMode(sw_MOM_pin, INPUT);
   pinMode(sw_TOG_pin, INPUT);
@@ -362,9 +380,12 @@ void pll_init(void)
   //WILL ONLY WORK IF SHIFT REGISTER PUSHES OUT EXTRA VALUES
 
   //SET FUNCTION/INITIALIZATION LATCH
-  Serial.print("Setting Function Latch, transfer input = ");
-  Serial.println(0x000000C3, BIN);
-  pll_24b_transfer(0x000000C3);
+  Serial.print("Setting INIT Latch, transfer input = ");
+  Serial.println(0x00000093, BIN);
+  pll_24b_transfer(0x00000093); //supposed to be C3?
+  Serial.print("Setting INIT Latch, transfer input = ");
+  Serial.println(0x00000092, BIN);
+  pll_24b_transfer(0x00000092); //supposed to be C3?
 
   //SET R-DIVIDER LATCH
   uint32_t R = f_osc / pll_channel_spacing; //find R divider
@@ -398,6 +419,7 @@ void freq_set(uint32_t freq)
   Serial.print("Setting N Value, transfer input = ");
   Serial.println(data_temp, BIN);
   pll_24b_transfer(data_temp);
+  f_current = freq * 3;
 }
 
 void pre(void)
@@ -429,17 +451,21 @@ void pre(void)
 
 void update_fft(int16_t sample[])
 {
+  for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
+  {
+    in_place_buffer[buffer_index] = (char)((adc_buffer[buffer_index] + 2) / 4); //convert 10 bit int to 8 bit char
+  }
   char zero_buffer[sample_N];
   for (buffer_index = 0; buffer_index < sample_N; buffer_index++)
   {
     zero_buffer[buffer_index] = 127;
     if (test_flag)
     {
-      Serial.println(in_place_buffer[buffer_index] - '0');
+      Serial.println((int8_t)in_place_buffer[buffer_index] - '0');
     }
   }
 
-  fix_fft(in_place_buffer, zero_buffer, 10, 0);
+  fix_fft(in_place_buffer, zero_buffer, 5, 0);
   //fix_fftr(in_place_buffer, 10, 0);
   if (test_flag)
   {
@@ -460,13 +486,31 @@ void update_fft(int16_t sample[])
   //  int8_t fft_mag_temp[sample_N];
 }
 
-void MCP41010Write(byte value)
+void MCP41010Write(uint8_t value)
 {
-  // Note that the integer value passed to this subroutine
-  // is cast to a byte
-
-  digitalWrite(pll_POT, LOW);
-  SPI.transfer(B00010001); // This tells the chip to set the pot
+  digitalWrite(pot_CS, LOW);
+  SPI.beginTransaction(pot_spi);
+  SPI.transfer(0b00000000); // This tells the chip to set the pot
   SPI.transfer(value);     // This tells it the pot position
-  digitalWrite(pll_POT, HIGH);
+  digitalWrite(pot_CS, HIGH);
+}
+
+void pot_update(uint16_t rms_in)
+{
+  //  Serial.print("INPUT RMS: ");
+  //  Serial.println(rms_in);
+  int16_t rms_diff = rms_target - rms_in;
+  if (abs(rms_diff) > rms_hysteresis)
+  {
+    pot_pos = pot_pos - loop_gain * rms_diff / 100; //recalculate potentiometer position
+    if (pot_pos > 255) pot_pos = 255; //protect from 8-bit overflow
+    if (pot_pos < 1) pot_pos = 1; //protect from lockup
+    if (old_pos != pot_pos)
+    {
+      MCP41010Write((byte)pot_pos); //cast to byte, set position, update gain
+      Serial.print("NEW POT POSITION: ");
+      Serial.println(pot_pos);
+      old_pos = pot_pos;
+    }
+  }
 }
