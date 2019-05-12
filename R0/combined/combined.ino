@@ -71,6 +71,7 @@ uint8_t tile[4][128]; //2D array of 'tile' objects
 int32_t x_bin[128]; //128-wide vector for display pixels
 int16_t fft_mag[sample_N];
 const uint8_t target_N = 1; // 1-3 target capable
+uint8_t MTI_flag = 0; //default MTI off, turn on in FMCW mode with momentary switch
 
 //PLOT CONSTANTS AND VARIABLES
 const uint8_t plot_wait = 5; //for time-domain plots, reduces update rate
@@ -112,12 +113,11 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  //***************UNCOMMENT FOR MTI
-  //  if(state == FMCW)
-  //  {
-  //    while(digitalRead(SYNC_pin)); //wait for new cycle
-  //    while(!digitalRead(SYNC_pin)); //wait for positive transition
-  //  }
+  if (state == FMCW && MTI_flag)
+  {
+    while (digitalRead(SYNC_pin)); //wait for new cycle
+    while (!digitalRead(SYNC_pin)); //wait for positive transition
+  }
   actual_time_0 = millis();
   adc_timer = micros();
   for (buffer_index = 0; buffer_index < sample_N;)
@@ -146,10 +146,14 @@ void loop() {
       break;
     case FMCW:
       //***************UNCOMMENT FOR MTI
-      //moving_target_indication(); //update difference buffer
-      //update_fft(adc_buffer_diff, sample_N); //perform fft on adc_buffer_diff
+      if (MTI_flag)
+      {
+        moving_target_indication(); //update difference buffer
+        update_fft(adc_buffer_diff, sample_N); //perform fft from adc_buffer_diff
+      } else {
+        update_fft(adc_buffer_new, sample_N); //perform fft from adc_buffer_new
+      }
 
-      update_fft(adc_buffer_new, sample_N); //to disable MTI, uncomment
       if (plot_wait_count++ == plot_wait)
       {
         plot_samples(fft_mag, 128, 0); //each FFT div is ~1m in range
@@ -333,18 +337,40 @@ void switch_poll(uint8_t current_state)
   {
     while (analogRead(sw_MOM_pin) > 819)
     {
-      f_new -= (pll_channel_spacing * 3);
-      delay(150);
-      if (f_new < f_lim_lower) f_new = f_lim_upper - (f_lim_upper % (pll_channel_spacing * 3)); //wraparound
+      switch (state)
+      {
+        case DOPPLER:
+          f_new -= (pll_channel_spacing * 3);
+          delay(150);
+          if (f_new < f_lim_lower) f_new = f_lim_upper - (f_lim_upper % (pll_channel_spacing * 3)); //wraparound
+          break;
+        case FMCW:
+          MTI_flag = 0;
+          u8x8.setCursor(1, 3);
+          u8x8.print("MTI disabled");
+          delay(250);
+          break;
+      }
     }
   }
   else if (momentary_sw_in < 205)
   {
     while (analogRead(sw_MOM_pin) < 205)
     {
-      f_new += (pll_channel_spacing * 3);
-      delay(50);
-      if (f_new > f_lim_upper) f_new = f_lim_lower + pll_channel_spacing - (f_lim_lower % (pll_channel_spacing * 3)); //wraparound
+      switch (state)
+      {
+        case DOPPLER:
+          f_new += (pll_channel_spacing * 3);
+          delay(50);
+          if (f_new > f_lim_upper) f_new = f_lim_lower + pll_channel_spacing - (f_lim_lower % (pll_channel_spacing * 3)); //wraparound
+          break;
+        case FMCW:
+          MTI_flag = 1;
+          u8x8.setCursor(1, 3);
+          u8x8.print("MTI enabled");
+          delay(250);
+          break;
+      }
     }
   }
 
@@ -354,8 +380,8 @@ void switch_poll(uint8_t current_state)
     Serial.println(f_new);
     freq_set(f_new);
     f_current = f_new;
-    pre();
   }
+  pre();
 }
 
 void pin_init(void)
