@@ -72,6 +72,7 @@ int32_t x_bin[128]; //128-wide vector for display pixels
 int16_t fft_mag[sample_N];
 const uint8_t target_N = 1; // 1-3 target capable
 uint8_t MTI_flag = 0; //default MTI off, turn on in FMCW mode with momentary switch
+uint16_t MTI_timeout = 0;
 
 //PLOT CONSTANTS AND VARIABLES
 const uint8_t plot_wait = 5; //for time-domain plots, reduces update rate
@@ -113,11 +114,26 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (state == FMCW && MTI_flag)
-  {
-    while (digitalRead(SYNC_pin)); //wait for new cycle
-    while (!digitalRead(SYNC_pin)); //wait for positive transition
-  }
+//  if (state == FMCW && MTI_flag)
+//  {
+//    MTI_timeout = millis();
+//    while (digitalRead(SYNC_pin))
+//    {
+//      if (MTI_timeout + 500 < millis())
+//      {
+//        MTI_flag = 0; //wait for new cycle
+//        break;
+//      }
+//    }
+//    while (!digitalRead(SYNC_pin))
+//    {
+//      if (MTI_timeout + 1000 < millis())
+//      {
+//        MTI_flag = 0; //wait for new cycle
+//        break;
+//      }
+//    } //wait for positive transition
+//  }
   actual_time_0 = millis();
   adc_timer = micros();
   for (buffer_index = 0; buffer_index < sample_N;)
@@ -321,15 +337,17 @@ void switch_poll(uint8_t current_state)
         state = FMCW;
         pll_init();
         f_current = f_default;
+        pre();
       }
       else if (!toggle_sw_in)
       {
         state = DOPPLER;
         pll_init();
         f_current = f_default;
+        pre();
       }
       Serial.println("toggled");
-      pre();
+      
     }
   }
   momentary_sw_in = analogRead(sw_MOM_pin); //measure MOMENTARY switch
@@ -432,7 +450,7 @@ void pll_init(void)
   Serial.print("Setting INIT Latch, transfer input = ");
   Serial.println(0x00000093, BIN);
   pll_24b_transfer(0x00000093); //supposed to be C3?
-  Serial.print("Setting INIT Latch, transfer input = ");
+  Serial.print("Setting FUNC   Latch, transfer input = ");
   Serial.println(0x00000092, BIN);
   pll_24b_transfer(0x00000092); //supposed to be C3?
 
