@@ -114,26 +114,26 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  if (state == FMCW && MTI_flag)
-//  {
-//    MTI_timeout = millis();
-//    while (digitalRead(SYNC_pin))
-//    {
-//      if (MTI_timeout + 500 < millis())
-//      {
-//        MTI_flag = 0; //wait for new cycle
-//        break;
-//      }
-//    }
-//    while (!digitalRead(SYNC_pin))
-//    {
-//      if (MTI_timeout + 1000 < millis())
-//      {
-//        MTI_flag = 0; //wait for new cycle
-//        break;
-//      }
-//    } //wait for positive transition
-//  }
+  if (state == FMCW && MTI_flag)
+  {
+    MTI_timeout = millis();
+    while (digitalRead(SYNC_pin))
+    {
+      if (MTI_timeout + 500 < millis())
+      {
+        MTI_flag = 0; //wait for new cycle
+        break;
+      }
+    }
+    while (!digitalRead(SYNC_pin))
+    {
+      if (MTI_timeout + 1000 < millis())
+      {
+        MTI_flag = 0; //wait for new cycle
+        break;
+      }
+    } //wait for positive transition
+  }
   actual_time_0 = millis();
   adc_timer = micros();
   for (buffer_index = 0; buffer_index < sample_N;)
@@ -347,7 +347,6 @@ void switch_poll(uint8_t current_state)
         pre();
       }
       Serial.println("toggled");
-      
     }
   }
   momentary_sw_in = analogRead(sw_MOM_pin); //measure MOMENTARY switch
@@ -364,9 +363,11 @@ void switch_poll(uint8_t current_state)
           break;
         case FMCW:
           MTI_flag = 0;
+          u8x8.clearLine(3);
           u8x8.setCursor(1, 3);
           u8x8.print("MTI disabled");
-          delay(250);
+          delay(1000);
+          pre();
           break;
       }
     }
@@ -384,9 +385,11 @@ void switch_poll(uint8_t current_state)
           break;
         case FMCW:
           MTI_flag = 1;
+          u8x8.clearLine(3);
           u8x8.setCursor(1, 3);
           u8x8.print("MTI enabled");
-          delay(250);
+          delay(1000);
+          pre();
           break;
       }
     }
@@ -398,8 +401,8 @@ void switch_poll(uint8_t current_state)
     Serial.println(f_new);
     freq_set(f_new);
     f_current = f_new;
+    pre();
   }
-  pre();
 }
 
 void pin_init(void)
