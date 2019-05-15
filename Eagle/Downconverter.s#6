@@ -3125,10 +3125,10 @@ Digital Pot
 Control
 &amp; 5V Power 
 Supply</text>
-<text x="205.74" y="-45.72" size="1.778" layer="97">Adjustable Gain
+<text x="205.74" y="-40.64" size="1.778" layer="97">Adjustable Gain
 100k Digital potentiometer
 Max Gain = 100</text>
-<text x="254" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
+<text x="264.16" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
 Min Output = 2.48V
 100k digipot</text>
 <text x="317.5" y="20.32" size="1.778" layer="97">Sleeve (1)
@@ -3167,6 +3167,11 @@ LOSS 6dBm</text>
 <wire x1="114.3" y1="-12.7" x2="114.3" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="180.34" y1="-12.7" x2="180.34" y2="-33.02" width="0.1524" layer="97" style="shortdash"/>
 <text x="154.94" y="83.82" size="1.778" layer="97" align="top-left">To Source Module</text>
+<text x="45.72" y="88.9" size="1.778" layer="97">ZLD0117</text>
+<text x="106.68" y="91.44" size="1.778" layer="97">TC1185</text>
+<text x="299.72" y="-2.54" size="1.778" layer="97">To the ADC on 
+the DSP Board.
+Biased on that board.</text>
 </plain>
 <instances>
 <instance part="J1" gate="G$1" x="12.7" y="99.06" smashed="yes">
@@ -3334,8 +3339,8 @@ LOSS 6dBm</text>
 <instance part="SUPPLY3" gate="G$1" x="149.86" y="71.12" smashed="yes">
 <attribute name="VALUE" x="149.86" y="73.914" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="SUPPLY5" gate="G$1" x="127" y="43.18" smashed="yes">
-<attribute name="VALUE" x="127" y="45.974" size="1.778" layer="96" align="bottom-center"/>
+<instance part="SUPPLY5" gate="G$1" x="127" y="45.72" smashed="yes">
+<attribute name="VALUE" x="127" y="48.514" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="R9" gate="G$1" x="193.04" y="20.32" smashed="yes" rot="R270">
 <attribute name="NAME" x="189.23" y="21.8186" size="1.778" layer="95" rot="R180" align="center"/>
@@ -3692,9 +3697,14 @@ LOSS 6dBm</text>
 <pinref part="U4" gate="A" pin="P0W"/>
 <wire x1="228.6" y1="-15.24" x2="248.92" y2="-15.24" width="0.1524" layer="91"/>
 <wire x1="248.92" y1="-15.24" x2="248.92" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="248.92" y1="27.94" x2="264.16" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="27.94" x2="259.08" y2="27.94" width="0.1524" layer="91"/>
 <junction x="248.92" y="27.94"/>
 <pinref part="C8" gate="A" pin="1"/>
+<pinref part="J8" gate="G$1" pin="1"/>
+<wire x1="259.08" y1="27.94" x2="264.16" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="2.54" x2="259.08" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="2.54" x2="259.08" y2="27.94" width="0.1524" layer="91"/>
+<junction x="259.08" y="27.94"/>
 </segment>
 </net>
 <net name="N$13" class="0">
@@ -3753,6 +3763,7 @@ LOSS 6dBm</text>
 <segment>
 <pinref part="R7" gate="G$1" pin="1"/>
 <pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
+<wire x1="127" y1="45.72" x2="127" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
@@ -3773,9 +3784,8 @@ LOSS 6dBm</text>
 <net name="RDR_OUT" class="0">
 <segment>
 <pinref part="J2" gate="G$1" pin="RING1"/>
-<wire x1="271.78" y1="27.94" x2="281.94" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="TIP"/>
-<wire x1="281.94" y1="27.94" x2="292.1" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="271.78" y1="27.94" x2="292.1" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="27.94" x2="302.26" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="20.32" x2="292.1" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="20.32" x2="292.1" y2="22.86" width="0.1524" layer="91"/>
@@ -3788,9 +3798,6 @@ LOSS 6dBm</text>
 <pinref part="J2" gate="G$1" pin="TIPSWITCH"/>
 <wire x1="302.26" y1="22.86" x2="292.1" y2="22.86" width="0.1524" layer="91"/>
 <junction x="292.1" y="22.86"/>
-<pinref part="J8" gate="G$1" pin="1"/>
-<wire x1="281.94" y1="27.94" x2="281.94" y2="2.54" width="0.1524" layer="91"/>
-<junction x="281.94" y="27.94"/>
 <label x="281.94" y="7.62" size="1.778" layer="95"/>
 <pinref part="C8" gate="A" pin="2"/>
 </segment>

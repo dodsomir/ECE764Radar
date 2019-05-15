@@ -1096,7 +1096,7 @@ design rules under a new name.</description>
 <element name="C11" library="764Library" package="R0603" package3d_urn="urn:adsk.eagle:package:26057/1" value="470pF" x="52.5145" y="32.3215" smashed="yes" rot="R270">
 <attribute name="NAME" x="53.1495" y="32.9565" size="1.27" layer="25" rot="R270"/>
 </element>
-<element name="C12" library="764Library" package="R0603" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF" x="38.735" y="5.715" smashed="yes">
+<element name="C12" library="764Library" package="R0603" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.2uF" x="38.735" y="5.715" smashed="yes">
 <attribute name="NAME" x="37.465" y="3.81" size="1.27" layer="25"/>
 </element>
 <element name="C13" library="764Library" package="R0603" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF" x="47.625" y="8.509" smashed="yes" rot="R270">

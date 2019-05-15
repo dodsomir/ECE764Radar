@@ -3107,7 +3107,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C10" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="1uF"/>
 <part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="C11" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="470pF"/>
-<part name="C12" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
+<part name="C12" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.2uF"/>
 <part name="C13" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
 </parts>
 <sheets>
@@ -3117,7 +3117,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="177.8" y="83.82" size="1.778" layer="97" align="top-left">To TX/RX</text>
 <text x="142.24" y="-43.18" size="1.778" layer="97">Low Pass Filter
 fc = 5k
-Gain = R5/R4 = 100</text>
+Gain = -R5/R4 = -37</text>
 <text x="198.12" y="-17.78" size="1.778" layer="97" align="bottom-right">N/C</text>
 <text x="198.12" y="-20.32" size="1.778" layer="97" align="bottom-right">N/C</text>
 <text x="198.12" y="-22.86" size="1.778" layer="97" align="bottom-right">N/C</text>
@@ -3129,10 +3129,9 @@ Control
 Supply</text>
 <text x="205.74" y="-40.64" size="1.778" layer="97">Adjustable Gain
 100k Digital potentiometer
-Max Gain = 100</text>
-<text x="264.16" y="15.24" size="1.778" layer="97">Total Gain = 10,000 V/V
-Min Output = 2.48V
-100k digipot</text>
+Max Gain = -37</text>
+<text x="264.16" y="15.24" size="1.778" layer="97">Total Gain = 1369 V/V
+Min Output = 1.65 V</text>
 <text x="317.5" y="20.32" size="1.778" layer="97">Sleeve (1)
 Ring2 (4)
 Ring1 (3)
@@ -3145,15 +3144,15 @@ Tip (2)</text>
 
 ASSUME CONVERSION
 LOSS 6dBm</text>
-<text x="68.58" y="55.88" size="1.778" layer="97">-50 dBm
-1E-8W
-0.00099V</text>
+<text x="68.58" y="55.88" size="1.778" layer="97">-80 dBm
+1E-11W
+1.4E-11 V</text>
 <text x="53.34" y="22.86" size="1.778" layer="97">6 dBm
 0.00398W
 0.624V</text>
-<text x="96.52" y="43.18" size="1.778" layer="97">-56 dBm
-2.5E-9W
-0.000248 V</text>
+<text x="96.52" y="43.18" size="1.778" layer="97">-86 dBm
+2.5E-12 W
+3.5E-12 V</text>
 <text x="66.04" y="124.46" size="1.778" layer="97">Supply Voltage Conversion</text>
 <wire x1="137.16" y1="50.8" x2="233.68" y2="50.8" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="233.68" y1="50.8" x2="233.68" y2="10.16" width="0.1524" layer="97" style="shortdash"/>
@@ -3829,12 +3828,12 @@ Biased on that board.</text>
 <wire x1="124.46" y1="-5.08" x2="124.46" y2="-20.32" width="0.1524" layer="91"/>
 <junction x="124.46" y="-20.32"/>
 <pinref part="U3" gate="A" pin="-"/>
-<wire x1="134.62" y1="22.86" x2="134.62" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="22.86" x2="134.62" y2="10.16" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="134.62" y1="12.7" x2="134.62" y2="-5.08" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="33.02" x2="119.38" y2="12.7" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="12.7" x2="134.62" y2="12.7" width="0.1524" layer="91"/>
-<junction x="134.62" y="12.7"/>
+<wire x1="134.62" y1="10.16" x2="134.62" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="33.02" x2="119.38" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="10.16" x2="134.62" y2="10.16" width="0.1524" layer="91"/>
+<junction x="134.62" y="10.16"/>
 </segment>
 </net>
 <net name="N$5" class="0">
