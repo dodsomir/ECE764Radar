@@ -3212,19 +3212,19 @@ Biased on that board.</text>
 <instance part="GND5" gate="1" x="81.28" y="7.62" smashed="yes">
 <attribute name="VALUE" x="81.28" y="7.366" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="J5" gate="G$1" x="20.32" y="50.8" smashed="yes">
-<attribute name="NAME" x="16.51" y="54.864" size="1.778" layer="95"/>
-<attribute name="VALUE" x="1.016" y="51.562" size="1.778" layer="96"/>
+<instance part="J5" gate="G$1" x="40.64" y="50.8" smashed="yes">
+<attribute name="NAME" x="36.83" y="54.864" size="1.778" layer="95"/>
+<attribute name="VALUE" x="21.336" y="51.562" size="1.778" layer="96"/>
 </instance>
-<instance part="J6" gate="G$1" x="20.32" y="30.48" smashed="yes">
-<attribute name="NAME" x="16.51" y="34.544" size="1.778" layer="95"/>
-<attribute name="VALUE" x="1.016" y="31.242" size="1.778" layer="96"/>
+<instance part="J6" gate="G$1" x="40.64" y="30.48" smashed="yes">
+<attribute name="NAME" x="36.83" y="34.544" size="1.778" layer="95"/>
+<attribute name="VALUE" x="21.336" y="31.242" size="1.778" layer="96"/>
 </instance>
-<instance part="GND6" gate="1" x="22.86" y="40.64" smashed="yes">
-<attribute name="VALUE" x="22.86" y="40.386" size="1.778" layer="96" align="top-center"/>
+<instance part="GND6" gate="1" x="43.18" y="43.18" smashed="yes">
+<attribute name="VALUE" x="43.18" y="42.926" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="GND7" gate="1" x="22.86" y="15.24" smashed="yes">
-<attribute name="VALUE" x="22.86" y="14.986" size="1.778" layer="96" align="top-center"/>
+<instance part="GND7" gate="1" x="43.18" y="20.32" smashed="yes">
+<attribute name="VALUE" x="43.18" y="20.066" size="1.778" layer="96" align="top-center"/>
 </instance>
 <instance part="R3" gate="G$1" x="99.06" y="25.4" smashed="yes" rot="R90">
 <attribute name="NAME" x="102.6414" y="26.67" size="1.778" layer="95" rot="R180" align="center"/>
@@ -3433,7 +3433,7 @@ Biased on that board.</text>
 <segment>
 <pinref part="J6" gate="G$1" pin="GND"/>
 <pinref part="GND7" gate="1" pin="GND"/>
-<wire x1="22.86" y1="27.94" x2="22.86" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="27.94" x2="43.18" y2="22.86" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U2" gate="A" pin="GND"/>
@@ -3443,7 +3443,7 @@ Biased on that board.</text>
 <segment>
 <pinref part="J5" gate="G$1" pin="GND"/>
 <pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="22.86" y1="48.26" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="48.26" x2="43.18" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
@@ -3606,7 +3606,7 @@ Biased on that board.</text>
 <net name="RAW_RF" class="0">
 <segment>
 <pinref part="J5" gate="G$1" pin="SIG"/>
-<wire x1="22.86" y1="53.34" x2="81.28" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="53.34" x2="81.28" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="U2" gate="A" pin="RF"/>
 <wire x1="81.28" y1="53.34" x2="81.28" y2="50.8" width="0.1524" layer="91"/>
 <label x="43.18" y="53.34" size="1.778" layer="95"/>
@@ -3616,7 +3616,7 @@ Biased on that board.</text>
 <segment>
 <pinref part="J6" gate="G$1" pin="SIG"/>
 <pinref part="U2" gate="A" pin="LO"/>
-<wire x1="22.86" y1="33.02" x2="63.5" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="33.02" x2="63.5" y2="33.02" width="0.1524" layer="91"/>
 <label x="43.18" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>

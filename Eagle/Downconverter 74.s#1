@@ -3109,7 +3109,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C11" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="470pF"/>
 <part name="C12" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="2.2uF"/>
 <part name="C13" library="764Library" deviceset="C0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="0.1uF"/>
-<part name="R1" library="764Library" deviceset="R0603" device="" package3d_urn="urn:adsk.eagle:package:26057/1" value="82"/>
 </parts>
 <sheets>
 <sheet>
@@ -3398,10 +3397,6 @@ Biased on that board.</text>
 <instance part="C13" gate="G$1" x="195.58" y="27.94" smashed="yes">
 <attribute name="NAME" x="197.739" y="32.004" size="1.778" layer="95" rot="R180" align="center"/>
 <attribute name="VALUE" x="199.136" y="30.099" size="1.778" layer="96" rot="R180" align="center"/>
-</instance>
-<instance part="R1" gate="G$1" x="279.4" y="27.94" smashed="yes" rot="R180">
-<attribute name="NAME" x="278.13" y="34.0614" size="1.778" layer="95" align="center"/>
-<attribute name="VALUE" x="278.13" y="31.242" size="1.778" layer="96" align="center"/>
 </instance>
 </instances>
 <busses>
@@ -3805,9 +3800,11 @@ Biased on that board.</text>
 <segment>
 <pinref part="J2" gate="G$1" pin="RING1"/>
 <pinref part="J2" gate="G$1" pin="TIP"/>
+<wire x1="271.78" y1="27.94" x2="292.1" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="27.94" x2="302.26" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="20.32" x2="292.1" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="20.32" x2="292.1" y2="22.86" width="0.1524" layer="91"/>
+<junction x="292.1" y="27.94"/>
 <pinref part="J2" gate="G$1" pin="RINGSWITCH"/>
 <wire x1="292.1" y1="22.86" x2="292.1" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="25.4" x2="292.1" y2="27.94" width="0.1524" layer="91"/>
@@ -3817,9 +3814,7 @@ Biased on that board.</text>
 <wire x1="302.26" y1="22.86" x2="292.1" y2="22.86" width="0.1524" layer="91"/>
 <junction x="292.1" y="22.86"/>
 <label x="271.78" y="25.4" size="1.778" layer="95"/>
-<pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="284.48" y1="27.94" x2="292.1" y2="27.94" width="0.1524" layer="91"/>
-<junction x="292.1" y="27.94"/>
+<pinref part="C8" gate="A" pin="2"/>
 </segment>
 </net>
 <net name="N$9" class="0">
@@ -3862,13 +3857,6 @@ Biased on that board.</text>
 <wire x1="172.72" y1="27.94" x2="172.72" y2="-20.32" width="0.1524" layer="91"/>
 <junction x="172.72" y="27.94"/>
 <junction x="172.72" y="-20.32"/>
-</segment>
-</net>
-<net name="N$2" class="0">
-<segment>
-<pinref part="R1" gate="G$1" pin="2"/>
-<pinref part="C8" gate="A" pin="2"/>
-<wire x1="274.32" y1="27.94" x2="271.78" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
